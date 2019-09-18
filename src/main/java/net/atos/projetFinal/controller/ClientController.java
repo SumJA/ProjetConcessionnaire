@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.atos.projetFinal.model.Client;
-import net.atos.projetFinal.service.ServiceClient;
+import net.atos.projetFinal.service.impl.ServiceClient;
 
 
 @RestController
