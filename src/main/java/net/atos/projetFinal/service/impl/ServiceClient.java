@@ -1,4 +1,4 @@
-package net.atos.projetFinal.service;
+package net.atos.projetFinal.service.impl;
 
 import java.util.List;
 
@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import net.atos.projetFinal.model.Client;
 import net.atos.projetFinal.repo.ClientRepository;
+import net.atos.projetFinal.service.IClientService;
 
 
 @Service
