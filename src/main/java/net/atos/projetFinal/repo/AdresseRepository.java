@@ -5,11 +5,11 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import net.atos.projetFinal.model.Client;
+import net.atos.projetFinal.model.Adresse;
 
-
-
-public interface ClientRepository extends JpaRepository<Client, Integer>{
+public interface AdresseRepository extends JpaRepository<Adresse, Integer>{
+	
+	
 
 
 }

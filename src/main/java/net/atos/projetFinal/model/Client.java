@@ -1,10 +1,12 @@
 package net.atos.projetFinal.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table
+@Table(name="client")
 public class Client {
 	
 	
@@ -22,19 +24,20 @@ public class Client {
 	@Column(name="idClient")
 	private int id;
 	
-	@Column(name="nomClient")
+	@Column(name="nomClient", length = 100)
 	private String nom;
 	
-	@Column(name="prenomClient")
+	@Column(name="prenomClient", length = 100)
 	private String prenom;
 	
-	@Column
+	@Column(length = 75)
 	private String numeroTelClient;
 	
-	@Column
+	@Column(length = 75)
 	private String adresseMail;
 	
 	@OneToOne
+	@MapsId
 	private Adresse adresse;
 	
 	
