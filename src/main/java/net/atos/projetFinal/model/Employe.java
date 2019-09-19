@@ -69,7 +69,9 @@ public class Employe implements Serializable {
 	private Role role ;
 
 	
-	
+	/**
+	 * Constructeur vide : initialise createTime à la date du moment
+	 */
 	public Employe() {
 		super();
 		
