@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.atos.projetFinal.model.Adresse;
-import net.atos.projetFinal.service.ServiceAdresse;
+import net.atos.projetFinal.service.impl.ServiceAdresse;
 
 
 
