@@ -11,6 +11,13 @@ import net.atos.projetFinal.repo.ClientRepository;
 import net.atos.projetFinal.service.IClientService;
 
 
+/**
+ * Classe ServiceClient
+ * implémete IClientService
+ * Annotation: @Service
+ * @author kamel
+ *
+ */
 @Service
 public class ServiceClient implements IClientService {
 	
@@ -25,6 +32,10 @@ public class ServiceClient implements IClientService {
 		return dao;
 	}
 
+	/**
+	 * méthode getAllClients
+	 * Annotations: @Override, @Transactional(readOnly = true)
+	 */
 	@Override
 	@Transactional(readOnly = true)
 	public List<Client> getAllClients() {
@@ -32,6 +43,10 @@ public class ServiceClient implements IClientService {
 		return dao.findAll();
 	}
 
+	/**
+	 * méthode creerClient 
+	 * Annotations: @Override, @Transactional
+	 */
 	@Override
 	@Transactional
 	public void creerClient(Client client) {
@@ -42,6 +57,10 @@ public class ServiceClient implements IClientService {
 
 	}
 
+	/**
+	 * méthode supprimerClient 
+	 * Annotations: @Override, @Transactional
+	 */
 	@Override
 	@Transactional
 	public void supprimerClientById(int idClient) {
@@ -50,6 +69,10 @@ public class ServiceClient implements IClientService {
 
 	}
 
+	/**
+	 * méthode modifierClient 
+	 * Annotations: @Override, @Transactional
+	 */
 	@Override
 	@Transactional
 	public void modifierClients(List<Client> clients) {
