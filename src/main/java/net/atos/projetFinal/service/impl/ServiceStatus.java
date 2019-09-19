@@ -43,7 +43,7 @@ public class ServiceStatus implements IStatus {
 
 	@Override
 	@Transactional
-	public void supprimerStatusById(int idStatus) {
+	public void supprimerStatusById(Long idStatus) {
 		
 		dao.deleteById(idStatus);
 

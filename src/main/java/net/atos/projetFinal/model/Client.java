@@ -1,3 +1,6 @@
+/**
+ * Client du Concessionnaire
+ */
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
@@ -12,9 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * Entity Client attribut en private, getter/setter en public implémentation de
- * Serializable constructeur par défaut correspond à la table "client" dans la
- * Bdd
  * 
  * @author kamel
  *
@@ -22,19 +22,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "client")
 public class Client implements Serializable {
-
-	/**
-	 * serial version id
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * attribut id de Client généré en "AUTO" (strategy = GenerationType.AUTO)
-	 * correspond à idClient dans la Bdd
-	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idClient")
+	@Column(name = "idClient", updatable = false, nullable = false)
 	private Long id;
 
 	@Column(name = "nomClient", length = 100)
@@ -43,138 +35,108 @@ public class Client implements Serializable {
 	@Column(name = "prenomClient", length = 100)
 	private String prenom;
 
-	/**
-	 * attribut numeroTelClient le nom de l'attribut est le même que celui de la Bdd
-	 */
-	@Column(length = 75)
+	@Column(name = "telephone", length = 75)
 	private String numeroTelClient;
 
-	/**
-	 * attribut adresseMail le nom de l'attribut est le même que celui de la Bdd
-	 */
-	@Column(length = 75)
+	@Column(length = 100)
 	private String adresseMail;
 
-	/**
-	 * attribut adresse annoté en OneToOne
-	 */
 	@OneToOne
 	@MapsId
 	private Adresse adresse;
 
-	/**
-	 * constructeur par défaut
-	 */
 	public Client() {
 		super();
 	}
 
 	/**
-	 * Getter de id de Client
-	 * 
-	 * @return
+	 * @return the id
 	 */
 	public Long getId() {
 		return id;
 	}
 
 	/**
-	 * Setter de id de Client
-	 * 
-	 * @return
+	 * @param id the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 	/**
-	 * Getter de nom de Client
-	 * 
-	 * @return
+	 * @return the nom
 	 */
 	public String getNom() {
 		return nom;
 	}
 
 	/**
-	 * Setter de nom de Client
-	 * 
-	 * @return
+	 * @param nom the nom to set
 	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
 
 	/**
-	 * Getter de prenom de Client
-	 * 
-	 * @return
+	 * @return the prenom
 	 */
 	public String getPrenom() {
 		return prenom;
 	}
 
 	/**
-	 * Setter de prenom de Client
-	 * 
-	 * @return
+	 * @param prenom the prenom to set
 	 */
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
 
 	/**
-	 * Getter de numeroTelClient de Client
-	 * 
-	 * @return
+	 * @return the numeroTelClient
 	 */
 	public String getNumeroTelClient() {
 		return numeroTelClient;
 	}
 
 	/**
-	 * Setter de numeroTelClient de Client
-	 * 
-	 * @return
+	 * @param numeroTelClient the numeroTelClient to set
 	 */
 	public void setNumeroTelClient(String numeroTelClient) {
 		this.numeroTelClient = numeroTelClient;
 	}
 
 	/**
-	 * Getter de adresseMail de Client
-	 * 
-	 * @return
+	 * @return the adresseMail
 	 */
 	public String getAdresseMail() {
 		return adresseMail;
 	}
 
 	/**
-	 * Setter de adresseMail de Client
-	 * 
-	 * @return
+	 * @param adresseMail the adresseMail to set
 	 */
 	public void setAdresseMail(String adresseMail) {
 		this.adresseMail = adresseMail;
 	}
 
 	/**
-	 * Getter de adresse de Client
-	 * 
-	 * @return
+	 * @return the adresse
 	 */
 	public Adresse getAdresse() {
 		return adresse;
 	}
 
 	/**
-	 * Setter de adresse de Client
-	 * 
-	 * @return
+	 * @param adresse the adresse to set
 	 */
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
+	}
+
+	@Override
+	public String toString() {
+		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroTelClient=" + numeroTelClient
+				+ ", adresseMail=" + adresseMail + ", adresse=" + adresse + "]";
 	}
 
 }

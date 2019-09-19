@@ -9,9 +9,9 @@ public interface IAdresseService {
 	
 	List<Adresse> getAllAdresses();
 	
-	void creerAdresse(Adresse adresse);
+	void creerAdresse(final Adresse adresse);
 	
-	void supprimerAdresse(final int idAdresse);
+	void supprimerAdresse(final Long idAdresse);
 	
 	void modifierAdresse(final List<Adresse> adresses);
 	
