@@ -27,7 +27,7 @@ public interface IRoleService {
 	 * Supprimer un role en l'identifiant par son id
 	 * @param idRole : id du role à supprimer
 	 */
-	void supprimerRoleById(int idRole) ;
+	void supprimerRoleById(Long idRole) ;
 	
 	/**
 	 * Modifier une liste de role

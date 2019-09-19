@@ -27,7 +27,7 @@ public interface IEmployeService {
 	 * Supprimer un employé identifié par l'id
 	 * @param idEmploye : id de l'employé à supprimer
 	 */
-	void supprimerEmployeParId(int idEmploye) ;
+	void supprimerEmployeParId(Long idEmploye) ;
 	
 	/**
 	 * Modifier des employés dans la sauvegarde

@@ -31,7 +31,7 @@ public class Role implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="idRole")
-	private int id ;
+	private Long id ;
 	
 	/**
 	 * nom du rôle pointe sur la colonne nomRole de la table
@@ -43,11 +43,11 @@ public class Role implements Serializable{
 		super();
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

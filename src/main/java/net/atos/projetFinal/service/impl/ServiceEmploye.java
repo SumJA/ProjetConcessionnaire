@@ -37,7 +37,7 @@ public class ServiceEmploye implements IEmployeService {
 
 	@Override
 	@Transactional
-	public void supprimerEmployeParId(int idEmploye) {
+	public void supprimerEmployeParId(Long idEmploye) {
 		dao.deleteById(idEmploye);
 
 	}

@@ -9,6 +9,6 @@ import net.atos.projetFinal.model.Employe;
  * @author NVV
  *
  */
-public interface EmployeRepository extends JpaRepository<Employe, Integer> {
+public interface EmployeRepository extends JpaRepository<Employe, Long> {
 
 }

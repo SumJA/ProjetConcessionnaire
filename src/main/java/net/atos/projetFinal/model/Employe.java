@@ -35,7 +35,7 @@ public class Employe implements Serializable {
 	@Id
 	@Column(name="idClient")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id ;
+	private Long id ;
 	
 	/**
 	 * Nom de l'employé qui point sur la colonne username de la table
@@ -79,11 +79,11 @@ public class Employe implements Serializable {
 		createTime = LocalDateTime.now() ;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

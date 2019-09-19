@@ -9,6 +9,6 @@ import net.atos.projetFinal.model.Role;
  * @author NVV
  *
  */
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
 
 }

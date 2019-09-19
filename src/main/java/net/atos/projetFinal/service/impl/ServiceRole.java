@@ -34,7 +34,7 @@ public class ServiceRole implements IRoleService{
 
 	@Override
 	@Transactional
-	public void supprimerRoleById(int idRole) {
+	public void supprimerRoleById(Long idRole) {
 		dao.deleteById(idRole);
 		
 	}
