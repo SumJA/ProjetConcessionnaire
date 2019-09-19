@@ -13,41 +13,40 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="adresse")
-public class Adresse {
-	
-	
+@Table(name = "adresse")
+public class Adresse implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="idadresse")
+	@Column(name = "idadresse")
 	private Long id;
-	
+
 	private int numero;
-	
+
 	@Column(length = 200)
 	private String libelle;
-	
+
 	@Column(length = 200)
 	private String complement;
-	
-	
+
 	private LocalDateTime dateCreation;
-	
-	
+
 	private LocalDateTime dateDerniereMiseAJour;
-	
+
 	/**
-	 * attribut codepostal
-	 * 45 caractères
-	 * correspond à codepostal dans la Bdd
+	 * attribut codepostal 45 caractères correspond à codepostal dans la Bdd
 	 */
-	@Column(name = "codePostal",length = 45)
-	private String codepostal;
-	
+	@Column(name = "codePostal", length = 45)
+	private String codePostal;
+
 	@Column(length = 75)
 	private String ville;
-	
-	
+
 	@OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
 	private Client client;
 
@@ -55,35 +54,18 @@ public class Adresse {
 		super();
 	}
 
-	public Adresse(int id, int numero, String libelleVoie, String complementAdresse, String codePostal, String ville,
-			Client client) {
-		super();
-		this.id = id;
-		this.numero = numero;
-		this.libelleVoie = libelleVoie;
-		this.complementAdresse = complementAdresse;
-		this.codePostal = codePostal;
-		this.ville = ville;
-		this.client = client;
-	}
-
-
-
-
 	/**
 	 * Getters id de Adresse
+	 * 
 	 * @return
 	 */
 	public Long getId() {
 		return id;
 	}
 
-
-
-
-
 	/**
 	 * Setter id de Adresse
+	 * 
 	 * @param id
 	 */
 	public void setId(Long id) {
@@ -138,42 +120,20 @@ public class Adresse {
 		this.client = client;
 	}
 
-
-
-
-
 	public LocalDateTime getDateCreation() {
 		return dateCreation;
 	}
-
-
-
-
 
 	public void setDateCreation(LocalDateTime dateCreation) {
 		this.dateCreation = dateCreation;
 	}
 
-
-
-
-
 	public LocalDateTime getDateDerniereMiseAJour() {
 		return dateDerniereMiseAJour;
 	}
 
-
-
-
-
 	public void setDateDerniereMiseAJour(LocalDateTime dateDerniereMiseAJour) {
 		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
 	}
-	
-	
-	
-	
-	
-	
 
 }
