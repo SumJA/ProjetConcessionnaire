@@ -1,5 +1,6 @@
 package net.atos.projetFinal.model;
 
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,68 +11,57 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
-
-
 /**
- * Entity Client
- * attribut en private, getter/setter en public
- * implémentation de Serializable
- * constructeur par défaut
- * correspond à la table "client" dans la Bdd
+ * Entity Client attribut en private, getter/setter en public implémentation de
+ * Serializable constructeur par défaut correspond à la table "client" dans la
+ * Bdd
+ * 
  * @author kamel
  *
  */
 @Entity
-@Table(name="client")
-public class Client {
-	
-	
-	
+@Table(name = "client")
+public class Client implements Serializable {
+
 	/**
 	 * serial version id
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * attribut id de Client
-	 * généré en "AUTO" (strategy = GenerationType.AUTO)
+	 * attribut id de Client généré en "AUTO" (strategy = GenerationType.AUTO)
 	 * correspond à idClient dans la Bdd
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="idClient")
+	@Column(name = "idClient")
 	private Long id;
-	
-	@Column(name="nomClient", length = 100)
+
+	@Column(name = "nomClient", length = 100)
 	private String nom;
-	
-	@Column(name="prenomClient", length = 100)
+
+	@Column(name = "prenomClient", length = 100)
 	private String prenom;
-	
+
 	/**
-	 * attribut numeroTelClient
-	 * le nom de l'attribut est le même que celui de la Bdd
+	 * attribut numeroTelClient le nom de l'attribut est le même que celui de la Bdd
 	 */
 	@Column(length = 75)
 	private String numeroTelClient;
-	
+
 	/**
-	 * attribut adresseMail
-	 * le nom de l'attribut est le même que celui de la Bdd
+	 * attribut adresseMail le nom de l'attribut est le même que celui de la Bdd
 	 */
 	@Column(length = 75)
 	private String adresseMail;
-	
+
 	/**
-	 * attribut adresse
-	 * annoté en OneToOne
+	 * attribut adresse annoté en OneToOne
 	 */
 	@OneToOne
 	@MapsId
 	private Adresse adresse;
-	
-	
+
 	/**
 	 * constructeur par défaut
 	 */
@@ -79,10 +69,9 @@ public class Client {
 		super();
 	}
 
-	
-
 	/**
 	 * Getter de id de Client
+	 * 
 	 * @return
 	 */
 	public Long getId() {
@@ -91,6 +80,7 @@ public class Client {
 
 	/**
 	 * Setter de id de Client
+	 * 
 	 * @return
 	 */
 	public void setId(Long id) {
@@ -99,6 +89,7 @@ public class Client {
 
 	/**
 	 * Getter de nom de Client
+	 * 
 	 * @return
 	 */
 	public String getNom() {
@@ -107,6 +98,7 @@ public class Client {
 
 	/**
 	 * Setter de nom de Client
+	 * 
 	 * @return
 	 */
 	public void setNom(String nom) {
@@ -115,6 +107,7 @@ public class Client {
 
 	/**
 	 * Getter de prenom de Client
+	 * 
 	 * @return
 	 */
 	public String getPrenom() {
@@ -123,6 +116,7 @@ public class Client {
 
 	/**
 	 * Setter de prenom de Client
+	 * 
 	 * @return
 	 */
 	public void setPrenom(String prenom) {
@@ -131,63 +125,56 @@ public class Client {
 
 	/**
 	 * Getter de numeroTelClient de Client
+	 * 
 	 * @return
 	 */
 	public String getNumeroTelClient() {
-		return telephone;
+		return numeroTelClient;
 	}
 
 	/**
 	 * Setter de numeroTelClient de Client
+	 * 
 	 * @return
 	 */
 	public void setNumeroTelClient(String numeroTelClient) {
-		this.telephone = numeroTelClient;
+		this.numeroTelClient = numeroTelClient;
 	}
 
 	/**
 	 * Getter de adresseMail de Client
+	 * 
 	 * @return
 	 */
 	public String getAdresseMail() {
-		return email;
+		return adresseMail;
 	}
 
 	/**
 	 * Setter de adresseMail de Client
+	 * 
 	 * @return
 	 */
 	public void setAdresseMail(String adresseMail) {
-		this.email = adresseMail;
+		this.adresseMail = adresseMail;
 	}
-
-
 
 	/**
 	 * Getter de adresse de Client
+	 * 
 	 * @return
 	 */
 	public Adresse getAdresse() {
 		return adresse;
 	}
 
-
-
 	/**
 	 * Setter de adresse de Client
+	 * 
 	 * @return
 	 */
 	public void setAdresse(Adresse adresse) {
 		this.adresse = adresse;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
