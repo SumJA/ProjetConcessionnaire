@@ -41,7 +41,7 @@ public class Client {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="idClient")
-	private int id;
+	private Long id;
 	
 	@Column(name="nomClient", length = 100)
 	private String nom;
@@ -49,9 +49,17 @@ public class Client {
 	@Column(name="prenomClient", length = 100)
 	private String prenom;
 	
+	/**
+	 * attribut numeroTelClient
+	 * le nom de l'attribut est le même que celui de la Bdd
+	 */
 	@Column(length = 75)
 	private String numeroTelClient;
 	
+	/**
+	 * attribut adresseMail
+	 * le nom de l'attribut est le même que celui de la Bdd
+	 */
 	@Column(length = 75)
 	private String adresseMail;
 	
@@ -77,7 +85,7 @@ public class Client {
 	 * Getter de id de Client
 	 * @return
 	 */
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
@@ -85,7 +93,7 @@ public class Client {
 	 * Setter de id de Client
 	 * @return
 	 */
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -126,7 +134,7 @@ public class Client {
 	 * @return
 	 */
 	public String getNumeroTelClient() {
-		return numeroTelClient;
+		return telephone;
 	}
 
 	/**
@@ -134,7 +142,7 @@ public class Client {
 	 * @return
 	 */
 	public void setNumeroTelClient(String numeroTelClient) {
-		this.numeroTelClient = numeroTelClient;
+		this.telephone = numeroTelClient;
 	}
 
 	/**
@@ -142,7 +150,7 @@ public class Client {
 	 * @return
 	 */
 	public String getAdresseMail() {
-		return adresseMail;
+		return email;
 	}
 
 	/**
@@ -150,7 +158,7 @@ public class Client {
 	 * @return
 	 */
 	public void setAdresseMail(String adresseMail) {
-		this.adresseMail = adresseMail;
+		this.email = adresseMail;
 	}
 
 

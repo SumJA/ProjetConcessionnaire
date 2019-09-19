@@ -57,6 +57,8 @@ public class ClientController {
 		return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
 	}
 	
+	
+	
 	@RequestMapping(value="/Clients", method = RequestMethod.POST)
 	ResponseEntity<Client> addClient(@RequestBody Client client)
 	{
@@ -67,7 +69,9 @@ public class ClientController {
 	
 	
 	
-	ResponseEntity<Client> updateClient(Client client)
+	
+	@RequestMapping(value="/Clients", method = RequestMethod.PUT)
+	ResponseEntity<Client> updateClient(@RequestBody Client client)
 	{
 		this.serviceClient.getDao().save(client);
 		return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);

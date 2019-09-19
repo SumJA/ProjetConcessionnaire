@@ -36,10 +36,17 @@ public class Status implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="idStatus")
-	private int id;
+	private Long id;
 	
 	@Column
 	private String nomStatus;
+	
+	
+	private Devis devis;
+	
+	private Commande commande;
+	
+	private LigneCommande ligneCommande;
 
 	
 	
@@ -53,14 +60,14 @@ public class Status implements Serializable{
 
 
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
 
 
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
