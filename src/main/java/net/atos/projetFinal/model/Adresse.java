@@ -1,5 +1,8 @@
 package net.atos.projetFinal.model;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,19 +19,30 @@ public class Adresse {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idadresse")
-	private int id;
+	@Column(name="idadresse")
+	private Long id;
 	
 	private int numero;
 	
 	@Column(length = 200)
-	private String libelleVoie;
+	private String libelle;
 	
 	@Column(length = 200)
-	private String complementAdresse;
+	private String complement;
 	
-	@Column(length = 45)
-	private String codePostal;
+	
+	private LocalDateTime dateCreation;
+	
+	
+	private LocalDateTime dateDerniereMiseAJour;
+	
+	/**
+	 * attribut codepostal
+	 * 45 caractères
+	 * correspond à codepostal dans la Bdd
+	 */
+	@Column(name = "codePostal",length = 45)
+	private String codepostal;
 	
 	@Column(length = 75)
 	private String ville;
@@ -53,11 +67,26 @@ public class Adresse {
 		this.client = client;
 	}
 
-	public int getId() {
+
+
+
+	/**
+	 * Getters id de Adresse
+	 * @return
+	 */
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+
+
+
+
+	/**
+	 * Setter id de Adresse
+	 * @param id
+	 */
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -70,19 +99,19 @@ public class Adresse {
 	}
 
 	public String getLibelleVoie() {
-		return libelleVoie;
+		return libelle;
 	}
 
 	public void setLibelleVoie(String libelleVoie) {
-		this.libelleVoie = libelleVoie;
+		this.libelle = libelleVoie;
 	}
 
 	public String getComplementAdresse() {
-		return complementAdresse;
+		return complement;
 	}
 
 	public void setComplementAdresse(String complementAdresse) {
-		this.complementAdresse = complementAdresse;
+		this.complement = complementAdresse;
 	}
 
 	public String getCodePostal() {
@@ -107,6 +136,38 @@ public class Adresse {
 
 	public void setClient(Client client) {
 		this.client = client;
+	}
+
+
+
+
+
+	public LocalDateTime getDateCreation() {
+		return dateCreation;
+	}
+
+
+
+
+
+	public void setDateCreation(LocalDateTime dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+
+
+
+
+	public LocalDateTime getDateDerniereMiseAJour() {
+		return dateDerniereMiseAJour;
+	}
+
+
+
+
+
+	public void setDateDerniereMiseAJour(LocalDateTime dateDerniereMiseAJour) {
+		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
 	}
 	
 	
