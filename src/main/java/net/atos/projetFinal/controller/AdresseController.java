@@ -38,7 +38,7 @@ public class AdresseController {
 	
 	@RequestMapping(value = "/Adresses/{idAdresse}")
 	@ResponseBody
-	Optional<Adresse> getAdresseById(@PathVariable final int idAdresse)
+	Optional<Adresse> getAdresseById(@PathVariable final Long idAdresse)
 	{
 		
 		
