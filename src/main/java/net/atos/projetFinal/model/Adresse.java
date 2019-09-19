@@ -16,6 +16,11 @@ import javax.persistence.Table;
 @Table(name = "adresse")
 public class Adresse implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idadresse")
