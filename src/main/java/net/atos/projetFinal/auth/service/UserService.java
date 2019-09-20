@@ -3,6 +3,8 @@
  */
 package net.atos.projetFinal.auth.service;
 
+import org.springframework.stereotype.Service;
+
 import net.atos.projetFinal.model.Employe;
 
 /**

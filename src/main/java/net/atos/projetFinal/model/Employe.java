@@ -1,18 +1,15 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.Instant;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -36,17 +33,17 @@ public class Employe implements Serializable {
 	@Column(name = "username", length = 100)
 	private String nom;
 
-	@Column(length = 255)
+	@Column(length = 100)
 	private String email;
 
-	@Column(length = 32)
+	@Column(length = 100)
 	private String password;
 
 	@Transient
 	private String passwordConfirm;
 
 	@Basic
-	private LocalDateTime createTime;
+	private Instant createTime;
 
 	@OneToOne
 	@JoinColumn(name = "Role_idRole")
@@ -55,7 +52,7 @@ public class Employe implements Serializable {
 	public Employe() {
 		super();
 		// Date de creation du profil par default : la date d'aujourd'hui
-		this.createTime = LocalDateTime.now();
+		this.createTime = Instant.now();
 	}
 
 	/**
@@ -117,14 +114,14 @@ public class Employe implements Serializable {
 	/**
 	 * @return the createTime
 	 */
-	public LocalDateTime getCreateTime() {
+	public Instant getCreateTime() {
 		return createTime;
 	}
 
 	/**
 	 * @param createTime the createTime to set
 	 */
-	public void setCreateTime(LocalDateTime createTime) {
+	public void setCreateTime(Instant createTime) {
 		this.createTime = createTime;
 	}
 

@@ -33,9 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            	.antMatchers("/ProjetConcessionnaire").authenticated() //Bloque accès à toute l'application
-            	.antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/registration").permitAll()
+            	.antMatchers("/admin/**").hasRole("admin")
+            	.antMatchers("/resources/**", "/inscription").permitAll()
+                .antMatchers("/inscription").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
