@@ -33,39 +33,42 @@ public class Status implements Serializable {
 	@Column(name = "idStatus")
 	private Long id;
 
-	/**
-	 * Nom du status identifé par la colone nomStatus
-	 */
-	@Column(name = "nomStatus", length = 100)
-	private String nom;
+	@Column(length = 100)
+	private String nomStatus;
 	
-	//TODO OneToMany des ligneCommande, Commande et devis
+	
 
 	/**
-	 * Constructeur par défaut
+	 * @return the id
 	 */
-	public Status() {
-		super();
-	}
-
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getNom() {
-		return nom;
+	/**
+	 * @return the nomStatus
+	 */
+	public String getNomStatus() {
+		return nomStatus;
 	}
 
-	public void setNom(String nomStatus) {
-		this.nom = nomStatus;
+	/**
+	 * @param nomStatus the nomStatus to set
+	 */
+	public void setNomStatus(String nomStatus) {
+		this.nomStatus = nomStatus;
 	}
 
 	@Override
 	public String toString() {
-		return "Status [id=" + id + ", nom=" + nom + "]";
+		return "Status [id=" + id + ", nomStatus=" + nomStatus + "]";
 	}
+
 }
