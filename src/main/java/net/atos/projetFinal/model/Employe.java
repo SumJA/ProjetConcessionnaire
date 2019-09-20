@@ -10,7 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -45,14 +50,53 @@ public class Employe implements Serializable {
 	@Basic
 	private Instant createTime;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "Role_idRole")
 	private Role role;
+
+
+	@OneToMany(mappedBy = "employe", fetch = FetchType.LAZY)
+	private List<Devis> devisList;
+
+	@OneToMany(mappedBy = "employe", fetch = FetchType.LAZY)
+	private List<Commande> commandes;
 
 	public Employe() {
 		super();
 		// Date de creation du profil par default : la date d'aujourd'hui
 		this.createTime = Instant.now();
+	}
+
+	/**
+	 * 
+	 * @return la liste des devis que l'employé a et est en train de géré
+	 */
+	public List<Devis> getDevisList() {
+		return devisList;
+	}
+
+	/**
+	 * 
+	 * @param devisList : la liste des devis que l'employé a et est en train de géré à setter
+	 */
+	public void setDevisList(List<Devis> devisList) {
+		this.devisList = devisList;
+	}
+
+	/**
+	 * 
+	 * @return la liste des commandes que l'employé a et est en train de géré
+	 */
+	public List<Commande> getCommandes() {
+		return commandes;
+	}
+
+	/**
+	 * 
+	 * @param commandes : la liste des commandes que l'employé a et est en train de géré à setter
+	 */
+	public void setCommandes(List<Commande> commandes) {
+		this.commandes = commandes;
 	}
 
 	/**
@@ -155,8 +199,8 @@ public class Employe implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Employe [id=" + id + ", nom=" + nom + ", email=" + email + ", password=" + password + ", createTime="
-				+ createTime + ", role=" + role + "]";
+		return "Employe [id=" + id + ", nom=" + nom + ", email=" + email + ", password=" + password
+				+ ", passwordConfirm=" + passwordConfirm + ", createTime=" + createTime + ", role=" + role
+				+ ", devisList=" + devisList + ", commandes=" + commandes + "]";
 	}
-
 }

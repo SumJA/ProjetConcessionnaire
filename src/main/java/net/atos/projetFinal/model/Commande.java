@@ -40,21 +40,21 @@ public class Commande implements Serializable{
 	 */
 	@ManyToOne
 	@JoinColumn(name = "employe_idemploye")
-	private Employe employeCde ;
+	private Employe employe ;
 	
 	/**
 	 * Status de la commande
 	 */
 	@ManyToOne
 	@JoinColumn(name = "statut_livraison")
-	private Status statusCde ;
+	private Status status ;
 	
 	/**
 	 * Client rattaché à la commande
 	 */
 	@ManyToOne
 	@JoinColumn(name = "client_idCLient")
-	private Client clientCde ;
+	private Client client ;
 	
 	/**
 	 * lignes de commande affectée à la commande
@@ -74,28 +74,28 @@ public class Commande implements Serializable{
 		this.id = id;
 	}
 
-	public Employe getEmployeCde() {
-		return employeCde;
+	public Employe getEmploye() {
+		return employe;
 	}
 
-	public void setEmployeCde(Employe employeCde) {
-		this.employeCde = employeCde;
+	public void setEmploye(Employe employeCde) {
+		this.employe = employeCde;
 	}
 
-	public Status getStatusCde() {
-		return statusCde;
+	public Status getStatus() {
+		return status;
 	}
 
-	public void setStatusCde(Status statusCde) {
-		this.statusCde = statusCde;
+	public void setStatus(Status statusCde) {
+		this.status = statusCde;
 	}
 
-	public Client getClientCde() {
-		return clientCde;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setClientCde(Client clientCde) {
-		this.clientCde = clientCde;
+	public void setClient(Client clientCde) {
+		this.client = clientCde;
 	}
 
 	public List<LigneCommande> getLignesCommande() {
@@ -108,7 +108,6 @@ public class Commande implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Commande [id=" + id + ", employeCde=" + employeCde + ", statusCde=" + statusCde + ", clientCde="
-				+ clientCde + ", lignesCommande=" + lignesCommande + "]";
+		return "Commande [id=" + id + ", statusCde=" + status + ", lignesCommande=" + lignesCommande + "]";
 	}
 }

@@ -4,15 +4,20 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
+
+import java.util.List;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -58,12 +63,49 @@ public class Client implements Serializable {
 	@OneToOne
 	@JoinColumn(name="adresse_idadresse")
 	private Adresse adresse;
+	
+
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	List<Commande> commades ;
+	
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	List<Devis> devis ;
 
 	public Client() {
 		super();
 	}
 
 	/**
+	 * 
+	 * @return Liste des commandes auxquelles le client est affecté
+	 */
+	public List<Commande> getCommades() {
+		return commades;
+	}
+
+	/**
+	 * 
+	 * @param commades : la liste des commandes auxquelles le cleint doit être affecté
+	 */
+	public void setCommades(List<Commande> commades) {
+		this.commades = commades;
+	}
+
+	/**
+	 * 
+	 * @return Liste des devis auxquelles le client est affecté
+	 */
+	public List<Devis> getDevis() {
+		return devis;
+	}
+
+	/**
+	 * 
+	 * @param commades : la liste des devis auxquelles le cleint doit être affecté
+	 */
+	public void setDevis(List<Devis> devis) {
+		this.devis = devis;
+
 	 * @return the dateCreation
 	 */
 	public LocalDateTime getDateCreation() {
@@ -89,6 +131,7 @@ public class Client implements Serializable {
 	 */
 	public void setDateDerniereMiseAJour(Instant dateDerniereMiseAJour) {
 		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
+
 	}
 
 	/**
@@ -178,8 +221,10 @@ public class Client implements Serializable {
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroTelClient=" + numeroTelClient
-				+ ", adresseMail=" + adresseMail + ", dateCreation=" + dateCreation + ", dateDerniereMiseAJour="
-				+ dateDerniereMiseAJour + ", adresse=" + adresse + "]";
+				+ ", adresseMail=" + adresseMail + ", adresse=" + adresse + ", commades=" + commades + ", devis="
+				+ devis + "]";
+
 	}
+
 
 }
