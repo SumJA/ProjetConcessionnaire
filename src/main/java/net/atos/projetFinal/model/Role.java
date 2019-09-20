@@ -25,6 +25,7 @@ public class Role implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idRole", updatable = false, nullable = false)
 	private Long id;
+	// TODO : OneToMany pour employe
 
 	@Column(name = "nomRole", length = 100)
 	private String nom;
