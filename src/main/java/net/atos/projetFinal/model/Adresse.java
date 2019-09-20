@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,13 +40,13 @@ public class Adresse implements Serializable {
 	/**
 	 * Libellé d'une rue
 	 */
-	@Column(length = 200)
+	@Column(name ="libelleVoie", length = 200)
 	private String libelle;
 
 	/**
 	 * Complément d'adresse
 	 */
-	@Column(length = 200)
+	@Column(name = "complementAdresse", length = 200)
 	private String complement;
 
 	@Column(name = "codePostal", length = 45)
@@ -67,22 +68,6 @@ public class Adresse implements Serializable {
 		super();
 		this.dateCreation = LocalDateTime.now();
 		this.dateDerniereMiseAJour = Instant.now();
-	}
-
-	public String getLibelle() {
-		return libelle;
-	}
-
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
-
-	public String getComplement() {
-		return complement;
-	}
-
-	public void setComplement(String complement) {
-		this.complement = complement;
 	}
 
 	/**
