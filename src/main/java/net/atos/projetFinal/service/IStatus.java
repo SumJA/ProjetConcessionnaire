@@ -8,9 +8,9 @@ public interface IStatus {
 	
 	List<Status> getAllStatuts();
 	
-	void creerStatus(Status status);
+	void creerStatus(final Status status);
 	
-	void supprimerStatusById(final int idStatus);
+	void supprimerStatusById(final Long idStatus);
 	
 	void modifierStatus(final List<Status> status);
 

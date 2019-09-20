@@ -37,26 +37,26 @@ public class ClientController {
 	}
 	
 	
-	@RequestMapping(value="/Clients/{idClient}", method=RequestMethod.GET)
-	@ResponseBody
-	Optional<Client> getClientById(@PathVariable final  int idClient)
-	{
-		
-		return this.serviceClient.getDao().findById(idClient);
-		
-		
-	}
+//	@RequestMapping(value="/Clients/{idClient}", method=RequestMethod.GET)
+//	@ResponseBody
+//	Optional<Client> getClientById(@PathVariable final  int idClient)
+//	{
+//		
+//		return this.serviceClient.getDao().findById(idClient);
+//		
+//		
+//	}
 	
-	@RequestMapping(value="/Clients/{idClient}", method = RequestMethod.GET)
-	@ResponseBody
-	ResponseEntity<Client> deleteClientById(@PathVariable final int clientId)
-	{
-		
-		
-		this.serviceClient.supprimerClientById(clientId);
-		return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
-	}
-	
+//	@RequestMapping(value="/Clients/{idClient}", method = RequestMethod.GET)
+//	@ResponseBody
+//	ResponseEntity<Client> deleteClientById(@PathVariable final int clientId)
+//	{
+//		
+//		
+//		this.serviceClient.supprimerClientById(clientId);
+//		return new ResponseEntity<Client>(HttpStatus.NO_CONTENT);
+//	}
+//	
 	
 	
 	@RequestMapping(value="/Clients", method = RequestMethod.POST)

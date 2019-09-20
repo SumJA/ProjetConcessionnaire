@@ -5,12 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import net.atos.projetFinal.model.Role;
 
-/**
- * DAO de l'entité Role
- * @author NVV
- *
- */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-
 }

@@ -21,17 +21,17 @@ public interface IEmployeService {
 	 * Créer un nouvel employé
 	 * @param employe : employé à créer
 	 */
-	void creerEmploye(Employe employe) ;
+	void creerEmploye(final Employe employe) ;
 	
 	/**
 	 * Supprimer un employé identifié par l'id
 	 * @param idEmploye : id de l'employé à supprimer
 	 */
-	void supprimerEmployeParId(Long idEmploye) ;
+	void supprimerEmployeParId(final Long idEmploye) ;
 	
 	/**
 	 * Modifier des employés dans la sauvegarde
 	 * @param employes : Liste des employé à modifier
 	 */
-	void modifierEmployes(List<Employe> employes) ;
+	void modifierEmployes(final List<Employe> employes) ;
 }

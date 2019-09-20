@@ -32,28 +32,28 @@ public class StatusController {
 		
 	}
 	
-	@RequestMapping(value = "/Status/{idStatus}", method = RequestMethod.GET)
-	@ResponseBody
-	Optional<Status> getStatusById(@PathVariable final int idStatus)
-	{
-		
-		
-		return this.serviceStatus.getDao().findById(idStatus);
-		
-		
-		
-	}
-	
-	
-	@RequestMapping(value = "/Status/{idStatus}", method = RequestMethod.DELETE)
-	@ResponseBody
-	ResponseEntity<Status> deleteStatusById(final int idStatus)
-	{
-		
-		this.serviceStatus.supprimerStatusById(idStatus);
-		return new ResponseEntity<Status>(HttpStatus.NO_CONTENT);
-		
-	}
+//	@RequestMapping(value = "/Status/{idStatus}", method = RequestMethod.GET)
+//	@ResponseBody
+//	Optional<Status> getStatusById(@PathVariable final int idStatus)
+//	{
+//		
+//		
+//		return this.serviceStatus.getDao().findById(idStatus);
+//		
+//		
+//		
+//	}
+//	
+//	
+//	@RequestMapping(value = "/Status/{idStatus}", method = RequestMethod.DELETE)
+//	@ResponseBody
+//	ResponseEntity<Status> deleteStatusById(final int idStatus)
+//	{
+//		
+//		this.serviceStatus.supprimerStatusById(idStatus);
+//		return new ResponseEntity<Status>(HttpStatus.NO_CONTENT);
+//		
+//	}
 	
 	
 	@RequestMapping(value = "/Status", method = RequestMethod.POST)

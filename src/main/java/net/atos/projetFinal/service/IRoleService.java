@@ -21,17 +21,17 @@ public interface IRoleService {
 	 * Créer un nouveau role
 	 * @param role : le role à créer
 	 */
-	void creerRole(Role role) ;
+	void creerRole(final Role role) ;
 	
 	/**
 	 * Supprimer un role en l'identifiant par son id
 	 * @param idRole : id du role à supprimer
 	 */
-	void supprimerRoleById(Long idRole) ;
+	void supprimerRoleById(final Long idRole) ;
 	
 	/**
 	 * Modifier une liste de role
 	 * @param roles : roles contenant les modifications
 	 */
-	void modifierRoles(List<Role> roles) ;
+	void modifierRoles(final List<Role> roles) ;
 }

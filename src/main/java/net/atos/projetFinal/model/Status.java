@@ -9,92 +9,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 /**
- * Entity Status
- * implement Serializable
- * attribut en private
- * getter/setter public
+ * Gère un status
+ * 
  * @author kamel
  *
  */
 @Entity
-@Table(name="status")
-public class Status implements Serializable{
-	
-	
-	/**
-	 *  serial version id
-	 */
+@Table(name = "status")
+public class Status implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id de status
-	 * correspond à "idStatus" dans la Bdd
-	 * généré avec "AUTO" (@GeneratedValue(strategy = GenerationType.AUTO)
-	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="idStatus")
+	@Column(name = "idStatus", updatable = false, nullable = false)
 	private Long id;
-	
-	@Column
+
+	@Column(length = 100)
 	private String nomStatus;
-	
-	
-	private Devis devis;
-	
-	private Commande commande;
-	
-	private LigneCommande ligneCommande;
 
-	
-	
-	/**
-	 * Constructeur par défaut
-	 */
-	public Status() {
-		super();
-	}
-
-
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-
-
-	public String getNomStatus() {
-		return nomStatus;
-	}
-
-
-
-
-	public void setNomStatus(String nomStatus) {
-		this.nomStatus = nomStatus;
-	}
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
