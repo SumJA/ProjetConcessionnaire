@@ -65,18 +65,34 @@ public class Client implements Serializable {
 		super();
 	}
 
+	/**
+	 * 
+	 * @return Liste des commandes auxquelles le client est affecté
+	 */
 	public List<Commande> getCommades() {
 		return commades;
 	}
 
+	/**
+	 * 
+	 * @param commades : la liste des commandes auxquelles le cleint doit être affecté
+	 */
 	public void setCommades(List<Commande> commades) {
 		this.commades = commades;
 	}
 
+	/**
+	 * 
+	 * @return Liste des devis auxquelles le client est affecté
+	 */
 	public List<Devis> getDevis() {
 		return devis;
 	}
 
+	/**
+	 * 
+	 * @param commades : la liste des devis auxquelles le cleint doit être affecté
+	 */
 	public void setDevis(List<Devis> devis) {
 		this.devis = devis;
 	}
