@@ -87,7 +87,7 @@ public class Devis implements Serializable{
 	/**
 	 * Les lignes du devis
 	 */
-	@OneToMany(mappedBy = "devisLigneProduit")
+	@OneToMany(mappedBy = "devis")
 	private List<LigneProduit> lignesProduit ;
 	
 	public Devis() {

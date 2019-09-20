@@ -50,8 +50,57 @@ public class LigneProduit implements Serializable{
 	 */
 	@ManyToOne
 	@JoinColumn(name = "devis_idDevis")
-	private Devis devisLigneProduit ;
+	private Devis devis ;
 	
-	//TODO ManyToOne Stock
+	/**
+	 * Stock présent dans un devis via ligneProduit
+	 */
+	@ManyToOne
+	@JoinColumn(name = "stock_idStock")
+	private Stock stock ;
 
+	
+	public LigneProduit() {
+		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getQte() {
+		return qte;
+	}
+
+	public void setQte(int qte) {
+		this.qte = qte;
+	}
+
+	public float getPrixLigne() {
+		return prixLigne;
+	}
+
+	public void setPrixLigne(float prixLigne) {
+		this.prixLigne = prixLigne;
+	}
+
+	public Devis getDevis() {
+		return devis;
+	}
+
+	public void setDevis(Devis devisLigneProduit) {
+		this.devis = devisLigneProduit;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stockLigneProduit) {
+		this.stock = stockLigneProduit;
+	}
 }

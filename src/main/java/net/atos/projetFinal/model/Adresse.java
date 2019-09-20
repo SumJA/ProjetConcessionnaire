@@ -69,6 +69,22 @@ public class Adresse implements Serializable {
 		this.dateDerniereMiseAJour = Instant.now();
 	}
 
+	public String getLibelle() {
+		return libelle;
+	}
+
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
+
+	public String getComplement() {
+		return complement;
+	}
+
+	public void setComplement(String complement) {
+		this.complement = complement;
+	}
+
 	/**
 	 * Getters id de Adresse
 	 * 
