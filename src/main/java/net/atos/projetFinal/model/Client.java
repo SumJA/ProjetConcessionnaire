@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -29,9 +29,15 @@ public class Client implements Serializable {
 	@Column(name = "idClient", updatable = false, nullable = false)
 	private Long id;
 
+	/**
+	 * Nom du client
+	 */
 	@Column(name = "nomClient", length = 100)
 	private String nom;
 
+	/**
+	 * Prénom du client
+	 */
 	@Column(name = "prenomClient", length = 100)
 	private String prenom;
 
@@ -42,7 +48,7 @@ public class Client implements Serializable {
 	private String adresseMail;
 
 	@OneToOne
-	@MapsId
+	@JoinColumn(name="adresse_idadresse")
 	private Adresse adresse;
 
 	public Client() {
