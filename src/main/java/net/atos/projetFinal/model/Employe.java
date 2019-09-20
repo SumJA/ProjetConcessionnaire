@@ -52,12 +52,12 @@ public class Employe implements Serializable {
 	@JoinColumn(name = "Role_idRole")
 	private Role role;
 
-	/*
+
 	@OneToMany(mappedBy = "employe", fetch = FetchType.LAZY)
 	private List<Devis> devisList;
 
 	@OneToMany(mappedBy = "employe", fetch = FetchType.LAZY)
-	private List<Commande> commandes;*/
+	private List<Commande> commandes;
 
 	public Employe() {
 		super();
@@ -65,37 +65,37 @@ public class Employe implements Serializable {
 		this.createTime = LocalDateTime.now();
 	}
 
-//	/**
-//	 * 
-//	 * @return la liste des devis que l'employé a et est en train de géré
-//	 */
-//	public List<Devis> getDevisList() {
-//		return devisList;
-//	}
-//
-//	/**
-//	 * 
-//	 * @param devisList : la liste des devis que l'employé a et est en train de géré à setter
-//	 */
-//	public void setDevisList(List<Devis> devisList) {
-//		this.devisList = devisList;
-//	}
-//
-//	/**
-//	 * 
-//	 * @return la liste des commandes que l'employé a et est en train de géré
-//	 */
-//	public List<Commande> getCommandes() {
-//		return commandes;
-//	}
-//
-//	/**
-//	 * 
-//	 * @param commandes : la liste des commandes que l'employé a et est en train de géré à setter
-//	 */
-//	public void setCommandes(List<Commande> commandes) {
-//		this.commandes = commandes;
-//	}
+	/**
+	 * 
+	 * @return la liste des devis que l'employé a et est en train de géré
+	 */
+	public List<Devis> getDevisList() {
+		return devisList;
+	}
+
+	/**
+	 * 
+	 * @param devisList : la liste des devis que l'employé a et est en train de géré à setter
+	 */
+	public void setDevisList(List<Devis> devisList) {
+		this.devisList = devisList;
+	}
+
+	/**
+	 * 
+	 * @return la liste des commandes que l'employé a et est en train de géré
+	 */
+	public List<Commande> getCommandes() {
+		return commandes;
+	}
+
+	/**
+	 * 
+	 * @param commandes : la liste des commandes que l'employé a et est en train de géré à setter
+	 */
+	public void setCommandes(List<Commande> commandes) {
+		this.commandes = commandes;
+	}
 
 	/**
 	 * @return the id

@@ -54,18 +54,17 @@ public class Client implements Serializable {
 	@JoinColumn(name="adresse_idadresse")
 	private Adresse adresse;
 	
-	/*
+
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
 	List<Commande> commades ;
 	
 	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
-	List<Devis> devis ;*/
+	List<Devis> devis ;
 
 	public Client() {
 		super();
 	}
 
-	/*
 	public List<Commande> getCommades() {
 		return commades;
 	}
@@ -80,7 +79,7 @@ public class Client implements Serializable {
 
 	public void setDevis(List<Devis> devis) {
 		this.devis = devis;
-	}*/
+	}
 
 	/**
 	 * @return the id
