@@ -4,13 +4,16 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -50,10 +53,34 @@ public class Client implements Serializable {
 	@OneToOne
 	@JoinColumn(name="adresse_idadresse")
 	private Adresse adresse;
+	
+	/*
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	List<Commande> commades ;
+	
+	@OneToMany(mappedBy = "client", fetch = FetchType.LAZY)
+	List<Devis> devis ;*/
 
 	public Client() {
 		super();
 	}
+
+	/*
+	public List<Commande> getCommades() {
+		return commades;
+	}
+
+	public void setCommades(List<Commande> commades) {
+		this.commades = commades;
+	}
+
+	public List<Devis> getDevis() {
+		return devis;
+	}
+
+	public void setDevis(List<Devis> devis) {
+		this.devis = devis;
+	}*/
 
 	/**
 	 * @return the id

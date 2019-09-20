@@ -65,14 +65,14 @@ public class Devis implements Serializable{
 	 */
 	@ManyToOne
 	@JoinColumn(name="client_idclient")
-	private Client clientDevis ;
+	private Client client ;
 	
 	/**
 	 * L'employé qui a géré le devis
 	 */
 	@ManyToOne
 	@JoinColumn(name="user_idUser")
-	private Employe employeDevis ;
+	private Employe employe ;
 	
 	/**
 	 * Le status du devis
@@ -131,20 +131,20 @@ public class Devis implements Serializable{
 		this.prixTtc = prixTtc;
 	}
 
-	public Client getClientDevis() {
-		return clientDevis;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setClientDevis(Client clientDevis) {
-		this.clientDevis = clientDevis;
+	public void setClient(Client clientDevis) {
+		this.client = clientDevis;
 	}
 
-	public Employe getEmployeDevis() {
-		return employeDevis;
+	public Employe getEmploye() {
+		return employe;
 	}
 
-	public void setEmployeDevis(Employe employeDevis) {
-		this.employeDevis = employeDevis;
+	public void setEmploye(Employe employeDevis) {
+		this.employe = employeDevis;
 	}
 
 	public Status getStatus() {
@@ -166,7 +166,7 @@ public class Devis implements Serializable{
 	@Override
 	public String toString() {
 		return "Devis [id=" + id + ", dateCreation=" + dateCreation + ", delaiDevis=" + delaiDevis + ", prixHt="
-				+ prixHt + ", prixTtc=" + prixTtc + ", clientDevis=" + clientDevis + ", employeDevis=" + employeDevis
+				+ prixHt + ", prixTtc=" + prixTtc + ", clientDevis=" + client + ", employeDevis=" + employe
 				+ ", status=" + status + ", lignesProduit=" + lignesProduit + "]";
 	}
 }
