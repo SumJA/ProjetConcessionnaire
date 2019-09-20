@@ -34,22 +34,16 @@ public class Adresse implements Serializable {
 	@Column(name = "idAdresse", updatable = false, nullable = false)
 	private Long id;
 
-	@Column
+	@Column(name = "numeroVoie")
 	private int numero;
 
-	/**
-	 * Libellé d'une rue
-	 */
-	@Column(name ="libelleVoie", length = 200)
+	@Column(name = "libelleVoie", length = 200)
 	private String libelle;
 
-	/**
-	 * Complément d'adresse
-	 */
 	@Column(name = "complementAdresse", length = 200)
 	private String complement;
 
-	@Column(name = "codePostal", length = 45)
+	@Column(length = 45)
 	private String codePostal;
 
 	@Column(length = 100)
@@ -58,7 +52,7 @@ public class Adresse implements Serializable {
 	@Column
 	private LocalDateTime dateCreation;
 
-	@Column
+	@Column(name = "dateMiseAJour")
 	private Instant dateDerniereMiseAJour;
 
 	@OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)

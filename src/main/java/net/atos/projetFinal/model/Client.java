@@ -4,7 +4,11 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
+
 import java.util.List;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,11 +48,17 @@ public class Client implements Serializable {
 	@Column(name = "prenomClient", length = 100)
 	private String prenom;
 
-	@Column(name = "telephone", length = 75)
+	@Column(length = 75)
 	private String numeroTelClient;
 
 	@Column(length = 100)
 	private String adresseMail;
+
+	@Column
+	private LocalDateTime dateCreation;
+
+	@Column(name = "dateMiseAJour")
+	private Instant dateDerniereMiseAJour;
 
 	@OneToOne
 	@JoinColumn(name="adresse_idadresse")
@@ -95,6 +105,33 @@ public class Client implements Serializable {
 	 */
 	public void setDevis(List<Devis> devis) {
 		this.devis = devis;
+
+	 * @return the dateCreation
+	 */
+	public LocalDateTime getDateCreation() {
+		return dateCreation;
+	}
+
+	/**
+	 * @param dateCreation the dateCreation to set
+	 */
+	public void setDateCreation(LocalDateTime dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	/**
+	 * @return the dateDerniereMiseAJour
+	 */
+	public Instant getDateDerniereMiseAJour() {
+		return dateDerniereMiseAJour;
+	}
+
+	/**
+	 * @param dateDerniereMiseAJour the dateDerniereMiseAJour to set
+	 */
+	public void setDateDerniereMiseAJour(Instant dateDerniereMiseAJour) {
+		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
+
 	}
 
 	/**
@@ -186,6 +223,7 @@ public class Client implements Serializable {
 		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroTelClient=" + numeroTelClient
 				+ ", adresseMail=" + adresseMail + ", adresse=" + adresse + ", commades=" + commades + ", devis="
 				+ devis + "]";
+
 	}
 
 

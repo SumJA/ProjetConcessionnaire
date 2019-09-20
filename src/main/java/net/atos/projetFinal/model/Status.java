@@ -36,12 +36,11 @@ public class Status implements Serializable {
 	@Column(name = "idStatus")
 	private Long id;
 
-	/**
-	 * Nom du status identifé par la colone nomStatus
-	 */
-	@Column(name = "nomStatus", length = 100)
-	private String nom;
+	@Column(length = 100)
+	private String nomStatus;
 	
+	
+
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	List<LigneCommande> lignesCommande ;
 	
@@ -51,8 +50,9 @@ public class Status implements Serializable {
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	List<Devis> devisList ;
 	
+
 	/**
-	 * Constructeur par défaut
+	 * @return the id
 	 */
 	public Status() {
 		super();
@@ -136,10 +136,11 @@ public class Status implements Serializable {
 	 */
 	public void setNom(String nomStatus) {
 		this.nom = nomStatus;
-	}
+  }
 
 	@Override
 	public String toString() {
-		return "Status [id=" + id + ", nom=" + nom + "]";
+		return "Status [id=" + id + ", nomStatus=" + nomStatus + "]";
 	}
+
 }
