@@ -1,12 +1,14 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,6 +31,9 @@ public class Role implements Serializable {
 
 	@Column(name = "nomRole", length = 100)
 	private String nom;
+	
+	@OneToMany(mappedBy = "role")
+	private List<Employe> employes ;
 
 	public Role() {
 		super();
