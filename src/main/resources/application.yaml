@@ -1,4 +1,9 @@
 spring:
+  messages:
+    basename: validation
+  mvc:
+    view:      prefix: /
+      suffix: .jsp
   jpa:
     database: MYSQL
     show-sql: true

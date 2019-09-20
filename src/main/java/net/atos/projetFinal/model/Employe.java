@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Description de la classe employe qui font partie du concessionnaire
@@ -37,6 +38,9 @@ public class Employe implements Serializable {
 
 	@Column(length = 32)
 	private String password;
+
+	@Transient
+	private String passwordConfirm;
 
 	@Basic
 	private LocalDateTime createTime;
@@ -133,6 +137,20 @@ public class Employe implements Serializable {
 	 */
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	/**
+	 * @return the passwordConfirm
+	 */
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	/**
+	 * @param passwordConfirm the passwordConfirm to set
+	 */
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 
 	@Override
