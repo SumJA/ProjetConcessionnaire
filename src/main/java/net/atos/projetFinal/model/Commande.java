@@ -105,4 +105,10 @@ public class Commande implements Serializable{
 	public void setLignesCommande(List<LigneCommande> lignesCommande) {
 		this.lignesCommande = lignesCommande;
 	}
+
+	@Override
+	public String toString() {
+		return "Commande [id=" + id + ", employeCde=" + employeCde + ", statusCde=" + statusCde + ", clientCde="
+				+ clientCde + ", lignesCommande=" + lignesCommande + "]";
+	}
 }

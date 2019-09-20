@@ -36,8 +36,10 @@ public class Status implements Serializable {
 	/**
 	 * Nom du status identifé par la colone nomStatus
 	 */
-	@Column(name = "nomStatus")
+	@Column(name = "nomStatus", length = 100)
 	private String nom;
+	
+	//TODO OneToMany des ligneCommande, Commande et devis
 
 	/**
 	 * Constructeur par défaut
@@ -62,4 +64,8 @@ public class Status implements Serializable {
 		this.nom = nomStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "Status [id=" + id + ", nom=" + nom + "]";
+	}
 }

@@ -31,14 +31,14 @@ public class Stock implements Serializable {
 	/**
 	 * Nom du produit
 	 */
-	@Column(name = "nomProduit")
+	@Column(name = "nomProduit", length = 100)
 	private String nom;
 
 	/**
 	 * Prix unitaire du produit
 	 */
 	@Column(name = "prixProduit")
-	private String prix;
+	private float prix;
 
 	/**
 	 * Quantité du produit disponible
@@ -92,11 +92,11 @@ public class Stock implements Serializable {
 		this.nom = nom;
 	}
 
-	public String getPrix() {
+	public float getPrix() {
 		return prix;
 	}
 
-	public void setPrix(String prix) {
+	public void setPrix(float prix) {
 		this.prix = prix;
 	}
 
@@ -122,6 +122,12 @@ public class Stock implements Serializable {
 
 	public void setLignesProduit(List<LigneProduit> lignesProduit) {
 		this.lignesProduit = lignesProduit;
+	}
+
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", nom=" + nom + ", prix=" + prix + ", qteDispo=" + qteDispo + ", qteReserve="
+				+ qteReserve + ", lignesProduit=" + lignesProduit + ", lignesCommande=" + lignesCommande + "]";
 	}
 
 }

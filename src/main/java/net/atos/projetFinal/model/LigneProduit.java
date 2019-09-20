@@ -34,7 +34,7 @@ public class LigneProduit implements Serializable{
 	private Long id ;
 	
 	/**
-	 * Quantité voulu pour la ligne donnée
+	 * Quantité voulue pour la ligne donnée
 	 */
 	@Column(name = "qteProduit")
 	private int qte ;
@@ -102,5 +102,10 @@ public class LigneProduit implements Serializable{
 
 	public void setStock(Stock stockLigneProduit) {
 		this.stock = stockLigneProduit;
+	}
+
+	@Override
+	public String toString() {
+		return "LigneProduit [id=" + id + ", qte=" + qte + ", prixLigne=" + prixLigne + "]";
 	}
 }

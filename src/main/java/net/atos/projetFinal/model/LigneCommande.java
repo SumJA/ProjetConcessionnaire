@@ -11,65 +11,62 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="ligneCommande")
+@Table(name = "ligneCommande")
 public class LigneCommande implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Id du devis qui pointe sur la clé primaire
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idLigneCommande")
-	private Long id ;
-	
+	private Long id;
+
 	/**
 	 * Délai de livraison exprimé en jour
 	 */
-	@Column(name = "delaisLivraison")
-	private int delaisLivraison ;
-	
+	@Column(name = "delaiLivraison")
+	private int delaiLivraison;
+
 	/**
 	 * Quantité nécessaire à la ligne de commande
 	 */
 	@Column(name = "qteCommande")
-	private int qteCommande ;
-	
+	private int qteCommande;
+
 	/**
 	 * La commande à laquelle est affectée la ligne
 	 */
 	@ManyToOne
 	@JoinColumn(name = "commande_idCommande")
-	private Commande commande ;
-	
+	private Commande commande;
+
 	/**
 	 * Stock présent dans un devis via ligneProduit
 	 */
 	@ManyToOne
 	@JoinColumn(name = "stock_idStock")
-	private Stock stock ;
-	
+	private Stock stock;
+
 	/**
 	 * Le status du devis
 	 */
 	@ManyToOne
 	@JoinColumn(name = "status_idstatus")
-	private Status status ;
+	private Status status;
 
 	/**
 	 * Date de création du devis
 	 */
-	@Temporal(TemporalType.DATE)
-	@Column(name="dateCreationLigneCommande")
-	private LocalDateTime dateCreation ;
+	@Column(name = "dateCreationLigneCommande")
+	private LocalDateTime dateCreation;
 
 	public LigneCommande() {
 		super();
@@ -83,12 +80,12 @@ public class LigneCommande implements Serializable {
 		this.id = id;
 	}
 
-	public int getDelaisLivraison() {
-		return delaisLivraison;
+	public int getDelaiLivraison() {
+		return delaiLivraison;
 	}
 
-	public void setDelaisLivraison(int delaisLivraison) {
-		this.delaisLivraison = delaisLivraison;
+	public void setDelaiLivraison(int delaisLivraison) {
+		this.delaiLivraison = delaisLivraison;
 	}
 
 	public int getQteCommande() {
@@ -122,8 +119,11 @@ public class LigneCommande implements Serializable {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "LigneCommande [id=" + id + ", delaiLivraison=" + delaiLivraison + ", qteCommande=" + qteCommande
+				 + ", status=" + status + ", dateCreation=" + dateCreation + "]";
+	}
 
 }

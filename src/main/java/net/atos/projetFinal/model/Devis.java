@@ -13,8 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  * Description de l'entité devis géré par le commercial
@@ -41,7 +39,6 @@ public class Devis implements Serializable{
 	/**
 	 * Date de création du devis
 	 */
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dateCreationDevis")
 	private LocalDateTime dateCreation ;
 	
@@ -164,5 +161,12 @@ public class Devis implements Serializable{
 
 	public void setLignesProduit(List<LigneProduit> lignesProduit) {
 		this.lignesProduit = lignesProduit;
+	}
+
+	@Override
+	public String toString() {
+		return "Devis [id=" + id + ", dateCreation=" + dateCreation + ", delaiDevis=" + delaiDevis + ", prixHt="
+				+ prixHt + ", prixTtc=" + prixTtc + ", clientDevis=" + clientDevis + ", employeDevis=" + employeDevis
+				+ ", status=" + status + ", lignesProduit=" + lignesProduit + "]";
 	}
 }
