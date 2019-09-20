@@ -105,7 +105,9 @@ public class Client implements Serializable {
 	 */
 	public void setDevis(List<Devis> devis) {
 		this.devis = devis;
-
+	}
+	
+		/**
 	 * @return the dateCreation
 	 */
 	public LocalDateTime getDateCreation() {

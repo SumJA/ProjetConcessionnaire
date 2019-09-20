@@ -36,8 +36,8 @@ public class Status implements Serializable {
 	@Column(name = "idStatus")
 	private Long id;
 
-	@Column(length = 100)
-	private String nomStatus;
+	@Column(name = "nomStatus", length = 100)
+	private String nom;
 	
 	
 
@@ -140,7 +140,7 @@ public class Status implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Status [id=" + id + ", nomStatus=" + nomStatus + "]";
+		return "Status [id=" + id + ", nom=" + nom + "]";
 	}
 
 }
