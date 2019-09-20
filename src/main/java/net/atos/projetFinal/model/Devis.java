@@ -166,7 +166,7 @@ public class Devis implements Serializable{
 	@Override
 	public String toString() {
 		return "Devis [id=" + id + ", dateCreation=" + dateCreation + ", delaiDevis=" + delaiDevis + ", prixHt="
-				+ prixHt + ", prixTtc=" + prixTtc + ", clientDevis=" + client + ", employeDevis=" + employe
-				+ ", status=" + status + ", lignesProduit=" + lignesProduit + "]";
+				+ prixHt + ", prixTtc=" + prixTtc + ", status=" + status + ", lignesProduit=" 
+				+ lignesProduit + "]";
 	}
 }

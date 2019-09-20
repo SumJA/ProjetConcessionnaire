@@ -108,7 +108,6 @@ public class Commande implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Commande [id=" + id + ", employeCde=" + employe + ", statusCde=" + status + ", clientCde="
-				+ client + ", lignesCommande=" + lignesCommande + "]";
+		return "Commande [id=" + id + ", statusCde=" + status + ", lignesCommande=" + lignesCommande + "]";
 	}
 }
