@@ -14,6 +14,5 @@ public interface IClientService {
 	
 	void modifierClients(final List<Client> clients);
 	
-
 }
 

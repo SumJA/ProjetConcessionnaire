@@ -18,13 +18,14 @@ import org.hibernate.annotations.ColumnDefault;
 
 /**
  * Description de l'entité devis géré par le commercial
+ * 
  * @author Administrateur
  *
  */
 @Entity
-@Table(name="devis")
-public class Devis implements Serializable{
-
+@Table(name = "devis")
+public class Devis implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Id

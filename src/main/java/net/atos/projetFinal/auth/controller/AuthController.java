@@ -73,4 +73,9 @@ public class AuthController {
 		return "login";
 	}
 
+	@GetMapping({ "/", "/home" })
+	public String welcome(Model model) {
+		return "index";
+	}
+
 }

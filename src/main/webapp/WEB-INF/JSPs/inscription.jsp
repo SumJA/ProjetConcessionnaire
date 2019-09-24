@@ -59,12 +59,12 @@
 			<spring:bind path="role">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
 					<form:select path="role" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-						<option selected>Selectionner un rôle</option>
+						<option selected>Selectionner un rï¿½le</option>
 						<c:forEach items="${role}" var="liste" begin="0" end="${role.size()}">
 							<form:option value="${liste.getIdRole()}">${liste.getNomRole()}</form:option>
 						</c:forEach>
 					</form:select>
-					<form:errors path="password"></form:errors>
+					<form:errors path="role"></form:errors>
 				</div>
 			</spring:bind>
 

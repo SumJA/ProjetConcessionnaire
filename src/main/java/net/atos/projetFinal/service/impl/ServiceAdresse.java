@@ -68,10 +68,6 @@ public class ServiceAdresse implements IAdresseService {
 	@Override
 	@Transactional
 	public void modifierAdresse(List<Adresse> adresses) {
-		
-		
-		
-
 	}
 
 }

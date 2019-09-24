@@ -3,6 +3,7 @@
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `voitures`;
+
 INSERT INTO `voitures`.`role` (`id_role`, `nom_role`) VALUES (1, 'admin');
 INSERT INTO `voitures`.`role` (`id_role`, `nom_role`) VALUES (2, 'magasinier');
 INSERT INTO `voitures`.`role` (`id_role`, `nom_role`) VALUES (3, 'commercial');
@@ -15,6 +16,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `voitures`;
+
 INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (1, 'commande livre');
 INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (2, 'commande recue');
 INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (3, 'commande annulee');

@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
+ * Désigne la commande gérer par le magasinier
  * 
  * @author JB
  * @author Kamal 
@@ -21,8 +22,8 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="commande")
-public class Commande implements Serializable{
+@Table(name = "commande")
+public class Commande implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
