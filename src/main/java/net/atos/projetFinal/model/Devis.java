@@ -48,11 +48,11 @@ public class Devis implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="client_idclient")
-	private Client clientDevis ;
+	private Client client ;
 	
 	@ManyToOne
 	@JoinColumn(name="user_idUser")
-	private Employe employeDevis ;
+	private Employe employe ;
 	
 	@ManyToOne
 	@JoinColumn(name = "status_devis")
@@ -116,6 +116,7 @@ public class Devis implements Serializable{
 	public void setPrixTTC(float prixTTC) {
 		this.prixTTC = prixTTC;
 	}
+
 
 	/**
 	 * @return the clientDevis
@@ -185,6 +186,7 @@ public class Devis implements Serializable{
 		return "Devis [idDevis=" + idDevis + ", dateCreationDevis=" + dateCreationDevis + ", delaiDevis=" + delaiDevis
 				+ ", prixHT=" + prixHT + ", prixTTC=" + prixTTC + ", clientDevis=" + clientDevis + ", employeDevis="
 				+ employeDevis + ", status=" + status + ", lignesProduit=" + lignesProduit + "]";
+
 	}
 	
 }

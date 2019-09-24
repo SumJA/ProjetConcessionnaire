@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,6 +58,14 @@ public class Employe implements Serializable {
 	
 	@OneToMany(mappedBy = "clientCommande")
 	List<Commande> commande ;
+
+
+
+	@OneToMany(mappedBy = "employe", fetch = FetchType.LAZY)
+	private List<Devis> devisList;
+
+	@OneToMany(mappedBy = "employe", fetch = FetchType.LAZY)
+	private List<Commande> commandes;
 
 	public Employe() {
 		super();
@@ -189,4 +198,5 @@ public class Employe implements Serializable {
 				+ ", listeDevis=" + listeDevis + ", commande=" + commande + "]";
 	}
 		
+
 }
