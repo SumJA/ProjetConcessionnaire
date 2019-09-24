@@ -88,8 +88,8 @@ public class Client implements Serializable {
 	public Client() {
 		super();
 		
-		dateCreation = LocalDateTime.now() ;
-		dateDerniereMiseAJour = Instant.now();
+		dateCreationClient = LocalDateTime.now() ;
+		dateDerniereMiseAJourClient = Instant.now();
 	}
 
 	/**
