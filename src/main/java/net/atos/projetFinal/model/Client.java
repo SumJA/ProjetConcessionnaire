@@ -85,6 +85,12 @@ public class Client implements Serializable {
 
 	@OneToMany(mappedBy = "clientDevis")
 	List<Devis> devis;
+	public Client() {
+		super();
+		
+		dateCreation = LocalDateTime.now() ;
+		dateDerniereMiseAJour = Instant.now();
+	}
 
 	/**
 	 * @return the nomClient
