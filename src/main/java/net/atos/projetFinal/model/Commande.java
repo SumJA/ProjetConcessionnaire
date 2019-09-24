@@ -14,101 +14,105 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Désigne la commande gérer par le magasinier
- * @author NVV
- *
+ * 
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
  */
 @Entity
 @Table(name="commande")
 public class Commande implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * id de Commande correspond à "idStatus" 
-	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idCommande")
-	private Long id ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = true)
+	private Long idCommande ;
 	
-	/**
-	 * Employe qui gère la commande
-	 */
 	@ManyToOne
-	@JoinColumn(name = "employe_idemploye")
-	private Employe employeCde ;
+	@JoinColumn(name = "employe_idEmploye")
+	private Employe employeCommande ;
 	
-	/**
-	 * Status de la commande
-	 */
 	@ManyToOne
 	@JoinColumn(name = "statut_livraison")
-	private Status statusCde ;
+	private Status statusCommande ;
 	
-	/**
-	 * Client rattaché à la commande
-	 */
 	@ManyToOne
 	@JoinColumn(name = "client_idCLient")
-	private Client clientCde ;
+	private Client clientCommande;
 	
-	/**
-	 * lignes de commande affectée à la commande
-	 */
 	@OneToMany(mappedBy = "commande")
-	List<LigneCommande> lignesCommande ;
+	List<LigneCommande> lignesCommande;
 
-	public Commande() {
-		super();
+	/**
+	 * @return the employeCommande
+	 */
+	public Employe getEmployeCommande() {
+		return employeCommande;
 	}
 
-	public Long getId() {
-		return id;
+	/**
+	 * @param employeCommande the employeCommande to set
+	 */
+	public void setEmployeCommande(Employe employeCommande) {
+		this.employeCommande = employeCommande;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	/**
+	 * @return the statusCommande
+	 */
+	public Status getStatusCommande() {
+		return statusCommande;
 	}
 
-	public Employe getEmployeCde() {
-		return employeCde;
+	/**
+	 * @param statusCommande the statusCommande to set
+	 */
+	public void setStatusCommande(Status statusCommande) {
+		this.statusCommande = statusCommande;
 	}
 
-	public void setEmployeCde(Employe employeCde) {
-		this.employeCde = employeCde;
+	/**
+	 * @return the clientCommande
+	 */
+	public Client getClientCommande() {
+		return clientCommande;
 	}
 
-	public Status getStatusCde() {
-		return statusCde;
+	/**
+	 * @param clientCommande the clientCommande to set
+	 */
+	public void setClientCommande(Client clientCommande) {
+		this.clientCommande = clientCommande;
 	}
 
-	public void setStatusCde(Status statusCde) {
-		this.statusCde = statusCde;
-	}
-
-	public Client getClientCde() {
-		return clientCde;
-	}
-
-	public void setClientCde(Client clientCde) {
-		this.clientCde = clientCde;
-	}
-
+	/**
+	 * @return the lignesCommande
+	 */
 	public List<LigneCommande> getLignesCommande() {
 		return lignesCommande;
 	}
 
+	/**
+	 * @param lignesCommande the lignesCommande to set
+	 */
 	public void setLignesCommande(List<LigneCommande> lignesCommande) {
 		this.lignesCommande = lignesCommande;
 	}
 
+	/**
+	 * @return the idCommande
+	 */
+	public Long getIdCommande() {
+		return idCommande;
+	}
+
 	@Override
 	public String toString() {
-		return "Commande [id=" + id + ", employeCde=" + employeCde + ", statusCde=" + statusCde + ", clientCde="
-				+ clientCde + ", lignesCommande=" + lignesCommande + "]";
+		return "Commande [idCommande=" + idCommande + ", employeCommande=" + employeCommande + ", statusCommande="
+				+ statusCommande + ", clientCommande=" + clientCommande + ", lignesCommande=" + lignesCommande + "]";
 	}
+
 }

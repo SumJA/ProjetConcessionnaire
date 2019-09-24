@@ -4,115 +4,92 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Adresse d'un client
- * @author Administrateur
- *
+ * 
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
  */
+
 @Entity
 @Table(name = "adresse")
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Id de l'adresse
-	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idAdresse", updatable = false, nullable = false)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false, nullable = false)
+	private Long idAdresse;
 
-	@Column(name = "numeroVoie")
-	private int numero;
+	@Column()
+	private int numeroVoie;
 
-	@Column(name = "libelleVoie", length = 200)
-	private String libelle;
+	@Column(length = 200, nullable = false)
+	private String libelleVoie;
 
-	@Column(name = "complementAdresse", length = 200)
-	private String complement;
+	@Column(length = 200)
+	private String complementAdresse;
 
-	@Column(length = 45)
+	@Column(length = 45, nullable = false)
 	private String codePostal;
 
-	@Column(length = 100)
+	@Column(length = 75, nullable = false)
 	private String ville;
 
-	@Column
-	private LocalDateTime dateCreation;
+	@OneToMany(mappedBy = "adresse")
+	List<Client> clients;
 
-	@Column(name = "dateMiseAJour")
-	private Instant dateDerniereMiseAJour;
-
-	@OneToOne(mappedBy = "adresse", cascade = CascadeType.ALL)
-	private Client client;
-
-	public Adresse() {
-		super();
-		this.dateCreation = LocalDateTime.now();
-		this.dateDerniereMiseAJour = Instant.now();
+	/**
+	 * @return the numeroVoie
+	 */
+	public int getNumeroVoie() {
+		return numeroVoie;
 	}
 
 	/**
-	 * Getters id de Adresse
-	 * 
-	 * @return
+	 * @param numeroVoie the numeroVoie to set
 	 */
-	public Long getId() {
-		return id;
+	public void setNumeroVoie(int numeroVoie) {
+		this.numeroVoie = numeroVoie;
 	}
 
 	/**
-	 * @return the numero
+	 * @return the libelleVoie
 	 */
-	public int getNumero() {
-		return numero;
+	public String getLibelleVoie() {
+		return libelleVoie;
 	}
 
 	/**
-	 * @param numero the numero to set
+	 * @param libelleVoie the libelleVoie to set
 	 */
-	public void setNumero(int numero) {
-		this.numero = numero;
+	public void setLibelleVoie(String libelleVoie) {
+		this.libelleVoie = libelleVoie;
 	}
 
 	/**
-	 * @return the libelle
+	 * @return the complementAdresse
 	 */
-	public String getLibelle() {
-		return libelle;
+	public String getComplementAdresse() {
+		return complementAdresse;
 	}
 
 	/**
-	 * @param libelle the libelle to set
+	 * @param complementAdresse the complementAdresse to set
 	 */
-	public void setLibelle(String libelle) {
-		this.libelle = libelle;
-	}
-
-	/**
-	 * @return the complement
-	 */
-	public String getComplement() {
-		return complement;
-	}
-
-	/**
-	 * @param complement the complement to set
-	 */
-	public void setComplement(String complement) {
-		this.complement = complement;
+	public void setComplementAdresse(String complementAdresse) {
+		this.complementAdresse = complementAdresse;
 	}
 
 	/**
@@ -144,59 +121,30 @@ public class Adresse implements Serializable {
 	}
 
 	/**
-	 * @return the dateCreation
+	 * @return the clients
 	 */
-	public LocalDateTime getDateCreation() {
-		return dateCreation;
+	public List<Client> getClients() {
+		return clients;
 	}
 
 	/**
-	 * @param dateCreation the dateCreation to set
+	 * @param clients the clients to set
 	 */
-	public void setDateCreation(LocalDateTime dateCreation) {
-		this.dateCreation = dateCreation;
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
 	}
 
 	/**
-	 * @return the dateDerniereMiseAJour
+	 * @return the idAdresse
 	 */
-	public Instant getDateDerniereMiseAJour() {
-		return dateDerniereMiseAJour;
-	}
-
-	/**
-	 * @param dateDerniereMiseAJour the dateDerniereMiseAJour to set
-	 */
-	public void setDateDerniereMiseAJour(Instant dateDerniereMiseAJour) {
-		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
-	}
-
-	/**
-	 * @return the client
-	 */
-	public Client getClient() {
-		return client;
-	}
-
-	/**
-	 * @param client the client to set
-	 */
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
+	public Long getIdAdresse() {
+		return idAdresse;
 	}
 
 	@Override
 	public String toString() {
-		return "Adresse [id=" + id + ", numero=" + numero + ", libelle=" + libelle + ", complement=" + complement
-				+ ", codePostal=" + codePostal + ", ville=" + ville + ", dateCreation=" + dateCreation
-				+ ", dateDerniereMiseAJour=" + dateDerniereMiseAJour + ", client=" + client + "]";
+		return "Adresse [idAdresse=" + idAdresse + ", numeroVoie=" + numeroVoie + ", libelleVoie=" + libelleVoie
+				+ ", complementAdresse=" + complementAdresse + ", codePostal=" + codePostal + ", ville=" + ville
+				+ ", clients=" + clients + "]";
 	}
-
 }

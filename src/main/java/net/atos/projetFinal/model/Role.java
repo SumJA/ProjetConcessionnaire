@@ -7,64 +7,71 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * Description des différents Role possible pour le employés Entity de la table
- * Role
  * 
- * @author NVV
- *
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
  */
+
 @Entity
 @Table(name = "role")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idRole", updatable = false, nullable = false)
-	private Long id;
-	// TODO : OneToMany pour employe
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false, nullable = false)
+	private Long idRole;
 
-	@Column(name = "nomRole", length = 100)
-	private String nom;
+	@Column(length = 100, unique = true)
+	private String nomRole;
+	
+	@OneToOne(mappedBy = "role")
+	private Employe employe;
 
-	public Role() {
-		super();
+	/**
+	 * @return the nomRole
+	 */
+	public String getNomRole() {
+		return nomRole;
 	}
 
 	/**
-	 * @return the id
+	 * @param nomRole the nomRole to set
 	 */
-	public Long getId() {
-		return id;
+	public void setNomRole(String nomRole) {
+		this.nomRole = nomRole;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @return the employe
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public Employe getEmploye() {
+		return employe;
 	}
 
 	/**
-	 * @return the nom
+	 * @param employe the employe to set
 	 */
-	public String getNom() {
-		return nom;
+	public void setEmploye(Employe employe) {
+		this.employe = employe;
 	}
 
 	/**
-	 * @param nom the nom to set
+	 * @return the idRole
 	 */
-	public void setNom(String nom) {
-		this.nom = nom;
+	public Long getIdRole() {
+		return idRole;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", nom=" + nom + "]";
+		return "Role [idRole=" + idRole + ", nomRole=" + nomRole + ", employe=" + employe + "]";
 	}
-
+	
 }

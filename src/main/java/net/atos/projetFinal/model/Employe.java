@@ -2,23 +2,26 @@ package net.atos.projetFinal.model;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
-import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * Description de la classe employe qui font partie du concessionnaire
  * 
- * @author NVV
- *
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
  */
 @Entity
 @Table(name = "employe")
@@ -26,49 +29,40 @@ public class Employe implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idEmploye", updatable = false, nullable = false)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false, nullable = false)
+	private Long idEmploye;
 
-	@Column(name = "username", length = 100)
+	@Column(length = 100, nullable = false)
 	private String nom;
 
 	@Column(length = 100)
 	private String email;
 
-	@Column(length = 100)
+	@Column(length = 100, nullable = false)
 	private String password;
 
 	@Transient
 	private String passwordConfirm;
 
-	@Basic
-	private Instant createTime;
-
-	@OneToOne
-	@JoinColumn(name = "Role_idRole")
-	private Role role;
+	@Column(nullable = false)
+	private Instant create_time;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Role_idRole", referencedColumnName = "idRole")
+    private Role role;
+    
+	@OneToMany(mappedBy = "employeDevis")
+	List<Devis> listeDevis ;
+	
+	@OneToMany(mappedBy = "clientCommande")
+	List<Commande> commande ;
 
 	public Employe() {
 		super();
-		// Date de creation du profil par default : la date d'aujourd'hui
-		this.createTime = Instant.now();
+		this.create_time = Instant.now();
 	}
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	
 	/**
 	 * @return the nom
 	 */
@@ -112,17 +106,31 @@ public class Employe implements Serializable {
 	}
 
 	/**
-	 * @return the createTime
+	 * @return the passwordConfirm
 	 */
-	public Instant getCreateTime() {
-		return createTime;
+	public String getPasswordConfirm() {
+		return passwordConfirm;
 	}
 
 	/**
-	 * @param createTime the createTime to set
+	 * @param passwordConfirm the passwordConfirm to set
 	 */
-	public void setCreateTime(Instant createTime) {
-		this.createTime = createTime;
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	/**
+	 * @return the create_time
+	 */
+	public Instant getCreate_time() {
+		return create_time;
+	}
+
+	/**
+	 * @param create_time the create_time to set
+	 */
+	public void setCreate_time(Instant create_time) {
+		this.create_time = create_time;
 	}
 
 	/**
@@ -140,23 +148,45 @@ public class Employe implements Serializable {
 	}
 
 	/**
-	 * @return the passwordConfirm
+	 * @return the listeDevis
 	 */
-	public String getPasswordConfirm() {
-		return passwordConfirm;
+	public List<Devis> getListeDevis() {
+		return listeDevis;
 	}
 
 	/**
-	 * @param passwordConfirm the passwordConfirm to set
+	 * @param listeDevis the listeDevis to set
 	 */
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
+	public void setListeDevis(List<Devis> listeDevis) {
+		this.listeDevis = listeDevis;
+	}
+
+	/**
+	 * @return the commandes
+	 */
+	public List<Commande> getCommande() {
+		return commande;
+	}
+
+	/**
+	 * @param commandes the commandes to set
+	 */
+	public void setCommande(List<Commande> commande) {
+		this.commande = commande;
+	}
+
+	/**
+	 * @return the idEmploye
+	 */
+	public Long getIdEmploye() {
+		return idEmploye;
 	}
 
 	@Override
 	public String toString() {
-		return "Employe [id=" + id + ", nom=" + nom + ", email=" + email + ", password=" + password + ", createTime="
-				+ createTime + ", role=" + role + "]";
+		return "Employe [idEmploye=" + idEmploye + ", nom=" + nom + ", email=" + email + ", password=" + password
+				+ ", passwordConfirm=" + passwordConfirm + ", create_time=" + create_time + ", role=" + role
+				+ ", listeDevis=" + listeDevis + ", commande=" + commande + "]";
 	}
-
+		
 }

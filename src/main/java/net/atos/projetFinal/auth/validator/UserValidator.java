@@ -1,7 +1,7 @@
 /**
  * Valideur qui implémente org.springframework.validation.Validator de Spring Validator
  * Pour la validation du formulaire d'inscription
- * Les codes d'erreurs "Size.userForm.username" sont définis dans le fichier validation.yaml
+ * Les codes d'erreurs "Size.userForm.nom" sont définis dans le fichier validation.yaml
  */
 package net.atos.projetFinal.auth.validator;
 
@@ -32,22 +32,22 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		Employe user = (Employe) target;
 		
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nom", "NotEmpty");
         if (user.getNom().length() < 6 || user.getNom().length() > 45) {
-            errors.rejectValue("username", "Size.userForm.username");
+            errors.rejectValue("nom", "Size.inscription.nom");
         }
         
         if (userService.findByUsername(user.getNom()) != null) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            errors.rejectValue("nom", "Duplicate.inscription.nom");
         }
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
         if (user.getPassword().length() < 8 || user.getPassword().length() > 32) {
-            errors.rejectValue("password", "Size.userForm.password");
+            errors.rejectValue("password", "Size.inscription.password");
         }
 
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
-            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+            errors.rejectValue("passwordConfirm", "Diff.inscription.passwordConfirm");
         }
 	}
 	

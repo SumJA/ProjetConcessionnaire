@@ -6,6 +6,7 @@ package net.atos.projetFinal.model;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,124 +14,82 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  * 
- * @author kamel
- *
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
  */
+
 @Entity
 @Table(name = "client")
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idClient", updatable = false, nullable = false)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false, nullable = false)
+	private Long idClient;
 
-	/**
-	 * Nom du client
-	 */
-	@Column(name = "nomClient", length = 100)
-	private String nom;
+	@Column(length = 100, nullable = false)
+	private String nomClient;
 
-	/**
-	 * Prénom du client
-	 */
-	@Column(name = "prenomClient", length = 100)
-	private String prenom;
+	@Column(length = 100, nullable = false)
+	private String prenomClient;
 
-	@Column(length = 75)
+	@Column(length = 75, unique = true)
 	private String numeroTelClient;
 
-	@Column(length = 100)
+	@Column(length = 100, nullable = false, unique = true)
 	private String adresseMail;
 
-	@Column
-	private LocalDateTime dateCreation;
+	@Column(nullable = false)
+	private LocalDateTime dateCreationClient;
 
-	@Column(name = "dateMiseAJour")
-	private Instant dateDerniereMiseAJour;
+	@Column(nullable = false)
+	private Instant dateDerniereMiseAJourClient;
 
-	@OneToOne
-	@JoinColumn(name="adresse_idadresse")
-	private Adresse adresse;
+	@ManyToOne
+	@JoinColumn(name = "adresse_idAdresse")
+	private Adresse adresse ;
+	
+	@OneToMany(mappedBy = "clientCommande")
+	List<Commande> commandes;
+	
+	@OneToMany(mappedBy = "clientDevis")
+	List<Devis> devis;
 
-	public Client() {
-		super();
+	/**
+	 * @return the nomClient
+	 */
+	public String getNomClient() {
+		return nomClient;
 	}
 
 	/**
-	 * @return the dateCreation
+	 * @param nomClient the nomClient to set
 	 */
-	public LocalDateTime getDateCreation() {
-		return dateCreation;
+	public void setNomClient(String nomClient) {
+		this.nomClient = nomClient;
 	}
 
 	/**
-	 * @param dateCreation the dateCreation to set
+	 * @return the prenomClient
 	 */
-	public void setDateCreation(LocalDateTime dateCreation) {
-		this.dateCreation = dateCreation;
+	public String getPrenomClient() {
+		return prenomClient;
 	}
 
 	/**
-	 * @return the dateDerniereMiseAJour
+	 * @param prenomClient the prenomClient to set
 	 */
-	public Instant getDateDerniereMiseAJour() {
-		return dateDerniereMiseAJour;
-	}
-
-	/**
-	 * @param dateDerniereMiseAJour the dateDerniereMiseAJour to set
-	 */
-	public void setDateDerniereMiseAJour(Instant dateDerniereMiseAJour) {
-		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the nom
-	 */
-	public String getNom() {
-		return nom;
-	}
-
-	/**
-	 * @param nom the nom to set
-	 */
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	/**
-	 * @return the prenom
-	 */
-	public String getPrenom() {
-		return prenom;
-	}
-
-	/**
-	 * @param prenom the prenom to set
-	 */
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setPrenomClient(String prenomClient) {
+		this.prenomClient = prenomClient;
 	}
 
 	/**
@@ -162,6 +121,34 @@ public class Client implements Serializable {
 	}
 
 	/**
+	 * @return the dateCreationClient
+	 */
+	public LocalDateTime getDateCreationClient() {
+		return dateCreationClient;
+	}
+
+	/**
+	 * @param dateCreationClient the dateCreationClient to set
+	 */
+	public void setDateCreationClient(LocalDateTime dateCreationClient) {
+		this.dateCreationClient = dateCreationClient;
+	}
+
+	/**
+	 * @return the dateDerniereMiseAJourClient
+	 */
+	public Instant getDateDerniereMiseAJourClient() {
+		return dateDerniereMiseAJourClient;
+	}
+
+	/**
+	 * @param dateDerniereMiseAJourClient the dateDerniereMiseAJourClient to set
+	 */
+	public void setDateDerniereMiseAJourClient(Instant dateDerniereMiseAJourClient) {
+		this.dateDerniereMiseAJourClient = dateDerniereMiseAJourClient;
+	}
+
+	/**
 	 * @return the adresse
 	 */
 	public Adresse getAdresse() {
@@ -175,11 +162,47 @@ public class Client implements Serializable {
 		this.adresse = adresse;
 	}
 
+	/**
+	 * @return the commandes
+	 */
+	public List<Commande> getCommandes() {
+		return commandes;
+	}
+
+	/**
+	 * @param commandes the commandes to set
+	 */
+	public void setCommandes(List<Commande> commandes) {
+		this.commandes = commandes;
+	}
+
+	/**
+	 * @return the devis
+	 */
+	public List<Devis> getDevis() {
+		return devis;
+	}
+
+	/**
+	 * @param devis the devis to set
+	 */
+	public void setDevis(List<Devis> devis) {
+		this.devis = devis;
+	}
+
+	/**
+	 * @return the idClient
+	 */
+	public Long getIdClient() {
+		return idClient;
+	}
+
 	@Override
 	public String toString() {
-		return "Client [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", numeroTelClient=" + numeroTelClient
-				+ ", adresseMail=" + adresseMail + ", dateCreation=" + dateCreation + ", dateDerniereMiseAJour="
-				+ dateDerniereMiseAJour + ", adresse=" + adresse + "]";
+		return "Client [idClient=" + idClient + ", nomClient=" + nomClient + ", prenomClient=" + prenomClient
+				+ ", numeroTelClient=" + numeroTelClient + ", adresseMail=" + adresseMail + ", dateCreationClient="
+				+ dateCreationClient + ", dateDerniereMiseAJourClient=" + dateDerniereMiseAJourClient + ", adresse="
+				+ adresse + ", commandes=" + commandes + ", devis=" + devis + "]";
 	}
 
 }
