@@ -89,7 +89,7 @@ public class ServiceAdresse implements IAdresseService {
 	 */
 	@Override
 	@Transactional
-	public void supprimerAdresseParId(@NotNull final Long idAdresse) {
+	public void supprimerAdresseById(@NotNull final Long idAdresse) {
 		if (idAdresse != null) {
 			adresseRepository.deleteById(idAdresse);
 		} else {
@@ -102,6 +102,8 @@ public class ServiceAdresse implements IAdresseService {
 	 * Met à jour une adresse
 	 * 
 	 * @param adresse à mettre à jour, ne doit pas etre un {@literal null}
+	 * @return 
+	 * @throws NoSuchFieldException 
 	 * @throws IllegalArgumentException si l'identidiant d'une {@code adresse} est
 	 *                                  {@literal null} ou si L'adresse donné est en
 	 *                                  paramètre est {@literal null}
@@ -109,20 +111,36 @@ public class ServiceAdresse implements IAdresseService {
 	 */
 	@Override
 	@Transactional
-	public void modifierAdresse(@NotNull final Adresse adresse) {
-		// TODO: Voir si déplacer cette méthode dans une methode nommé
-		// modifierAdresseClient dans ServiceClient
-		// TODO: 1) Vérifier si un client est associé à l'adresse
-		// TODO: 2) Si aucun client n'est associé à l'adresse, modifier l'adresse
-		// TODO: 3) Si un autre client est associé à l'adresse, ne pas faire un update
-		// mais créer une nouvelle adresse
+	public Adresse modifierAdresse(@NotNull final Adresse adresse) throws NoSuchFieldException {
 		Optional<Adresse> adresseToUpdate = adresseRepository.findById(adresse.getIdAdresse());
-		adresseToUpdate.get().setClients(adresse.getClients());
-		adresseToUpdate.get().setCodePostal(adresse.getCodePostal());
-		adresseToUpdate.get().setComplementAdresse(adresse.getComplementAdresse());
-		adresseToUpdate.get().setLibelleVoie(adresse.getLibelleVoie());
-		adresseToUpdate.get().setNumeroVoie(adresse.getNumeroVoie());
-		adresseToUpdate.get().setVille(adresse.getVille());
-		adresseRepository.saveAndFlush(adresseToUpdate.get());
+		
+		if(!adresseToUpdate.isPresent()) {
+			throw new NoSuchFieldException("Id pour l'adresse inexistant") ;
+		}
+		
+		List<Adresse> adresseVerificationDoublon = adresseRepository.findAdresseByFields(adresse.getNumeroVoie(),
+				adresse.getLibelleVoie(), adresse.getComplementAdresse(), adresse.getCodePostal(), adresse.getVille());
+		
+		
+		if (adresseVerificationDoublon.isEmpty()) {
+			/* If the adresse does not exist then modify */
+			adresseToUpdate.get().setClients(adresse.getClients());
+			adresseToUpdate.get().setCodePostal(adresse.getCodePostal());
+			adresseToUpdate.get().setComplementAdresse(adresse.getComplementAdresse());
+			adresseToUpdate.get().setLibelleVoie(adresse.getLibelleVoie());
+			adresseToUpdate.get().setNumeroVoie(adresse.getNumeroVoie());
+			adresseToUpdate.get().setVille(adresse.getVille());
+			
+			return(adresseRepository.saveAndFlush(adresseToUpdate.get()));
+		} else {
+			
+			if(adresseToUpdate.get().getClients().size() <= 1) {
+				/* if the adresse has only one client then remove from the database */
+				adresseToUpdate.get().getClients().clear();
+				supprimerAdresseById(adresseToUpdate.get().getIdAdresse()) ;
+			}
+			/* If the adresse exists then return the existed adresse */
+			return adresseVerificationDoublon.get(0) ;
+		}
 	}
 }

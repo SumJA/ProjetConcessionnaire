@@ -36,6 +36,11 @@ public class ClientController {
 	@Autowired
 	private IAdresseService serviceAdresse;
 
+	/**
+	 * Method pour afficher touts les client
+	 * @param pModel model envoyé à la JSP
+	 * @return le nom de la JSP
+	 */
 	@RequestMapping(value = "/admin/listeClients", method = RequestMethod.GET)
 	public String afficher(final ModelMap pModel) {
 		List<Client> clients = serviceClient.getAllClients();
@@ -65,6 +70,13 @@ public class ClientController {
 		return "listeClients";
 	}
 
+	/**
+	 * Methode qui permet d'intialiser la fenêtre de modification des clients
+	 * @param pModification formulaire indiquant les élément selectionné avec checkBox
+	 * @param pBindingResult
+	 * @param pModel model
+	 * @return Va à la jsp d'affichage si aucune selection et va à la jsp de modif sinon
+	 */
 	@RequestMapping(value = "/admin/listeClients/gotoupdateclient", method = RequestMethod.POST)
 	public String allerAModification(
 			@Valid @ModelAttribute(value = "modifFormClient") final ModificationFormClient pModification,
@@ -105,6 +117,13 @@ public class ClientController {
 
 	}
 
+	/**
+	 * Méthode enclencher lorsque l'utilisateur lance une modification de différents clients
+	 * @param pModification contient toutes les modif que l'utilisateur a fait
+	 * @param pBindingResult
+	 * @param pModel
+	 * @return à la jsp d'affichage des clients
+	 */
 	@RequestMapping(value = "/admin/listeClients/updateclient", method = RequestMethod.POST)
 	public String modifier(@Valid @ModelAttribute(value = "modifFormClient") final ModificationFormClient pModification,
 			final BindingResult pBindingResult, final ModelMap pModel) {
@@ -132,6 +151,10 @@ public class ClientController {
 		return afficher(pModel);
 	}
 
+	/**
+	 * !!!!! FOR TEST ONLY !!!!!
+	 * Initialise la base de donnée avec des valeur par défaut
+	 */
 	void initialValues() {
 		Client client;
 		Adresse adresse = new Adresse();

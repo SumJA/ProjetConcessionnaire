@@ -38,6 +38,8 @@ import net.atos.projetFinal.model.Adresse;
  * @author Sumaira JAVAID
  * 
  */
+
+
 @Repository
 public interface AdresseRepository extends JpaRepository<Adresse, Long> {
 
@@ -56,3 +58,4 @@ public interface AdresseRepository extends JpaRepository<Adresse, Long> {
 	@Query("SELECT a FROM Adresse a WHERE a.numeroVoie = ?1 AND a.libelleVoie = ?2 AND a.complementAdresse = ?3 AND a.codePostal = ?4 AND a.ville = ?5")
 	List<Adresse> findAdresseByFields(int numero, String libelle, String complement, String codePostal, String ville);
 }
+

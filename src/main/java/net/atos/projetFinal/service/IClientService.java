@@ -43,7 +43,7 @@ public interface IClientService {
 	 * 
 	 * @return la liste de tous les clients.
 	 */
-	List<Client> trouverTousLesClients();
+	List<Client> getAllClients();
 	
 	/**
 	 * Retourne le client correspondant à l'identifiant donné en paramètre
@@ -64,20 +64,22 @@ public interface IClientService {
 	List<Client> trouverClientParNom(final String Nom, final String prenom);
 	
 	/**
-	 * Créer un nouveau client
-	 * 
-	 * @param client à créer
+	 * Create a new client in the database
+	 * @param client : the client that has to be created
+	 * @return the client that has just been created
 	 */
-	void creerClient(final Client client);
+	Client creerClient(final Client client);
 	
-	/**
-	 * Supprime un client
-	 * 
-	 * @param idClient identifiant du client à supprimer
-	 * @throws IllegalArgumentException dans le cas où {@code idClient} donné est
-	 *                                  {@literal null}
-	 */
-	void supprimerClientParId(final Long idClient);
+//	/**
+//	 * Supprime un client
+//	 * 
+//	 * @param idClient identifiant du client à supprimer
+//	 * @throws IllegalArgumentException dans le cas où {@code idClient} donné est
+//	 *                                  {@literal null}
+//	 */
+//	void supprimerClientById(final Long idClient);
+
+	
 	
 	/**
 	 * Met à jour les informations d'un ensemble de clients
@@ -87,7 +89,7 @@ public interface IClientService {
 	 *                                  {@literal null}
 	 * @throws NoSuchElementException   - si un client n'existe pas en base
 	 */
-	void modifierClients(final List<Client> clients) throws NoSuchElementException;
+	void modifierClients(final List<Client> clients);
 	
 	/**
 	 * Met à jour les information d'un client
@@ -99,5 +101,16 @@ public interface IClientService {
 	 */
 	void modifierClient(final Client client);
 	
+	
+	
+	/**
+	 * Modify the adresse of the client in the database
+	 * @param client : client that contains the new value of the adresse
+	 * @return the new client values (with adresse updated)
+	 * @NB if the adresse attribute of the Client has an other client that the parameter client
+	 * the method create a new adresse
+	 */
+	Client modifierAdresseClient(Client client) ;
+
 }
 

@@ -25,13 +25,13 @@ package net.atos.projetFinal.service.impl;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
 import net.atos.projetFinal.repo.ClientRepository;
 import net.atos.projetFinal.service.IClientService;
@@ -39,15 +39,18 @@ import net.atos.projetFinal.service.IClientService;
 /**
  * Implémentation de {@link IClientService}
  * 
- * @author Kamel TRABELSI
- * @author Sumaira JAVAID
- * 
+ * @author kamel
+ * @author Nils VO-VAN
+ *
  */
 @Service
 public class ServiceClient implements IClientService {
 
 	@Autowired
-	private ClientRepository clientReposiroty;
+	private ClientRepository dao;
+	
+	@Autowired
+	private ServiceAdresse serviceAdresse ;
 
 	/**
 	 * Retourne la liste de tous les clients.
@@ -56,20 +59,18 @@ public class ServiceClient implements IClientService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Client> trouverTousLesClients() {
-		return clientReposiroty.findAll();
+	public List<Client> getAllClients() {
+		return dao.findAll();
 	}
 
 	/**
-	 * Retourne le client correspondant à l'identifiant donné en paramètre
-	 * 
-	 * @param id du client à retrouver
-	 * @return un client
+	 * Get all the client saved in the database
+	 * @return all the clients saved in database
 	 */
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<Client> trouverClientParId(final Long id) {
-		return clientReposiroty.findById(id);
+		return dao.findById(id);
 	}
 
 	/**
@@ -83,74 +84,115 @@ public class ServiceClient implements IClientService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Client> trouverClientParNom(final String nom, final String prenom) {
-		return clientReposiroty.findClientsByName(nom, prenom);
+		return dao.findClientsByName(nom, prenom);
 	}
 
 	/**
-	 * Créer un nouveau client
-	 * 
-	 * @param client à créer
+	 * Create a new client in the database
+	 * @param client : the client that has to be created
+	 * @return the client that has just been created
 	 */
 	@Override
 	@Transactional
-	public void creerClient(final Client client) {
-		clientReposiroty.saveAndFlush(client);
+	public Client creerClient(Client client) {
+
+		return(dao.save(client));
 	}
 
-	/**
-	 * Supprime un client
-	 * 
-	 * @param idClient identifiant du client à supprimer
-	 * @throws IllegalArgumentException dans le cas où {@code idClient} donné est
-	 *                                  {@literal null}
-	 */
-	@Override
-	@Transactional
-	public void supprimerClientParId(final Long idClient) {
-		clientReposiroty.deleteById(idClient);
-	}
 
 	/**
-	 * Met à jour les informations d'un ensemble de clients
-	 * 
-	 * @param clients la liste des clients à mettre à jour
-	 * @throws IllegalArgumentException si l'identidiant d'un {@code clients} est
-	 *                                  {@literal null}
-	 * @throws NoSuchElementException   - si un client n'existe pas en base
+	 * Modify in the database the clients in the list 
+	 * @param clients the clients with the modified attribute values
 	 */
 	@Override
 	@Transactional
-	public void modifierClients(final List<Client> clients) {
+	public void modifierClients(List<Client> clients) {
+
 		for (Client client : clients) {
-			Optional<Client> clientToUpdate = clientReposiroty.findById(client.getIdClient());
-			clientToUpdate.get().setNomClient(client.getNomClient());
-			clientToUpdate.get().setPrenomClient(client.getPrenomClient());
-			clientToUpdate.get().setNumeroTelClient(client.getNumeroTelClient());
-			clientToUpdate.get().setAdresseMail(client.getAdresseMail());
-			clientToUpdate.get().setAdresse(client.getAdresse());
-			clientReposiroty.save(clientToUpdate.get());
+			modifierClient(client);
 		}
-		clientReposiroty.flush();
 	}
 
 	/**
-	 * Met à jour les information d'un client
-	 * 
-	 * @param client à mettre à jour
-	 * @throws IllegalArgumentException si l'identidiant d'un {@code clients} est
-	 *                                  {@literal null}
-	 * @throws NoSuchElementException   - si un client n'existe pas en base
+	 * Modify in the database the client
+	 * @param client the client with the modified attribute values
 	 */
 	@Override
 	@Transactional
-	public void modifierClient(final Client client) {
-		Optional<Client> clientToUpdate = clientReposiroty.findById(client.getIdClient());
-		clientToUpdate.get().setNomClient(client.getNomClient());
-		clientToUpdate.get().setPrenomClient(client.getPrenomClient());
-		clientToUpdate.get().setNumeroTelClient(client.getNumeroTelClient());
-		clientToUpdate.get().setAdresseMail(client.getAdresseMail());
-		clientToUpdate.get().setDateDerniereMiseAJourClient(Instant.now());
-		clientToUpdate.get().setAdresse(client.getAdresse());
-		clientReposiroty.saveAndFlush(clientToUpdate.get());
+	public void modifierClient(Client client) {
+		Client clientToUpdate ;
+		
+		/* Is not null (mandatory) */
+		clientToUpdate = dao.findById(client.getIdClient()).get() ;
+		
+		/* If the adresse has changed then erase or create adresse */
+		if(!clientToUpdate.getAdresse().equals(client.getAdresse()))
+		{	
+
+			client = modifierAdresseClient(client) ;
+		}
+
+		clientToUpdate.setAdresse(client.getAdresse());
+		clientToUpdate.setAdresseMail(client.getAdresseMail());
+		clientToUpdate.setDateCreationClient(client.getDateCreationClient()) ;
+		clientToUpdate.setDateDerniereMiseAJourClient(Instant.now());
+		clientToUpdate.setNomClient(client.getNomClient());
+		clientToUpdate.setNumeroTelClient(client.getNumeroTelClient());
+		clientToUpdate.setPrenomClient(client.getPrenomClient());
+		
+		dao.save(clientToUpdate) ;
 	}
+
+	/**
+	 * Modify the adresse of the client in the database
+	 * @param client : client that contains the new value of the adresse
+	 * @return the new client values (adresse updated)
+	 * @NB if the adresse attribute of the client has an other client that the parameter client
+	 * the method create a new adresse
+	 */
+	@Override
+	@Transactional
+	public Client modifierAdresseClient(Client client) {
+		Client originalClient ;
+		Adresse adresse ;
+
+		adresse = client.getAdresse() ;
+		
+		/* Is not null (mandatory) */
+		originalClient = dao.findById(client.getIdClient()).get() ;
+		
+		if(originalClient.getAdresse().getClients().size()>1)
+		{
+			/* If more than one client depends on same adresse then create a new adresse */
+			
+			Adresse newAdresse = new Adresse();
+			
+			newAdresse.setCodePostal(adresse.getCodePostal());
+			newAdresse.setComplementAdresse(adresse.getComplementAdresse());
+			newAdresse.setLibelleVoie(adresse.getLibelleVoie());
+			newAdresse.setNumeroVoie(adresse.getNumeroVoie());
+			newAdresse.setVille(adresse.getVille());
+			/* Pas d'id car généré automatiquement par le service */
+			
+			newAdresse = serviceAdresse.creerAdresse(newAdresse) ;
+			
+			client.setAdresse(newAdresse);
+		}
+		else
+		{
+			/* If less than one client then update the adresse */
+			try {
+				client.setAdresse(serviceAdresse.modifierAdresse(client.getAdresse())) ;
+			} catch (NoSuchFieldException e) {
+				
+				System.err.println(e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		
+		return client ;
+		
+	}
+	
+
 }

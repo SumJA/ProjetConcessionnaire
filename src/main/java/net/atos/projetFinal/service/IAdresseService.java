@@ -1,18 +1,31 @@
 /**
  * MIT License
+<<<<<<< HEAD
 
 Copyright (c) [2019] [Sumaira JAVAID, Nils VO-VAN, Kamel TRABELSI, Jerome BRUNA]
 
+=======
+​
+Copyright (c) [2019] [Sumaira JAVAID, Nils VO-VAN, Kamel TRABELSI, Jerome BRUNA]
+​
+>>>>>>> MAJ service adresse pour répondre au différent cas lors de ala modif + add comments
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
+<<<<<<< HEAD
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
+=======
+​
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+​
+>>>>>>> MAJ service adresse pour répondre au différent cas lors de ala modif + add comments
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,8 +36,6 @@ SOFTWARE.
  */
 package net.atos.projetFinal.service;
 
-import java.util.NoSuchElementException;
-
 import javax.validation.constraints.NotNull;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -34,7 +45,8 @@ import net.atos.projetFinal.model.Adresse;
 /**
  * Service gérant l'adresse des clients du concessionnaire
  * 
- * @author Nils Vovan
+ * 
+ * @author Nils 
  * @author Sumaira JAVAID
  *
  */
@@ -61,17 +73,19 @@ public interface IAdresseService {
 	 * @throws NullPointerException     si l'id de l'adresse donné en paramètre est
 	 *                                  null
 	 */
-	void supprimerAdresseParId(@NotNull final Long idAdresse);
+	void supprimerAdresseById(@NotNull final Long idAdresse);
 
 	/**
-	 * FIXME : voir Implémentation !! Met à jour une adresse
+	 * Met à jour une adresse. Si l'adresse existe déjà alors retourne l'adresse
+	 * déjà sauvegardée
 	 * 
 	 * @param adresse à mettre à jour, ne doit pas etre un {@literal null}
+	 * @return adresse that has been saved in (or retrieved from) the data base
+	 * @throws NoSuchFieldException     si l'adresse avec id donné n'existe pas en
+	 *                                  base
 	 * @throws IllegalArgumentException si l'identidiant d'une {@code adresse} est
-	 *                                  {@literal null} ou si L'adresse donné est en
-	 *                                  paramètre est {@literal null}
-	 * @throws NoSuchElementException   - si l'adresse n'existe pas en base
+	 *                                  {@literal null}
 	 */
-	void modifierAdresse(@NotNull final Adresse adresse);
+	Adresse modifierAdresse(@NotNull final Adresse adresse) throws NoSuchFieldException;
 
 }
