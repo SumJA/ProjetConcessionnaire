@@ -50,6 +50,4 @@ public class UserValidator implements Validator {
             errors.rejectValue("passwordConfirm", "Diff.inscription.passwordConfirm");
         }
 	}
-	
-
 }

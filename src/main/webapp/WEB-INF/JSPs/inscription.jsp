@@ -19,7 +19,8 @@
 <body>
 
 	<div class="container">
-		<form:form method="POST" modelAttribute="inscription" class="form-signin">
+		<form:form method="POST" modelAttribute="inscription"
+			class="form-signin">
 			<h2 class="form-signin-heading">Create your account</h2>
 
 			<spring:bind path="nom">
@@ -48,20 +49,21 @@
 
 			<spring:bind path="passwordConfirm">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<form:input type="password" path="passwordConfirm" class="form-control"
-						placeholder="Confirmer Password" autofocus="true"></form:input>
+					<form:input type="password" path="passwordConfirm"
+						class="form-control" placeholder="Confirmer Password"
+						autofocus="true"></form:input>
 					<form:errors path="passwordConfirm"></form:errors>
 				</div>
 			</spring:bind>
 
 			<spring:bind path="role">
 				<div class="form-group ${status.error ? 'has-error' : ''}">
-					<select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+					<form:select path="role" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
 						<option selected>Selectionner un rôle</option>
-						<option value="admin">Administrateur</option>
-						<option value="magasinier">Magasinier</option>
-						<option value="commercial">Commercial</option>
-					</select>
+						<c:forEach items="${role}" var="liste" begin="0" end="${role.size()}">
+							<form:option value="${liste.getIdRole()}">${liste.getNomRole()}</form:option>
+						</c:forEach>
+					</form:select>
 					<form:errors path="password"></form:errors>
 				</div>
 			</spring:bind>

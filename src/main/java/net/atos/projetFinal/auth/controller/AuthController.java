@@ -15,6 +15,7 @@ import net.atos.projetFinal.auth.service.SecurityService;
 import net.atos.projetFinal.auth.service.UserService;
 import net.atos.projetFinal.auth.validator.UserValidator;
 import net.atos.projetFinal.model.Employe;
+import net.atos.projetFinal.repo.RoleRepository;
 
 /**
  * @author Sumaira
@@ -30,11 +31,18 @@ public class AuthController {
 
 	@Autowired
 	private UserValidator userValidator;
+	
+	/* 
+	 * TODO : changer par service
+	 */
+	@Autowired
+	private RoleRepository rolerepo;
 
 	@GetMapping("/inscription")
 	public String registration(Model model) {
 		Employe employe = new Employe();
 		model.addAttribute("inscription", employe);
+		model.addAttribute("role", rolerepo.findAll());
 
 		return "inscription";
 	}
@@ -46,12 +54,12 @@ public class AuthController {
 		if (bindingResult.hasErrors()) {
 			return "inscription";
 		}
-
+		
 		userService.save(userForm);
 
 		securityService.autoLogin(userForm.getNom(), userForm.getPasswordConfirm());
 
-		return "redirect:/home";
+		return "redirect:/login";
 	}
 
 	@GetMapping("/login")
@@ -63,11 +71,6 @@ public class AuthController {
 			model.addAttribute("message", "You have been logged out successfully.");
 
 		return "login";
-	}
-
-	@GetMapping({ "/", "/home" })
-	public String welcome(Model model) {
-		return "home";
 	}
 
 }
