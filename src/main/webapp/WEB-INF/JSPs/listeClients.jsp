@@ -11,7 +11,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 
-<form:form method="post" modelAttribute="modifFormClient" action="${contextPath}/admin/listeClients/updateclient">
+<form:form method="post" modelAttribute="modifFormClient" action="${contextPath}/admin/listeClients/gotoupdateclient">
     <table border="1">
     <thead>
         <tr>
@@ -19,12 +19,15 @@
             <th>ID</th>
             <th>Prénom</th>
             <th>Nom</th>
+            <th>N° adresse</th>
             <th>Libellé adresse</th>
+            <th>Complément adresse</th>
             <th>Code postal</th>
             <th>Ville</th>
             <th>Téléphone</th>
             <th>Mail</th>
             <th>Date de création</th>
+            <th>Date dernière mise à jour</th>
         </tr>
     </thead>
         <tbody>
@@ -46,8 +49,16 @@
                 		<input type="hidden" name = "modifClients[${status.index}].nom"  value = "${clientModif.nom}"/>
                     </td>
                     <td>
+                        <c:out value="${clientModif.numeroAdresse}"/>
+                		<input type="hidden" name = "modifClients[${status.index}].numeroAdresse"  value = "${clientModif.numeroAdresse}"/>
+                    </td>
+                    <td>
                         <c:out value="${clientModif.libelle}"/>
                 		<input type="hidden" name = "modifClients[${status.index}].libelle"  value = "${clientModif.libelle}"/>
+                    </td>
+                    <td>
+                        <c:out value="${clientModif.complementAdresse}"/>
+                		<input type="hidden" name = "modifClients[${status.index}].complementAdresse"  value = "${clientModif.complementAdresse}"/>
                     </td>
                     <td>
                         <c:out value="${clientModif.codePostal}"/>
@@ -69,12 +80,17 @@
                         <c:out value="${clientModif.dateCreation}"/>
                 		<input type="hidden" name = "modifClients[${status.index}].dateCreation"  value = "${clientModif.dateCreation}"/>
                     </td>
+                    <td>
+                        <c:out value="${clientModif.dateDerniereMiseAJour}"/>
+                		<input type="hidden" name = "modifClients[${status.index}].dateDerniereMiseAJour"  value = "${clientModif.dateDerniereMiseAJour}"/>
+                    </td>
                 </tr>
                 
                 <input type="hidden" name = "modifClients[${status.index}].idAdresse" value = "${clientModif.idAdresse}"/>
+                <input type="hidden" name = "modifClients[${status.index}].dateCreationAdresse" value = "${clientModif.dateCreationAdresse}"/>
                 	
             </c:forEach>
         </tbody>
     </table>
-    <input type="submit"/>
+    <input type="submit" value = "Modifier sélection"/>
 </form:form>
