@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 /**
  * 
- * @author NVV
+ * @author Nils VO-VAN
  *
  */
 public class ModificationFormClient {

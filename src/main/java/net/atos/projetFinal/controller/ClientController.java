@@ -1,6 +1,7 @@
 package net.atos.projetFinal.controller;
 
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
-import net.atos.projetFinal.service.impl.ServiceClient;
+import net.atos.projetFinal.service.IAdresseService;
+import net.atos.projetFinal.service.IClientService;
 
 /**
  * 
- * @author NVV
+ * @author Nils VO-VAN
  *
  */
 @Controller
@@ -29,30 +31,78 @@ public class ClientController {
 	private final String DATE_FORMAT = "dd/MM/yyyy";
 
 	@Autowired
-	private ServiceClient serviceClient;
+	private IClientService serviceClient;
+
+	@Autowired
+	private IAdresseService serviceAdresse;
 
 	@RequestMapping(value = "/admin/listeClients", method = RequestMethod.GET)
 	public String afficher(final ModelMap pModel) {
-		if (pModel.get("listeClientAAfficher") == null) {
-			// List<Client> clients = serviceClient.getAllClients();
-			List<Client> clients = initialValues();
-			ModificationFormClient modifFormClient = new ModificationFormClient();
-			List<ModificationClient> modifClientList = new ArrayList<>();
+		List<Client> clients = serviceClient.getAllClients();
 
-			for (Client client : clients) {
-				ModificationClient modifClient = new ModificationClient();
-
-				modifClient.insertClientIntoModif(client, DATE_FORMAT);
-
-				modifClientList.add(modifClient);
-			}
-
-			modifFormClient.setModifClients(modifClientList);
-
-			pModel.addAttribute("modifFormClient", modifFormClient);
+		/* pour la phase test... */
+		if (clients.isEmpty()) {
+			/* Add default value in the BDD */
+			initialValues();
+			clients = serviceClient.getAllClients();
 		}
 
+		ModificationFormClient modifFormClient = new ModificationFormClient();
+		List<ModificationClient> modifClientList = new ArrayList<>();
+
+		for (Client client : clients) {
+			ModificationClient modifClient = new ModificationClient();
+
+			modifClient.insertClientIntoModif(client, DATE_FORMAT);
+
+			modifClientList.add(modifClient);
+		}
+
+		modifFormClient.setModifClients(modifClientList);
+
+		pModel.addAttribute("modifFormClient", modifFormClient);
+
 		return "listeClients";
+	}
+
+	@RequestMapping(value = "/admin/listeClients/gotoupdateclient", method = RequestMethod.POST)
+	public String allerAModification(
+			@Valid @ModelAttribute(value = "modifFormClient") final ModificationFormClient pModification,
+			final BindingResult pBindingResult, final ModelMap pModel) {
+
+		if (!pBindingResult.hasErrors()) {
+			final List<Client> checkedClients = new ArrayList<>();
+			List<ModificationClient> checkedModifClients = new ArrayList<>();
+			ModificationFormClient checkedModifForm = new ModificationFormClient();
+
+			for (final ModificationClient modifClient : pModification.getModifClients()) {
+				/* if the client has been selected by the checkBox */
+				if (modifClient.getChecked()) {
+					Client client;
+
+					try {
+						client = modifClient.getClientFromModif(DATE_FORMAT);
+						checkedClients.add(client);
+						checkedModifClients.add(modifClient);
+					} catch (ParseException e) {
+						System.err.println(e.getMessage());
+					}
+				}
+			}
+			
+			if(checkedModifClients.size() > 0)
+			{
+				checkedModifForm.setModifClients(checkedModifClients);
+				/* Erase the current values with the selected values with checkBox */
+				pModel.addAttribute("modifFormClient", checkedModifForm);
+				
+				return "modifierClients";
+			}
+
+		}
+		
+		return(afficher(pModel)) ;
+
 	}
 
 	@RequestMapping(value = "/admin/listeClients/updateclient", method = RequestMethod.POST)
@@ -60,65 +110,103 @@ public class ClientController {
 			final BindingResult pBindingResult, final ModelMap pModel) {
 
 		if (!pBindingResult.hasErrors()) {
-			final List<Client> lClients = new ArrayList<>();
+			final List<Client> clientsToModify = new ArrayList<>();
+
 			for (final ModificationClient modifClient : pModification.getModifClients()) {
-				/* if the client has been selected by the checkBox */
-				if (modifClient.getChecked()) {
-					Client client;
-					
-					try {
-						client = modifClient.getClientFromModif(DATE_FORMAT);
-						lClients.add(client);
-					} catch (ParseException e) {
-						System.err.println(e.getMessage());
-					}
 
+				Client client;
+
+				try {
+					client = modifClient.getClientFromModif(DATE_FORMAT);
+					clientsToModify.add(client);
+				} catch (ParseException e) {
+					System.err.println(e.getMessage());
 				}
-
 			}
-			System.err.println("Nb selection : " + lClients.size());
-			System.err.println(lClients);
-			
-			pModel.remove("modifFormClient") ;
 
+			System.err.println("Avant modifierClient dans modifier de ClientController");
+			
+			serviceClient.modifierClients(clientsToModify);
 		}
 
-		return "listeClients";
+		return afficher(pModel);
 	}
 
-	List<Client> initialValues() {
-		List<Client> clients = new ArrayList<Client>();
+	void initialValues() {
 		Client client;
 		Adresse adresse = new Adresse();
+		LocalDateTime localDate ;
 
 		adresse.setCodePostal("69120");
 		adresse.setComplement("rien");
 		adresse.setNumero(14);
-		adresse.setId(3L);
 		adresse.setLibelle("Rue Bonnevay");
 		adresse.setVille("Vaulx");
+		serviceAdresse.creerAdresse(adresse);
+		
+		localDate = LocalDateTime.now();
+		localDate = localDate.minusYears(50) ;
 
 		client = new Client();
 		client.setAdresse(adresse);
-		client.setId(1L);
+		client.setDateCreation(localDate);
 		client.setPrenom("Nils");
 		client.setNom("VO");
 		client.setNumeroTelClient("0478809543");
 		client.setAdresseMail("zaed@dza.com");
+		serviceClient.creerClient(client);
 
-		clients.add(client);
+		adresse = new Adresse();
+		adresse.setCodePostal("69100");
+		adresse.setComplement("rien");
+		adresse.setNumero(14);
+		adresse.setLibelle("Rue Henry Barbusse");
+		adresse.setVille("Villeurbanne");
+		serviceAdresse.creerAdresse(adresse);
 
+		localDate = LocalDateTime.now();
+		localDate = localDate.minusYears(10) ;
+		
 		client = new Client();
 		client.setAdresse(adresse);
-		client.setId(2L);
+		client.setDateCreation(localDate);
 		client.setPrenom("John");
 		client.setNom("Connor");
 		client.setNumeroTelClient("0478809543");
 		client.setAdresseMail("Ill@bback.com");
+		serviceClient.creerClient(client);
 
-		clients.add(client);
+		adresse = new Adresse();
+		adresse.setCodePostal("74000");
+		adresse.setComplement("rien");
+		adresse.setNumero(50);
+		adresse.setLibelle("Rue du lac");
+		adresse.setVille("Annecy");
+		serviceAdresse.creerAdresse(adresse);
 
-		return (clients);
+		localDate = LocalDateTime.now();
+		localDate = localDate.minusYears(20) ;
+		
+		client = new Client();
+		client.setAdresse(adresse);
+		client.setDateCreation(localDate);
+		client.setPrenom("Jim");
+		client.setNom("Carrey");
+		client.setNumeroTelClient("0478809543");
+		client.setAdresseMail("splen@did.com");
+		serviceClient.creerClient(client);
+
+		localDate = LocalDateTime.now();
+		localDate = localDate.minusYears(5) ;
+		
+		client = new Client();
+		client.setAdresse(adresse);
+		client.setDateCreation(localDate);
+		client.setPrenom("Corinne");
+		client.setNom("Manificat");
+		client.setNumeroTelClient("0478809543");
+		client.setAdresseMail("splen@did.com");
+		serviceClient.creerClient(client);
 	}
 
 }

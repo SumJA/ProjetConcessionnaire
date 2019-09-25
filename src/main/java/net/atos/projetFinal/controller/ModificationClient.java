@@ -14,7 +14,7 @@ import net.atos.projetFinal.model.Client;
 
 /**
  * 
- * @author NVV
+ * @author Nils VO-VAN
  *
  */
 public class ModificationClient {
@@ -33,6 +33,12 @@ public class ModificationClient {
 	@NotEmpty
 	private String libelle ;
 
+	
+	private int numeroAdresse ;
+
+	@NotEmpty
+	private String complementAdresse ;
+
 	@NotEmpty
 	private String codePostal ;
 
@@ -47,6 +53,12 @@ public class ModificationClient {
 
 	@NotEmpty
 	private String dateCreation ;
+
+	@NotEmpty
+	private String dateDerniereMiseAJour ;
+
+	@NotEmpty
+	private String dateCreationAdresse ;
 	
 
 	/**
@@ -63,11 +75,17 @@ public class ModificationClient {
 		tel = client.getNumeroTelClient() ;
 		mail = client.getAdresseMail() ;
 		dateCreation = dateFormat.format(Date.from(client.getDateCreation().atZone(ZoneId.systemDefault()).toInstant())) ;
+		dateDerniereMiseAJour = client.getDateDerniereMiseAJour().toString() ;
 		
 		libelle = client.getAdresse().getLibelle() ;
 		codePostal = client.getAdresse().getCodePostal() ;
 		ville = client.getAdresse().getVille() ;
 		idAdresse = client.getAdresse().getId() ;
+		numeroAdresse = client.getAdresse().getNumero() ;
+		complementAdresse = client.getAdresse().getComplement() ;
+		
+		dateCreationAdresse = dateFormat.format(Date.from(client.getAdresse()
+				.getDateCreation().atZone(ZoneId.systemDefault()).toInstant())) ;
 		
 		checked = false ;
 	}
@@ -83,19 +101,20 @@ public class ModificationClient {
 		Client client = new Client() ;
 		Adresse adresse = new Adresse() ;
 		
-		client.setDateCreation(LocalDateTime.ofInstant(dateFormat.parse(dateCreation).toInstant(), ZoneId.systemDefault()));
-		
-		/* Je considère que le client vient d'être mis à jour */
-		client.setDateDerniereMiseAJour(Instant.now());
-		
+
 		adresse.setLibelle(libelle);
 		adresse.setCodePostal(codePostal);
 		adresse.setVille(ville);
-		//adresse.setNumero(numero);
-		//adresse.setComplement(complement);
+		adresse.setNumero(numeroAdresse);
+		adresse.setComplement(complementAdresse);
+		adresse.setDateDerniereMiseAJour(Instant.now());
+		client.setDateCreation(LocalDateTime.ofInstant(dateFormat.parse(dateCreationAdresse).toInstant(), ZoneId.systemDefault()));
 		adresse.setId(idAdresse);
 		client.setAdresse(adresse);
 		
+		client.setDateCreation(LocalDateTime.ofInstant(dateFormat.parse(dateCreation).toInstant(), ZoneId.systemDefault()));
+		/* Je considère que le client vient d'être mis à jour */
+		client.setDateDerniereMiseAJour(Instant.now());	
 		client.setId(idClient);
 		client.setNom(nom);
 		client.setPrenom(prenom);
@@ -105,6 +124,44 @@ public class ModificationClient {
 		return client ;
 	}
 	
+	
+	
+	public String getDateCreationAdresse() {
+		return dateCreationAdresse;
+	}
+
+	public void setDateCreationAdresse(String dateCreationAdresse) {
+		this.dateCreationAdresse = dateCreationAdresse;
+	}
+
+	public int getNumeroAdresse() {
+		return numeroAdresse;
+	}
+
+	public void setNumeroAdresse(int numeroAdresse) {
+		this.numeroAdresse = numeroAdresse;
+	}
+
+	public String getComplementAdresse() {
+		return complementAdresse;
+	}
+
+	public void setComplementAdresse(String complementAdresse) {
+		this.complementAdresse = complementAdresse;
+	}
+
+	public String getDateDerniereMiseAJour() {
+		return dateDerniereMiseAJour;
+	}
+
+	public void setDateDerniereMiseAJour(String dateDerniereMiseAJour) {
+		this.dateDerniereMiseAJour = dateDerniereMiseAJour;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	public Boolean getChecked() {
 		return checked;
 	}
