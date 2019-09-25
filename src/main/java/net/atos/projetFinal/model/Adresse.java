@@ -52,6 +52,7 @@ public class Adresse implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, nullable = false)
+
 	private Long idAdresse;
 
 	@Column()
@@ -161,6 +162,66 @@ public class Adresse implements Serializable {
 	 */
 	public Long getIdAdresse() {
 		return idAdresse;
+	}
+
+	/**
+	 * hashcode method with all attributes except dateCreation,dateDerniereMiseAJour
+	 * and clients
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codePostal == null) ? 0 : codePostal.hashCode());
+		result = prime * result + ((complementAdresse == null) ? 0 : complementAdresse.hashCode());
+		result = prime * result + ((idAdresse == null) ? 0 : idAdresse.hashCode());
+		result = prime * result + ((libelleVoie == null) ? 0 : libelleVoie.hashCode());
+		result = prime * result + numeroVoie;
+		result = prime * result + ((ville == null) ? 0 : ville.hashCode());
+		return result;
+	}
+
+	/**
+	 * Equals method with all attributes except for the following attributes id,
+	 * dateCreation, dateDerniereMiseAJour and clients
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Adresse other = (Adresse) obj;
+		if (codePostal == null) {
+			if (other.codePostal != null)
+				return false;
+		} else if (!codePostal.equals(other.codePostal))
+			return false;
+		if (complementAdresse == null) {
+			if (other.complementAdresse != null)
+				return false;
+		} else if (!complementAdresse.equals(other.complementAdresse))
+			return false;
+		if (idAdresse == null) {
+			if (other.idAdresse != null)
+				return false;
+		} else if (!idAdresse.equals(other.idAdresse))
+			return false;
+		if (libelleVoie == null) {
+			if (other.libelleVoie != null)
+				return false;
+		} else if (!libelleVoie.equals(other.libelleVoie))
+			return false;
+		if (numeroVoie != other.numeroVoie)
+			return false;
+		if (ville == null) {
+			if (other.ville != null)
+				return false;
+		} else if (!ville.equals(other.ville))
+			return false;
+		return true;
 	}
 
 	@Override
