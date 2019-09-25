@@ -1,7 +1,6 @@
 package net.atos.projetFinal.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +33,6 @@ public class Role implements Serializable {
 	
 	@OneToOne(mappedBy = "role")
 	private Employe employe;
-
 
 	/**
 	 * @return the nomRole

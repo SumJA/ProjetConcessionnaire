@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,16 +41,6 @@ public class Status implements Serializable {
 	
 	@OneToMany(mappedBy = "statusCommande")
 	List<Commande> commandes;
-
-	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
-	List<LigneCommande> lignesCommande ;
-	
-	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
-	List<Commande> commandes ;
-	
-	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
-	List<Devis> devisList ;
-	
 
 	/**
 	 * @return the nomStatus

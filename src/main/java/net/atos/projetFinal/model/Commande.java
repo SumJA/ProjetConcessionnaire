@@ -32,24 +32,19 @@ public class Commande implements Serializable{
 	private Long idCommande ;
 	
 	@ManyToOne
-
 	@JoinColumn(name = "employe_idEmploye")
 	private Employe employeCommande ;
-
 	
 	@ManyToOne
 	@JoinColumn(name = "statut_livraison")
 	private Status statusCommande ;
-
 	
 	@ManyToOne
 	@JoinColumn(name = "client_idCLient")
 	private Client clientCommande;
-
 	
 	@OneToMany(mappedBy = "commande")
 	List<LigneCommande> lignesCommande;
-
 
 	/**
 	 * @return the employeCommande
@@ -91,7 +86,6 @@ public class Commande implements Serializable{
 	 */
 	public void setClientCommande(Client clientCommande) {
 		this.clientCommande = clientCommande;
-
 	}
 
 	/**
