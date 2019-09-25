@@ -11,123 +11,142 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
+/**
+ * 
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
+ */
+
 @Entity
 @Table(name = "stock")
 public class Stock implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id de Commande correspond à "idStatus"
-	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idStock")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idStock;
 
-	/**
-	 * Nom du produit
-	 */
-	@Column(name = "nomProduit", length = 100)
-	private String nom;
+	@Column(length = 100, nullable = false)
+	private String nomProduit;
 
-	/**
-	 * Prix unitaire du produit
-	 */
-	@Column(name = "prixProduit")
-	private float prix;
+	@Column(nullable = false)
+	private float prixProduit;
 
-	/**
-	 * Quantité du produit disponible
-	 */
-	@Column(name = "qteProduit")
-	private int qteDispo;
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private int qteProduitDispo;
 
-	/**
-	 * Quantité réservé du produit (quantité réservée pour un client)
-	 */
-	@Column(name = "qteReserve")
+	@Column(nullable = false)
+	@ColumnDefault("0")
 	private int qteReserve;
 
-	/**
-	 * Lignes présenté dans un devis correspondant au stock
-	 */
 	@OneToMany(mappedBy = "stock")
 	List<LigneProduit> lignesProduit;
 
-	/**
-	 * Lignes présenté dans un devis correspondant au stock
-	 */
 	@OneToMany(mappedBy = "stock")
 	List<LigneCommande> lignesCommande;
 
-	public Stock() {
-		super();
+	/**
+	 * @return the nomProduit
+	 */
+	public String getNomProduit() {
+		return nomProduit;
 	}
 
-	public List<LigneCommande> getLignesCommande() {
-		return lignesCommande;
+	/**
+	 * @param nomProduit the nomProduit to set
+	 */
+	public void setNomProduit(String nomProduit) {
+		this.nomProduit = nomProduit;
 	}
 
-	public void setLignesCommande(List<LigneCommande> lignesCommande) {
-		this.lignesCommande = lignesCommande;
+	/**
+	 * @return the prixProduit
+	 */
+	public float getPrixProduit() {
+		return prixProduit;
 	}
 
-	public Long getId() {
-		return id;
+	/**
+	 * @param prixProduit the prixProduit to set
+	 */
+	public void setPrixProduit(float prixProduit) {
+		this.prixProduit = prixProduit;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	/**
+	 * @return the qteProduitDispo
+	 */
+	public int getQteProduitDispo() {
+		return qteProduitDispo;
 	}
 
-	public String getNom() {
-		return nom;
+	/**
+	 * @param qteProduitDispo the qteProduitDispo to set
+	 */
+	public void setQteProduitDispo(int qteProduitDispo) {
+		this.qteProduitDispo = qteProduitDispo;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public float getPrix() {
-		return prix;
-	}
-
-	public void setPrix(float prix) {
-		this.prix = prix;
-	}
-
-	public int getQteDispo() {
-		return qteDispo;
-	}
-
-	public void setQteDispo(int qteDispo) {
-		this.qteDispo = qteDispo;
-	}
-
+	/**
+	 * @return the qteReserve
+	 */
 	public int getQteReserve() {
 		return qteReserve;
 	}
 
+	/**
+	 * @param qteReserve the qteReserve to set
+	 */
 	public void setQteReserve(int qteReserve) {
 		this.qteReserve = qteReserve;
 	}
 
+	/**
+	 * @return the lignesProduit
+	 */
 	public List<LigneProduit> getLignesProduit() {
 		return lignesProduit;
 	}
 
+	/**
+	 * @param lignesProduit the lignesProduit to set
+	 */
 	public void setLignesProduit(List<LigneProduit> lignesProduit) {
 		this.lignesProduit = lignesProduit;
 	}
 
+	/**
+	 * @return the lignesCommande
+	 */
+	public List<LigneCommande> getLignesCommande() {
+		return lignesCommande;
+	}
+
+	/**
+	 * @param lignesCommande the lignesCommande to set
+	 */
+	public void setLignesCommande(List<LigneCommande> lignesCommande) {
+		this.lignesCommande = lignesCommande;
+	}
+
+	/**
+	 * @return the idStock
+	 */
+	public Long getIdStock() {
+		return idStock;
+	}
+
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", nom=" + nom + ", prix=" + prix + ", qteDispo=" + qteDispo + ", qteReserve="
-				+ qteReserve + ", lignesProduit=" + lignesProduit + ", lignesCommande=" + lignesCommande + "]";
+		return "Stock [idStock=" + idStock + ", nomProduit=" + nomProduit + ", prixProduit=" + prixProduit
+				+ ", qteProduitDispo=" + qteProduitDispo + ", qteReserve=" + qteReserve + ", lignesProduit="
+				+ lignesProduit + ", lignesCommande=" + lignesCommande + "]";
 	}
 
 }

@@ -14,5 +14,5 @@ import net.atos.projetFinal.model.Employe;
 @Repository
 public interface EmployeRepository extends JpaRepository<Employe, Long> {
 	@Query("SELECT e FROM Employe e WHERE e.nom = ?1")
-	Employe findByUsername(String username);
+	Employe findByUsername(String nom);
 }

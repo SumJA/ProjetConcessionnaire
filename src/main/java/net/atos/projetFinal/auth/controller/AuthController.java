@@ -33,13 +33,14 @@ public class AuthController {
 
 	@GetMapping("/inscription")
 	public String registration(Model model) {
-		model.addAttribute("userForm", new Employe());
+		Employe employe = new Employe();
+		model.addAttribute("inscription", employe);
 
 		return "inscription";
 	}
 
 	@PostMapping("/inscription")
-	public String registration(@ModelAttribute("userForm") Employe userForm, BindingResult bindingResult) {
+	public String registration(@ModelAttribute("inscription") Employe userForm, BindingResult bindingResult) {
 		userValidator.validate(userForm, bindingResult);
 
 		if (bindingResult.hasErrors()) {
@@ -56,7 +57,7 @@ public class AuthController {
 	@GetMapping("/login")
 	public String login(Model model, String error, String logout) {
 		if (error != null)
-			model.addAttribute("error", "Your username and password is invalid.");
+			model.addAttribute("error", "Your nom and password is invalid.");
 
 		if (logout != null)
 			model.addAttribute("message", "You have been logged out successfully.");

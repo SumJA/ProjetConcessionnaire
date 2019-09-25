@@ -13,33 +13,35 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Gère un status
  * 
- * @author kamel
- *
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
  */
+
 @Entity
 @Table(name = "status")
 public class Status implements Serializable {
 
-	/**
-	 * serial version id
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * id de status correspond à "idStatus" dans la Bdd généré avec "AUTO"
-	 * (@GeneratedValue(strategy = GenerationType.AUTO)
-	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idStatus")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
+	private Long idStatus;
 
-	@Column(name = "nomStatus", length = 100)
-	private String nom;
+	@Column(length = 100, nullable = false)
+	private String nomStatus;
+
+	@OneToMany(mappedBy = "status")
+	List<LigneCommande> lignesCommande;
 	
+	@OneToMany(mappedBy = "status")
+	List<Devis> devis;
 	
+	@OneToMany(mappedBy = "statusCommande")
+	List<Commande> commandes;
 
 	@OneToMany(mappedBy = "status", fetch = FetchType.LAZY)
 	List<LigneCommande> lignesCommande ;
@@ -52,95 +54,72 @@ public class Status implements Serializable {
 	
 
 	/**
-	 * @return the id
+	 * @return the nomStatus
 	 */
-	public Status() {
-		super();
+	public String getNomStatus() {
+		return nomStatus;
 	}
 
 	/**
-	 * 
-	 * @return Les lignes de commandes ayant ce status
+	 * @param nomStatus the nomStatus to set
+	 */
+	public void setNomStatus(String nomStatus) {
+		this.nomStatus = nomStatus;
+	}
+
+	/**
+	 * @return the lignesCommande
 	 */
 	public List<LigneCommande> getLignesCommande() {
 		return lignesCommande;
 	}
 
 	/**
-	 * 
-	 * @param lignesCommande lignes de commandes à setter avec ce status
+	 * @param lignesCommande the lignesCommande to set
 	 */
 	public void setLignesCommande(List<LigneCommande> lignesCommande) {
 		this.lignesCommande = lignesCommande;
 	}
 
 	/**
-	 * 
-	 * @return toutes les commandes qui ont ce status
+	 * @return the devis
+	 */
+	public List<Devis> getDevis() {
+		return devis;
+	}
+
+	/**
+	 * @param devis the devis to set
+	 */
+	public void setDevis(List<Devis> devis) {
+		this.devis = devis;
+	}
+
+	/**
+	 * @return the commandes
 	 */
 	public List<Commande> getCommandes() {
 		return commandes;
 	}
 
 	/**
-	 * 
-	 * @param commandes : commandes à setter avec ce status
+	 * @param commandes the commandes to set
 	 */
 	public void setCommandes(List<Commande> commandes) {
 		this.commandes = commandes;
 	}
 
 	/**
-	 * 
-	 * @return la liste de devis qui ont ce status
+	 * @return the idStatus
 	 */
-	public List<Devis> getDevisList() {
-		return devisList;
+	public Long getIdStatus() {
+		return idStatus;
 	}
-
-	/**
-	 * 
-	 * @param devisList : la liste de devis qui devrait être setter à ce status
-	 */
-	public void setDevisList(List<Devis> devisList) {
-		this.devisList = devisList;
-	}
-
-	/**
-	 * 
-	 * @return l'id du status
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * 
-	 * @param id : la nouvelle valeur de l'id souhaitée
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * 
-	 * @return le nom du status
-	 */
-	public String getNom() {
-		return nom;
-	}
-
-	/**
-	 * 
-	 * @param nomStatus : le nom du status souhaité
-	 */
-	public void setNom(String nomStatus) {
-		this.nom = nomStatus;
-  }
 
 	@Override
 	public String toString() {
-		return "Status [id=" + id + ", nom=" + nom + "]";
+		return "Status [idStatus=" + idStatus + ", nomStatus=" + nomStatus + ", lignesCommande=" + lignesCommande
+				+ ", devis=" + devis + ", commandes=" + commandes + "]";
 	}
-
+	
 }

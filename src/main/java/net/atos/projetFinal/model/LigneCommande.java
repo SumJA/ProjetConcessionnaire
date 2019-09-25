@@ -12,118 +12,144 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
+/**
+ * 
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+ * 
+ */
 @Entity
 @Table(name = "ligneCommande")
 public class LigneCommande implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Id du devis qui pointe sur la clé primaire
-	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idLigneCommande")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
+	private Long idLigneCommande;
 
-	/**
-	 * Délai de livraison exprimé en jour
-	 */
-	@Column(name = "delaiLivraison")
+	@Column(nullable = false)
 	private int delaiLivraison;
 
-	/**
-	 * Quantité nécessaire à la ligne de commande
-	 */
-	@Column(name = "qteCommande")
+	@Column(nullable = false)
+	@ColumnDefault("1")
 	private int qteCommande;
 
-	/**
-	 * La commande à laquelle est affectée la ligne
-	 */
 	@ManyToOne
 	@JoinColumn(name = "commande_idCommande")
 	private Commande commande;
 
-	/**
-	 * Stock présent dans un devis via ligneProduit
-	 */
 	@ManyToOne
 	@JoinColumn(name = "stock_idStock")
 	private Stock stock;
 
-	/**
-	 * Le status du devis
-	 */
 	@ManyToOne
-	@JoinColumn(name = "status_idstatus")
+	@JoinColumn(name = "status_idStatus")
 	private Status status;
 
+	@Column(nullable = false)
+	private LocalDateTime dateCreationLigneCommande;
+
 	/**
-	 * Date de création du devis
+	 * @return the delaiLivraison
 	 */
-	@Column(name = "dateCreationLigneCommande")
-	private LocalDateTime dateCreation;
-
-	public LigneCommande() {
-		super();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public int getDelaiLivraison() {
 		return delaiLivraison;
 	}
 
-	public void setDelaiLivraison(int delaisLivraison) {
-		this.delaiLivraison = delaisLivraison;
+	/**
+	 * @param delaiLivraison the delaiLivraison to set
+	 */
+	public void setDelaiLivraison(int delaiLivraison) {
+		this.delaiLivraison = delaiLivraison;
 	}
 
+	/**
+	 * @return the qteCommande
+	 */
 	public int getQteCommande() {
 		return qteCommande;
 	}
 
+	/**
+	 * @param qteCommande the qteCommande to set
+	 */
 	public void setQteCommande(int qteCommande) {
 		this.qteCommande = qteCommande;
 	}
 
+	/**
+	 * @return the commande
+	 */
 	public Commande getCommande() {
 		return commande;
 	}
 
+	/**
+	 * @param commande the commande to set
+	 */
 	public void setCommande(Commande commande) {
 		this.commande = commande;
 	}
 
+	/**
+	 * @return the stock
+	 */
 	public Stock getStock() {
 		return stock;
 	}
 
+	/**
+	 * @param stock the stock to set
+	 */
 	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
 
+	/**
+	 * @return the status
+	 */
 	public Status getStatus() {
 		return status;
 	}
 
+	/**
+	 * @param status the status to set
+	 */
 	public void setStatus(Status status) {
 		this.status = status;
 	}
 
+	/**
+	 * @return the dateCreationLigneCommande
+	 */
+	public LocalDateTime getDateCreationLigneCommande() {
+		return dateCreationLigneCommande;
+	}
+
+	/**
+	 * @param dateCreationLigneCommande the dateCreationLigneCommande to set
+	 */
+	public void setDateCreationLigneCommande(LocalDateTime dateCreationLigneCommande) {
+		this.dateCreationLigneCommande = dateCreationLigneCommande;
+	}
+
+	/**
+	 * @return the idLigneCommande
+	 */
+	public Long getIdLigneCommande() {
+		return idLigneCommande;
+	}
+
 	@Override
 	public String toString() {
-		return "LigneCommande [id=" + id + ", delaiLivraison=" + delaiLivraison + ", qteCommande=" + qteCommande
-				 + ", status=" + status + ", dateCreation=" + dateCreation + "]";
+		return "LigneCommande [idLigneCommande=" + idLigneCommande + ", delaiLivraison=" + delaiLivraison
+				+ ", qteCommande=" + qteCommande + ", commande=" + commande + ", stock=" + stock + ", status=" + status
+				+ ", dateCreationLigneCommande=" + dateCreationLigneCommande + "]";
 	}
 
 }

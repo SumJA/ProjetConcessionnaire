@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
 /**
  * Description de l'entité devis géré par le commercial
  * @author Administrateur
@@ -23,150 +25,168 @@ import javax.persistence.Table;
 @Table(name="devis")
 public class Devis implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
-	/**
-	 * Id du devis qui pointe sur la clé primaire
-	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "idDevis")
-	private Long id ;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false)
+	private Long idDevis ;
 	
-	/**
-	 * Date de création du devis
-	 */
-	@Column(name="dateCreationDevis")
-	private LocalDateTime dateCreation ;
+	@Column(nullable = false)
+	private LocalDateTime dateCreationDevis ;
 	
-	/**
-	 * Délai du devis en jours
-	 */
-	@Column(name="delaiDevis")
+	@Column(nullable = false)
 	private int delaiDevis ;
 	
-	/**
-	 * Prix HT affiché sur le devis
-	 */
-	@Column(name ="prixHT")
-	private float prixHt ;
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private float prixHT ;
 	
-	/**
-	 * Prix TTC affiché sur le devis
-	 */
-	@Column(name ="prixTTC")
-	private float prixTtc ;
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private float prixTTC ;
 	
-	/**
-	 * Le client du devis
-	 */
 	@ManyToOne
 	@JoinColumn(name="client_idclient")
 	private Client client ;
 	
-	/**
-	 * L'employé qui a géré le devis
-	 */
 	@ManyToOne
 	@JoinColumn(name="user_idUser")
 	private Employe employe ;
 	
-	/**
-	 * Le status du devis
-	 */
 	@ManyToOne
 	@JoinColumn(name = "status_devis")
 	private Status status ;
 	
-	/**
-	 * Les lignes du devis
-	 */
 	@OneToMany(mappedBy = "devis")
 	private List<LigneProduit> lignesProduit ;
-	
-	public Devis() {
-		super();
+
+	/**
+	 * @return the dateCreationDevis
+	 */
+	public LocalDateTime getDateCreationDevis() {
+		return dateCreationDevis;
 	}
 
-	public Long getId() {
-		return id;
+	/**
+	 * @param dateCreationDevis the dateCreationDevis to set
+	 */
+	public void setDateCreationDevis(LocalDateTime dateCreationDevis) {
+		this.dateCreationDevis = dateCreationDevis;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public LocalDateTime getDateCreation() {
-		return dateCreation;
-	}
-
-	public void setDateCreation(LocalDateTime dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-
+	/**
+	 * @return the delaiDevis
+	 */
 	public int getDelaiDevis() {
 		return delaiDevis;
 	}
 
+	/**
+	 * @param delaiDevis the delaiDevis to set
+	 */
 	public void setDelaiDevis(int delaiDevis) {
 		this.delaiDevis = delaiDevis;
 	}
 
-	public float getPrixHt() {
-		return prixHt;
+	/**
+	 * @return the prixHT
+	 */
+	public float getPrixHT() {
+		return prixHT;
 	}
 
-	public void setPrixHt(float prixHt) {
-		this.prixHt = prixHt;
+	/**
+	 * @param prixHT the prixHT to set
+	 */
+	public void setPrixHT(float prixHT) {
+		this.prixHT = prixHT;
 	}
 
-	public float getPrixTtc() {
-		return prixTtc;
+	/**
+	 * @return the prixTTC
+	 */
+	public float getPrixTTC() {
+		return prixTTC;
 	}
 
-	public void setPrixTtc(float prixTtc) {
-		this.prixTtc = prixTtc;
+	/**
+	 * @param prixTTC the prixTTC to set
+	 */
+	public void setPrixTTC(float prixTTC) {
+		this.prixTTC = prixTTC;
 	}
 
-	public Client getClient() {
-		return client;
+
+	/**
+	 * @return the clientDevis
+	 */
+	public Client getClientDevis() {
+		return clientDevis;
 	}
 
-	public void setClient(Client clientDevis) {
-		this.client = clientDevis;
+	/**
+	 * @param clientDevis the clientDevis to set
+	 */
+	public void setClientDevis(Client clientDevis) {
+		this.clientDevis = clientDevis;
 	}
 
-	public Employe getEmploye() {
-		return employe;
+	/**
+	 * @return the employeDevis
+	 */
+	public Employe getEmployeDevis() {
+		return employeDevis;
 	}
 
-	public void setEmploye(Employe employeDevis) {
-		this.employe = employeDevis;
+	/**
+	 * @param employeDevis the employeDevis to set
+	 */
+	public void setEmployeDevis(Employe employeDevis) {
+		this.employeDevis = employeDevis;
 	}
 
+	/**
+	 * @return the status
+	 */
 	public Status getStatus() {
 		return status;
 	}
 
+	/**
+	 * @param status the status to set
+	 */
 	public void setStatus(Status status) {
 		this.status = status;
 	}
 
+	/**
+	 * @return the lignesProduit
+	 */
 	public List<LigneProduit> getLignesProduit() {
 		return lignesProduit;
 	}
 
+	/**
+	 * @param lignesProduit the lignesProduit to set
+	 */
 	public void setLignesProduit(List<LigneProduit> lignesProduit) {
 		this.lignesProduit = lignesProduit;
 	}
 
+	/**
+	 * @return the idDevis
+	 */
+	public Long getIdDevis() {
+		return idDevis;
+	}
+
 	@Override
 	public String toString() {
-		return "Devis [id=" + id + ", dateCreation=" + dateCreation + ", delaiDevis=" + delaiDevis + ", prixHt="
-				+ prixHt + ", prixTtc=" + prixTtc + ", status=" + status + ", lignesProduit=" 
-				+ lignesProduit + "]";
+		return "Devis [idDevis=" + idDevis + ", dateCreationDevis=" + dateCreationDevis + ", delaiDevis=" + delaiDevis
+				+ ", prixHT=" + prixHT + ", prixTTC=" + prixTTC + ", clientDevis=" + clientDevis + ", employeDevis="
+				+ employeDevis + ", status=" + status + ", lignesProduit=" + lignesProduit + "]";
+
 	}
+	
 }
