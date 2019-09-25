@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
+ * Description des différents Role possible pour l'employés Entity de la table Role
  * 
  * @author JB
  * @author Kamal 

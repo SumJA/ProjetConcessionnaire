@@ -1,8 +1,4 @@
-/**
- * Implémentation de l'interface SecurityService, qui permet de
- * retrouver l'utilisateur connecté + 
- * gérer la connexion auto après création du compte
- */
+
 package net.atos.projetFinal.auth.service.impl;
 
 import org.slf4j.Logger;
@@ -18,6 +14,9 @@ import org.springframework.stereotype.Service;
 import net.atos.projetFinal.auth.service.SecurityService;
 
 /**
+ * Implémentation de l'interface SecurityService, qui permet de retrouver
+ * l'utilisateur connecté + gérer la connexion auto après création du compte
+ * 
  * @author Sumaira
  *
  */
@@ -37,7 +36,6 @@ public class SecurityServiceImpl implements SecurityService {
 		if (userDetails instanceof UserDetails) {
 			return ((UserDetails) userDetails).getUsername();
 		}
-
 		return null;
 	}
 
@@ -54,5 +52,4 @@ public class SecurityServiceImpl implements SecurityService {
 			logger.debug(String.format("Auto login %s successfully!", username));
 		}
 	}
-
 }

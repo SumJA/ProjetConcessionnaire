@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author Administrateur
  *
  */
-public class Acceuil {
+public class Accueil {
 	/*
-	 * TODO: Acceuil personalisé en fonction du role (admin, commercial, magasinier)
+	 * TODO: Accueil personalisé en fonction du role (admin, commercial, magasinier)
 	 */
 	@GetMapping("/")
 	public String home(Model model) {
-        return "Acceuil";
-    }
+		return "Accueil";
+	}
 }

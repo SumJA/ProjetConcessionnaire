@@ -15,46 +15,24 @@ import net.atos.projetFinal.service.IStatus;
 @Service
 public class ServiceStatus implements IStatus {
 
-	
-
-	@Autowired
-	private StatusRepository dao;
-	
-	
-	
-	public StatusRepository getDao() {
-		return dao;
+	@Override
+	public List<Status> trouverTousLesStatus() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public List<Status> getAllStatuts() {
-		
-		return dao.findAll();
+	public Status trouverStatusParId(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	@Transactional
-	public void creerStatus(Status status) {
-		
-		dao.save(status);
-
+	public Status trouverStatusParNom(String nomStatus) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	@Override
-	@Transactional
-	public void supprimerStatusById(Long idStatus) {
-		
-		dao.deleteById(idStatus);
-
-	}
-
-	@Override
-	@Transactional
-	public void modifierStatus(List<Status> status) {
-		
-		
-
-	}
+	
 
 }

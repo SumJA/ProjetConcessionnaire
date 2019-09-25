@@ -19,7 +19,10 @@ import org.hibernate.annotations.ColumnDefault;
 /**
  * Description de l'entité devis géré par le commercial
  * 
- * @author Administrateur
+ * @author Jerome BRUNA
+ * @author Kamel TRABELSI
+ * @author Nils VO-VAN
+ * @author Sumaira JAVAID
  *
  */
 @Entity

@@ -21,53 +21,29 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package net.atos.projetFinal.service;
+package net.atos.projetFinal;
 
-import java.util.List;
+import org.mockito.Mockito;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 
-import net.atos.projetFinal.model.Role;
+import net.atos.projetFinal.service.IAdresseService;
 
 /**
- * Service gérant les roles des employés du concessionnaire
+ * Configuration du contexte de l'application pour lancer les tests
  * 
- * @author Nils VOVAN
  * @author Sumaira JAVAID
  *
  */
-public interface IRoleService {
-
-	/**
-	 * Retourne la liste de tous les rôles existant dans la base de donnée
-	 * 
-	 * @return la liste de tous les rôles existant dans la base de donnée
-	 */
-	List<Role> trouverTousLesRoles();
-
-	/**
-	 * Créer un nouveau role
-	 * 
-	 * @param role à créer
-	 */
-	void creerRole(final Role role);
-
-	/**
-	 * Supprime un role à partir de l'identifiant donnée en paramètre
-	 * 
-	 * @param idRole : l'identifiant du role à supprimer
-	 */
-	void supprimerRoleParId(final Long idRole);
-
-	/**
-	 * Met à jour une liste de roles
-	 * 
-	 * @param roles : la liste des roles à mettre à jour
-	 */
-	void modifierRoles(final List<Role> roles);
-
-	/**
-	 * Met à jour un rôle
-	 * 
-	 * @param role à mettre à jour
-	 */
-	void modifierRole(final Role role);
+@Profile("test")
+@Configuration
+public class NameServiceTestConfiguration {
+	
+	@Bean
+	@Primary
+	public IAdresseService nameService() {
+		return Mockito.mock(IAdresseService.class);
+	}
 }

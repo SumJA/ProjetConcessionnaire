@@ -1,8 +1,35 @@
+/**
+ * MIT License
+
+Copyright (c) [2019] [Sumaira JAVAID, Nils VO-VAN, Kamel TRABELSI, Jerome BRUNA]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
 package net.atos.projetFinal.service.impl;
 
+import java.time.Instant;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,64 +37,78 @@ import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.repo.AdresseRepository;
 import net.atos.projetFinal.service.IAdresseService;
 
-
 /**
- * Classe ServiceAdresse
- * implément IAdresseService
- * annotation:  @Service
- * @author kamel
+ * Implementation de {@link IAdresseService}
+ * 
+ * @author Kamel TRABELSI
+ * @author Sumaira JAVAID
  *
  */
 @Service
 public class ServiceAdresse implements IAdresseService {
 
-	/**
-	 * @Autowired de AdresseRepository
-	 */
 	@Autowired
-	private AdresseRepository dao;
-	
-	
-	
-	public AdresseRepository getDao() {
-		return dao;
-	}
+	private AdresseRepository adresseRepository;
 
 	/**
-	 * méthode getAllAdresses
-	 * Annotations: @Override, @Transactional(readOnly=true)
-	 */
-	@Override
-	@Transactional(readOnly = true)
-	public List<Adresse> getAllAdresses() {
-		
-		return dao.findAll();
-	}
-
-	/**
-	 * méthode creerAdresse
-	 * Annotations: @Override, @Transactional
+	 * Créer l'adresse d'un client
+	 * 
+	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
+	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans
+	 *                                         la base
+	 * @return une Adresse                                     
 	 */
 	@Override
 	@Transactional
-	public void creerAdresse(Adresse adresse) {
-		dao.save(adresse);
+	public Adresse creerAdresse(Adresse adresse) {
+		if (adresse != null) {
+			List<Adresse> adresseVerificationDoublon = adresseRepository.findAdresseByFields(adresse.getNumeroVoie(),
+					adresse.getLibelleVoie(), adresse.getComplementAdresse(), adresse.getCodePostal(), adresse.getVille());
+			if (adresseVerificationDoublon.isEmpty()) {
+				return adresseRepository.saveAndFlush(adresse);
+			} else {
+				throw new DataIntegrityViolationException("Adresse déjà existante");
+			}
+		} else {
+			throw new NullPointerException("L'Adresse fournie en paramètre est null");
+		}
 	}
 
 	/**
-	 * méthode supprimerAdresse
-	 * Annotations: @Override, @Transactional
+	 * Supprime une adresse
+	 * 
+	 * @param idAdresse identifiant de l'adresse à supppimer
+	 * @throws IllegalArgumentException dans le cas où {@code idAdresse} donné est
+	 *                                  {@literal null}
 	 */
 	@Override
 	@Transactional
-	public void supprimerAdresse(Long idAdresse) {
-		dao.deleteById(idAdresse);
-
+	public void supprimerAdresseParId(final Long idAdresse) {
+		adresseRepository.deleteById(idAdresse);
 	}
 
+	/**
+	 * Met à jour une adresse
+	 * 
+	 * @param adresse à mettre à jour, ne doit pas etre un {@literal null}
+	 * @throws IllegalArgumentException si l'identidiant d'une {@code adresse} est
+	 *                                  {@literal null}
+	 * @throws NoSuchElementException - si l'adresse n'existe pas en base
+	 */
 	@Override
 	@Transactional
-	public void modifierAdresse(List<Adresse> adresses) {
+	public void modifierAdresse(final Adresse adresse) {
+		//TODO: Voir si déplacer cette méthode dans une methode nommé modifierAdresseClient dans ServiceClient
+		//TODO: 1) Vérifier si un client est associé à l'adresse
+		//TODO: 2) Si aucun client n'est associé à l'adresse, modifier l'adresse
+		//TODO: 3) Si un autre client est associé à l'adresse, ne pas faire un update mais créer une nouvelle adresse
+		Optional<Adresse> adresseToUpdate = adresseRepository.findById(adresse.getIdAdresse());
+		adresseToUpdate.get().setClients(adresse.getClients());
+		adresseToUpdate.get().setCodePostal(adresse.getCodePostal());
+		adresseToUpdate.get().setComplementAdresse(adresse.getComplementAdresse());
+		adresseToUpdate.get().setLibelleVoie(adresse.getLibelleVoie());
+		adresseToUpdate.get().setNumeroVoie(adresse.getNumeroVoie());
+		adresseToUpdate.get().setVille(adresse.getVille());
+		adresseRepository.saveAndFlush(adresseToUpdate.get());
 	}
-
 }
