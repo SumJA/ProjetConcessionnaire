@@ -88,6 +88,7 @@ public class ModificationClient {
 	/**
 	 * get the client with the right attributes according to the actual ModificationClient
 	 * @param expectedDateFormat : the expected date format (how the date have to appeared)
+	 * @param serviceAdresse the service of Adresse to save the modification
 	 * @param clientToUpdate client that has to be modified
 	 * @return the Client object with the updated attributes (clone)
 	 * @throws ParseException : exception thrown when the date is not at the expected format

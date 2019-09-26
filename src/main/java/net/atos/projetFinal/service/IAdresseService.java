@@ -25,7 +25,7 @@ public interface IAdresseService {
 	List<Adresse> recupererAdresseByFields(int numero, String libelle, String complement, String codePostal, String ville) ;
 	
 	/**
-	 * Crée l'adresse dans la database
+	 * Créer l'adresse dans la database
 	 * 
 	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
 	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans

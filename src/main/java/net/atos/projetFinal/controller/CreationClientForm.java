@@ -24,10 +24,8 @@ public class CreationClientForm {
 	@NotEmpty
 	private String libelle ;
 
-	
 	private int numeroAdresse ;
 
-	@NotEmpty
 	private String complementAdresse ;
 
 	@NotEmpty

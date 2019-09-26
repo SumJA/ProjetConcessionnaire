@@ -97,3 +97,7 @@
 <form method="get" action="${contextPath}/admin/listeClients/ajouterClient">
     <button type="submit">Ajouter un client</button>
 </form>
+
+    <input type="button" onclick="location.href='${contextPath}/accueil/admin'" value="Home" />
+    
+    

@@ -186,7 +186,7 @@ public class ClientController {
 
 			clientToCreate = pCreation.getClientFromCreat() ;
 			
-			serviceAdresse.creerAdresse(clientToCreate.getAdresse()) ;
+			clientToCreate.setAdresse(serviceAdresse.creerAdresse(clientToCreate.getAdresse())) ;
 			serviceClient.creerClient(clientToCreate) ;
 		}
 
