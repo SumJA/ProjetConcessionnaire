@@ -29,7 +29,6 @@ import java.util.Optional;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,8 +58,7 @@ public class ServiceAdresse implements IAdresseService {
 	 * Créer l'adresse d'un client
 	 * 
 	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
-	 * @return adresse sauvegardée dans la base
-	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans la base
+	 * @return adresse sauvegardée dans (ou récupérée depuis) la base
 	 */
 	@Override
 	@Transactional
