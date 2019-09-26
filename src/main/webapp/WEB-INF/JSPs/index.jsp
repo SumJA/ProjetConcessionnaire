@@ -21,7 +21,7 @@
 <button type="button" class="btn btn-primary btn-lg">Clients</button>
 <button type="button" class="btn btn-primary btn-lg">Employés</button>
 <button type="button" class="btn btn-primary btn-lg">Devis</button>
-<button type="button" class="btn btn-primary btn-lg">Stocks</button>
+<a class="btn btn-primary" href="${contextPath}/stock" role="button">Stocks</a>
 <button type="button" class="btn btn-primary btn-lg">Commandes</button>
 
 <button type="button" class="btn btn-warning">Se déconnecter</button>
