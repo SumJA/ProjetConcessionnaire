@@ -65,7 +65,6 @@
                 <!-- Value that should not be able to modify (and are useless to know) -->
                 <input type="hidden" name = "modifClients[${status.index}].idAdresse" value = "${clientModif.idAdresse}"/>
                 <input type="hidden" name = "modifClients[${status.index}].dateCreation"  value = "${clientModif.dateCreation}"/>
-                <input type="hidden" name = "modifClients[${status.index}].dateCreationAdresse"  value = "${clientModif.dateCreationAdresse}"/>
                 <input type="hidden" name = "modifClients[${status.index}].dateDerniereMiseAJour" value = "${clientModif.dateDerniereMiseAJour}"/>
                 	
             </c:forEach>

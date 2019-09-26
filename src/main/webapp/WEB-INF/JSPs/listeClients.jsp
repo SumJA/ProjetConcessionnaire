@@ -87,10 +87,13 @@
                 </tr>
                 
                 <input type="hidden" name = "modifClients[${status.index}].idAdresse" value = "${clientModif.idAdresse}"/>
-                <input type="hidden" name = "modifClients[${status.index}].dateCreationAdresse" value = "${clientModif.dateCreationAdresse}"/>
                 	
             </c:forEach>
         </tbody>
     </table>
     <input type="submit" value = "Modifier sélection"/>
 </form:form>
+
+<form method="get" action="${contextPath}/admin/listeClients/ajouterClient">
+    <button type="submit">Ajouter un client</button>
+</form>
