@@ -1,6 +1,7 @@
 package net.atos.projetFinal.controller;
 
 import java.text.ParseException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +73,7 @@ public class ClientController {
 
 	/**
 	 * Methode qui permet d'intialiser la fenêtre de modification des clients
-	 * @param pModification formulaire indiquant les élément selectionné avec checkBox
+	 * @param pModification formulaire indiquant les élément selectionné (ou pas) avec checkBox
 	 * @param pBindingResult
 	 * @param pModel model
 	 * @return Va à la jsp d'affichage si aucune selection et va à la jsp de modif sinon
@@ -142,13 +143,50 @@ public class ClientController {
 					System.err.println(e.getMessage());
 				}
 			}
-
-			System.err.println("Avant modifierClient dans modifier de ClientController");
 			
 			serviceClient.modifierClients(clientsToModify);
 		}
 
 		return afficher(pModel);
+	}
+
+	/**
+	 * Méthode enclencher lorsque l'utilisateur lance une création de différents clients
+	 * @param pCreation contient toutes les info nécessaire pour créer
+	 * @param pBindingResult
+	 * @param pModel
+	 * @return à la jsp d'affichage des clients
+	 */
+	@RequestMapping(value = "/admin/listeClients/ajouterClient", method = RequestMethod.POST)
+	public String creer(@Valid @ModelAttribute(value = "creationForm") final CreationClientForm pCreation,
+			final BindingResult pBindingResult, final ModelMap pModel) {
+
+		if (!pBindingResult.hasErrors()) {
+			final Client clientsToCreate ;
+
+			clientsToCreate = pCreation.getClientFromModif() ;
+			
+			serviceClient.creerClient(clientsToCreate) ;
+		}
+
+		return afficher(pModel);
+	}
+
+	/**
+	 * Méthode enclencher lorsque l'utilisateur lance une création de différents clients
+	 * @param pCreation contient toutes les info nécessaire pour créer
+	 * @param pBindingResult
+	 * @param pModel
+	 * @return à la jsp d'affichage des clients
+	 */
+	@RequestMapping(value = "/admin/listeClients/ajouterClient", method = RequestMethod.GET)
+	public String allerACreation(final ModelMap pModel) {
+
+		CreationClientForm creationFormClient = new CreationClientForm() ;
+		
+		pModel.addAttribute("creationForm", creationFormClient) ;
+
+		return ("ajouterClient");
 	}
 
 	/**
@@ -161,9 +199,9 @@ public class ClientController {
 		LocalDateTime localDate ;
 
 		adresse.setCodePostal("69120");
-		adresse.setComplement("rien");
-		adresse.setNumero(14);
-		adresse.setLibelle("Rue Bonnevay");
+		adresse.setComplementAdresse("rien");
+		adresse.setNumeroVoie(14);
+		adresse.setLibelleVoie("Rue Bonnevay");
 		adresse.setVille("Vaulx");
 		serviceAdresse.creerAdresse(adresse);
 		
@@ -172,18 +210,19 @@ public class ClientController {
 
 		client = new Client();
 		client.setAdresse(adresse);
-		client.setDateCreation(localDate);
-		client.setPrenom("Nils");
-		client.setNom("VO");
-		client.setNumeroTelClient("0478809543");
+		client.setDateCreationClient(localDate);
+		client.setDateDerniereMiseAJourClient(Instant.now());
+		client.setPrenomClient("Nils");
+		client.setNomClient("VO");
+		client.setNumeroTelClient("0606060606");
 		client.setAdresseMail("zaed@dza.com");
 		serviceClient.creerClient(client);
 
 		adresse = new Adresse();
 		adresse.setCodePostal("69100");
-		adresse.setComplement("rien");
-		adresse.setNumero(14);
-		adresse.setLibelle("Rue Henry Barbusse");
+		adresse.setComplementAdresse("rien");
+		adresse.setNumeroVoie(14);
+		adresse.setLibelleVoie("Rue Henry Barbusse");
 		adresse.setVille("Villeurbanne");
 		serviceAdresse.creerAdresse(adresse);
 
@@ -192,18 +231,19 @@ public class ClientController {
 		
 		client = new Client();
 		client.setAdresse(adresse);
-		client.setDateCreation(localDate);
-		client.setPrenom("John");
-		client.setNom("Connor");
-		client.setNumeroTelClient("0478809543");
+		client.setDateCreationClient(localDate);
+		client.setDateDerniereMiseAJourClient(Instant.now());
+		client.setPrenomClient("John");
+		client.setNomClient("Connor");
+		client.setNumeroTelClient("04040404");
 		client.setAdresseMail("Ill@bback.com");
 		serviceClient.creerClient(client);
 
 		adresse = new Adresse();
 		adresse.setCodePostal("74000");
-		adresse.setComplement("rien");
-		adresse.setNumero(50);
-		adresse.setLibelle("Rue du lac");
+		adresse.setComplementAdresse("rien");
+		adresse.setNumeroVoie(50);
+		adresse.setLibelleVoie("Rue du lac");
 		adresse.setVille("Annecy");
 		serviceAdresse.creerAdresse(adresse);
 
@@ -212,10 +252,11 @@ public class ClientController {
 		
 		client = new Client();
 		client.setAdresse(adresse);
-		client.setDateCreation(localDate);
-		client.setPrenom("Jim");
-		client.setNom("Carrey");
-		client.setNumeroTelClient("0478809543");
+		client.setDateCreationClient(localDate);
+		client.setDateDerniereMiseAJourClient(Instant.now());
+		client.setPrenomClient("Jim");
+		client.setNomClient("Carrey");
+		client.setNumeroTelClient("0478807843");
 		client.setAdresseMail("splen@did.com");
 		serviceClient.creerClient(client);
 
@@ -224,11 +265,12 @@ public class ClientController {
 		
 		client = new Client();
 		client.setAdresse(adresse);
-		client.setDateCreation(localDate);
-		client.setPrenom("Corinne");
-		client.setNom("Manificat");
-		client.setNumeroTelClient("0478809543");
-		client.setAdresseMail("splen@did.com");
+		client.setDateCreationClient(localDate);
+		client.setDateDerniereMiseAJourClient(Instant.now());
+		client.setPrenomClient("Corinne");
+		client.setNomClient("Manificat");
+		client.setNumeroTelClient("0505050505");
+		client.setAdresseMail("jiji@did.com");
 		serviceClient.creerClient(client);
 	}
 

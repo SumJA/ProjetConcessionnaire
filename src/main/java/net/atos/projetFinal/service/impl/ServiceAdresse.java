@@ -78,6 +78,7 @@ public class ServiceAdresse implements IAdresseService {
 		}
 	}
 
+	
 	/**
 	 * Supprime une adresse
 	 * 
@@ -142,5 +143,12 @@ public class ServiceAdresse implements IAdresseService {
 			/* If the adresse exists then return the existed adresse */
 			return adresseVerificationDoublon.get(0) ;
 		}
+	}
+
+
+	@Override
+	public List<Adresse> recupererAdresseByFields(int numero, String libelle, String complement, String codePostal,
+			String ville) {
+		return adresseRepository.findAdresseByFields(numero, libelle, complement, codePostal, ville) ;
 	}
 }

@@ -36,6 +36,9 @@ SOFTWARE.
  */
 package net.atos.projetFinal.service;
 
+
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -54,6 +57,11 @@ public interface IAdresseService {
 
 	/**
 	 * Créer l'adresse d'un client
+	 */
+	List<Adresse> recupererAdresseByFields(int numero, String libelle, String complement, String codePostal, String ville) ;
+	
+	/**
+	 * Crée l'adresse dans la database
 	 * 
 	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
 	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans

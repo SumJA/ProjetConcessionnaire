@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,7 +97,10 @@ public class ServiceClient implements IClientService {
 	@Transactional
 	public Client creerClient(Client client) {
 
-		return(dao.save(client));
+		Client clientJustCreated ;
+		
+		clientJustCreated = dao.save(client) ;
+		return(clientJustCreated);
 	}
 
 

@@ -18,6 +18,7 @@ import net.atos.projetFinal.model.Client;
  *
  */
 public class ModificationClient {
+	
 	private Long idClient ;
 	
 	private Long idAdresse ;
@@ -56,9 +57,6 @@ public class ModificationClient {
 
 	@NotEmpty
 	private String dateDerniereMiseAJour ;
-
-	@NotEmpty
-	private String dateCreationAdresse ;
 	
 
 	/**
@@ -69,23 +67,20 @@ public class ModificationClient {
 	public void insertClientIntoModif(Client client, String expectedDateFormat) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(expectedDateFormat) ;
 		
-		idClient = client.getId() ;
-		prenom = client.getPrenom() ;
-		nom = client.getNom() ;
+		idClient = client.getIdClient() ;
+		prenom = client.getPrenomClient() ;
+		nom = client.getNomClient() ;
 		tel = client.getNumeroTelClient() ;
 		mail = client.getAdresseMail() ;
-		dateCreation = dateFormat.format(Date.from(client.getDateCreation().atZone(ZoneId.systemDefault()).toInstant())) ;
-		dateDerniereMiseAJour = client.getDateDerniereMiseAJour().toString() ;
+		dateCreation = dateFormat.format(Date.from(client.getDateCreationClient().atZone(ZoneId.systemDefault()).toInstant())) ;
+		dateDerniereMiseAJour = client.getDateDerniereMiseAJourClient().toString() ;
 		
-		libelle = client.getAdresse().getLibelle() ;
+		libelle = client.getAdresse().getLibelleVoie() ;
 		codePostal = client.getAdresse().getCodePostal() ;
 		ville = client.getAdresse().getVille() ;
-		idAdresse = client.getAdresse().getId() ;
-		numeroAdresse = client.getAdresse().getNumero() ;
-		complementAdresse = client.getAdresse().getComplement() ;
-		
-		dateCreationAdresse = dateFormat.format(Date.from(client.getAdresse()
-				.getDateCreation().atZone(ZoneId.systemDefault()).toInstant())) ;
+		idAdresse = client.getAdresse().getIdAdresse() ;
+		numeroAdresse = client.getAdresse().getNumeroVoie() ;
+		complementAdresse = client.getAdresse().getComplementAdresse() ;
 		
 		checked = false ;
 	}
@@ -101,37 +96,24 @@ public class ModificationClient {
 		Client client = new Client() ;
 		Adresse adresse = new Adresse() ;
 		
-
-		adresse.setLibelle(libelle);
+		adresse.setIdAdresse(idAdresse);
+		adresse.setLibelleVoie(libelle);
 		adresse.setCodePostal(codePostal);
 		adresse.setVille(ville);
-		adresse.setNumero(numeroAdresse);
-		adresse.setComplement(complementAdresse);
-		adresse.setDateDerniereMiseAJour(Instant.now());
-		client.setDateCreation(LocalDateTime.ofInstant(dateFormat.parse(dateCreationAdresse).toInstant(), ZoneId.systemDefault()));
-		adresse.setId(idAdresse);
+		adresse.setNumeroVoie(numeroAdresse);
+		adresse.setComplementAdresse(complementAdresse);
 		client.setAdresse(adresse);
 		
-		client.setDateCreation(LocalDateTime.ofInstant(dateFormat.parse(dateCreation).toInstant(), ZoneId.systemDefault()));
+		client.setIdClient(idClient);
+		client.setDateCreationClient(LocalDateTime.ofInstant(dateFormat.parse(dateCreation).toInstant(), ZoneId.systemDefault()));
 		/* Je considère que le client vient d'être mis à jour */
-		client.setDateDerniereMiseAJour(Instant.now());	
-		client.setId(idClient);
-		client.setNom(nom);
-		client.setPrenom(prenom);
+		client.setDateDerniereMiseAJourClient(Instant.now());	
+		client.setNomClient(nom);
+		client.setPrenomClient(prenom);
 		client.setNumeroTelClient(tel);
 		client.setAdresseMail(mail);
 		
 		return client ;
-	}
-	
-	
-	
-	public String getDateCreationAdresse() {
-		return dateCreationAdresse;
-	}
-
-	public void setDateCreationAdresse(String dateCreationAdresse) {
-		this.dateCreationAdresse = dateCreationAdresse;
 	}
 
 	public int getNumeroAdresse() {
