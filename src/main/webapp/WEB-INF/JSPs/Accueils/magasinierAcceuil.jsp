@@ -9,7 +9,6 @@
 <!doctype html>
 
 <html lang="fr">
-
 <head>
 <meta charset="utf-8">
 
@@ -29,18 +28,19 @@
 </head>
 
 <body>
-	<button type="button" class="btn btn-primary btn-lg">Clients</button>
-	<button type="button" class="btn btn-primary btn-lg">Devis</button>
-	<a href="${contextPath}/admin/test">
-		<button type="button" class="btn btn-primary btn-lg">Stocks</button>
-	</a>
-	<button type="button" class="btn btn-primary btn-lg">Commandes</button>
-	<sec:authorize access="isAuthenticated()">
-		<a href="${contextPath}/logout">
-			<button type="button" class="btn btn-warning">Se
-				d�connecter</button>
+	<sec:authorize access="hasRole('magasinier')">
+		<button type="button" class="btn btn-primary btn-lg">Clients</button>
+		<button type="button" class="btn btn-primary btn-lg">Devis</button>
+		<a href="${contextPath}/admin/test">
+			<button type="button" class="btn btn-primary btn-lg">Stocks</button>
 		</a>
+		<button type="button" class="btn btn-primary btn-lg">Commandes</button>
+		<sec:authorize access="isAuthenticated()">
+			<a href="${contextPath}/logout">
+				<button type="button" class="btn btn-warning">Se
+					d�connecter</button>
+			</a>
+		</sec:authorize>
 	</sec:authorize>
 </body>
-
 </html>
