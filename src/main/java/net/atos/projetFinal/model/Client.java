@@ -45,7 +45,6 @@ import javax.persistence.Table;
  * @author Kamel TRABELSI
  * @author Nils VO-VAN
  * @author Sumaira JAVAID
- * 
  */
 
 @Entity
@@ -85,10 +84,11 @@ public class Client implements Serializable {
 
 	@OneToMany(mappedBy = "clientDevis")
 	List<Devis> devis;
+
 	public Client() {
 		super();
-		
-		dateCreationClient = LocalDateTime.now() ;
+
+		dateCreationClient = LocalDateTime.now();
 		dateDerniereMiseAJourClient = Instant.now();
 	}
 

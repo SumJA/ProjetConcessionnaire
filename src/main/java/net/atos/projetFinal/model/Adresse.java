@@ -35,12 +35,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
+<<<<<<< HEAD
  * Adresse d'un client
  * 
  * @author Jerome BRUNA
  * @author Kamel TRABELSI
  * @author Nils VO-VAN
  * @author Sumaira JAVAID
+=======
+ * 
+ * @author JB
+ * @author Kamal 
+ * @author Nils 
+>>>>>>> add setId for client and adresse + add equals and hashCode for adresse + Update from master
  * 
  */
 
@@ -52,7 +59,6 @@ public class Adresse implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, nullable = false)
-
 	private Long idAdresse;
 
 	@Column()
@@ -73,6 +79,8 @@ public class Adresse implements Serializable {
 	@OneToMany(mappedBy = "adresse")
 	List<Client> clients;
 
+	
+	
 	/**
 	 * @return the numeroVoie
 	 */
@@ -165,8 +173,7 @@ public class Adresse implements Serializable {
 	}
 
 	/**
-	 * hashcode method with all attributes except dateCreation,dateDerniereMiseAJour
-	 * and clients
+	 * hashCode with all attributes except idAdresse
 	 */
 	@Override
 	public int hashCode() {
@@ -184,6 +191,7 @@ public class Adresse implements Serializable {
 	/**
 	 * Equals method with all attributes except for the following attributes id,
 	 * dateCreation, dateDerniereMiseAJour and clients
+	 * equals method with all attributes except for idAdresse
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -228,6 +236,6 @@ public class Adresse implements Serializable {
 	public String toString() {
 		return "Adresse [idAdresse=" + idAdresse + ", numeroVoie=" + numeroVoie + ", libelleVoie=" + libelleVoie
 				+ ", complementAdresse=" + complementAdresse + ", codePostal=" + codePostal + ", ville=" + ville
-				+ ", clients=" + clients + "]";
+				+ "]";
 	}
 }
