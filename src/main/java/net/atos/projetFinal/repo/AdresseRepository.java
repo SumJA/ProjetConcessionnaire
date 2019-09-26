@@ -53,6 +53,6 @@ public interface AdresseRepository extends JpaRepository<Adresse, Long> {
 	 * @param ville	le nom de la ville des adresses recherchés
 	 * @return une liste d'adresse
 	 */
-	@Query("SELECT a FROM Adresse a WHERE a.numero = ?1 AND a.libelle = ?2 AND a.complement = ?3 AND a.codePostal = ?4 AND a.ville = ?5")
+	@Query("SELECT a FROM Adresse a WHERE a.numeroVoie = ?1 AND a.libelleVoie = ?2 AND a.complementAdresse = ?3 AND a.codePostal = ?4 AND a.ville = ?5")
 	List<Adresse> findAdresseByFields(int numero, String libelle, String complement, String codePostal, String ville);
 }

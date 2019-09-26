@@ -49,7 +49,7 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 	 * @param prenom des clients recherchés
 	 * @return une liste de Clients
 	 */
-	@Query("SELECT c FROM Client c WHERE c.nom = ?1 AND c.prenom = ?2")
+	@Query("SELECT c FROM Client c WHERE c.nomClient = ?1 AND c.prenomClient = ?2")
 	List<Client> findClientsByName(String Nom, final String prenom);
 
 }

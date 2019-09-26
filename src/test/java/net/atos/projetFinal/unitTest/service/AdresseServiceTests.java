@@ -24,9 +24,7 @@ SOFTWARE.
 package net.atos.projetFinal.unitTest.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.any;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -83,8 +81,8 @@ public class AdresseServiceTests {
 	@Test
 	public void creationDAdresseRenvoieLaMemeAdresse() {
 		Adresse adresseACreer = new Adresse();
-		adresseACreer.setNumero(10);
-		adresseACreer.setLibelle("Downing Street");
+		adresseACreer.setNumeroVoie((10));
+		adresseACreer.setLibelleVoie("Downing Street");
 		adresseACreer.setCodePostal("UK9999");
 		adresseACreer.setVille("Londres");
 		
@@ -93,8 +91,8 @@ public class AdresseServiceTests {
 		
 		Adresse adresseCreee = adresseService.creerAdresse(adresseACreer);
 
-		assertThat(adresseCreee.getNumero()).isSameAs(adresseACreer.getNumero());
-		assertThat(adresseCreee.getLibelle()).isSameAs(adresseACreer.getLibelle());
+		assertThat(adresseCreee.getNumeroVoie()).isSameAs(adresseACreer.getNumeroVoie());
+		assertThat(adresseCreee.getLibelleVoie()).isSameAs(adresseACreer.getLibelleVoie());
 		assertThat(adresseCreee.getCodePostal()).isSameAs(adresseACreer.getCodePostal());
 		assertThat(adresseCreee.getVille()).isSameAs(adresseACreer.getVille());
 	}

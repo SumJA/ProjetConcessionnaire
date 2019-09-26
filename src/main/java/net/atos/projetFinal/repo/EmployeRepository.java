@@ -29,7 +29,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Employe;
 
 /**
@@ -52,7 +51,13 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
 	@Query("SELECT e FROM Employe e WHERE e.nom = ?1")
 	Employe findByUsername(String username);
 	
-	
+	/**
+	 * Retourne la lsite des employésdont le nom ou le mot de passe correspond à celui donné en paramètre
+	 * 
+	 * @param nom	le nom de ou des employés à retrouver
+	 * @param email	le mot de passe de ou des employés à retrouver
+	 * @return une liste d'employés
+	 */
 	@Query("SELECT e FROM Employe e WHERE e.nom = ?1 OR e.email = ?2")
 	List<Employe> findEmployeByNameOrEmail(String nom, String email);
 }

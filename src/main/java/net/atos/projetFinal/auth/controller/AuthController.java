@@ -1,5 +1,25 @@
 /**
- * Controller pour l'authentification
+ * MIT License
+
+Copyright (c) [2019] [Sumaira JAVAID, Nils VO-VAN, Kamel TRABELSI, Jerome BRUNA]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
  */
 package net.atos.projetFinal.auth.controller;
 
@@ -18,7 +38,10 @@ import net.atos.projetFinal.model.Employe;
 import net.atos.projetFinal.repo.RoleRepository;
 
 /**
- * @author Sumaira
+ * Controller pour l'authentification
+ * 
+ * @author Sumaira JAVAID
+ * @author Jerome BRUNA
  *
  */
 @Controller
@@ -65,14 +88,14 @@ public class AuthController {
 	@GetMapping("/login")
 	public String login(Model model, String error, String logout) {
 		if (error != null)
-			model.addAttribute("error", "Your nom and password is invalid.");
+			model.addAttribute("error", "Nom d'utilisateur ou Mot De Passe Invalide.");
 
 		if (logout != null)
-			model.addAttribute("message", "You have been logged out successfully.");
+			model.addAttribute("message", "Vous avez été déconnecté !");
 
 		return "login";
 	}
-
+	
 	@GetMapping({ "/", "/home" })
 	public String welcome(Model model) {
 		return "index";

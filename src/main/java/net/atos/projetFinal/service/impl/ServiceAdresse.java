@@ -23,10 +23,11 @@ SOFTWARE.
  */
 package net.atos.projetFinal.service.impl;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -56,14 +57,17 @@ public class ServiceAdresse implements IAdresseService {
 	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
 	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans
 	 *                                         la base
-	 * @return une Adresse                                     
+	 * @throws NullPointerException            si l'adresse donnée en paramètre est
+	 *                                         null
+	 * @return une Adresse
 	 */
 	@Override
 	@Transactional
-	public Adresse creerAdresse(Adresse adresse) {
+	public Adresse creerAdresse(@NotNull final Adresse adresse) {
 		if (adresse != null) {
 			List<Adresse> adresseVerificationDoublon = adresseRepository.findAdresseByFields(adresse.getNumeroVoie(),
-					adresse.getLibelleVoie(), adresse.getComplementAdresse(), adresse.getCodePostal(), adresse.getVille());
+					adresse.getLibelleVoie(), adresse.getComplementAdresse(), adresse.getCodePostal(),
+					adresse.getVille());
 			if (adresseVerificationDoublon.isEmpty()) {
 				return adresseRepository.saveAndFlush(adresse);
 			} else {
@@ -80,28 +84,38 @@ public class ServiceAdresse implements IAdresseService {
 	 * @param idAdresse identifiant de l'adresse à supppimer
 	 * @throws IllegalArgumentException dans le cas où {@code idAdresse} donné est
 	 *                                  {@literal null}
+	 * @throws NullPointerException     si l'id de l'adresse donné en paramètre est
+	 *                                  null
 	 */
 	@Override
 	@Transactional
-	public void supprimerAdresseParId(final Long idAdresse) {
-		adresseRepository.deleteById(idAdresse);
+	public void supprimerAdresseParId(@NotNull final Long idAdresse) {
+		if (idAdresse != null) {
+			adresseRepository.deleteById(idAdresse);
+		} else {
+			throw new NullPointerException("L'identifiant de l'adresse fournie en paramètre est null");
+		}
 	}
 
 	/**
+	 * FIXME : voir Implémentation !!
 	 * Met à jour une adresse
 	 * 
 	 * @param adresse à mettre à jour, ne doit pas etre un {@literal null}
 	 * @throws IllegalArgumentException si l'identidiant d'une {@code adresse} est
-	 *                                  {@literal null}
-	 * @throws NoSuchElementException - si l'adresse n'existe pas en base
+	 *                                  {@literal null} ou si L'adresse donné est en
+	 *                                  paramètre est {@literal null}
+	 * @throws NoSuchElementException   - si l'adresse n'existe pas en base
 	 */
 	@Override
 	@Transactional
-	public void modifierAdresse(final Adresse adresse) {
-		//TODO: Voir si déplacer cette méthode dans une methode nommé modifierAdresseClient dans ServiceClient
-		//TODO: 1) Vérifier si un client est associé à l'adresse
-		//TODO: 2) Si aucun client n'est associé à l'adresse, modifier l'adresse
-		//TODO: 3) Si un autre client est associé à l'adresse, ne pas faire un update mais créer une nouvelle adresse
+	public void modifierAdresse(@NotNull final Adresse adresse) {
+		// TODO: Voir si déplacer cette méthode dans une methode nommé
+		// modifierAdresseClient dans ServiceClient
+		// TODO: 1) Vérifier si un client est associé à l'adresse
+		// TODO: 2) Si aucun client n'est associé à l'adresse, modifier l'adresse
+		// TODO: 3) Si un autre client est associé à l'adresse, ne pas faire un update
+		// mais créer une nouvelle adresse
 		Optional<Adresse> adresseToUpdate = adresseRepository.findById(adresse.getIdAdresse());
 		adresseToUpdate.get().setClients(adresse.getClients());
 		adresseToUpdate.get().setCodePostal(adresse.getCodePostal());

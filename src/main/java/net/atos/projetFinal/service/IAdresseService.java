@@ -25,6 +25,8 @@ package net.atos.projetFinal.service;
 
 import java.util.NoSuchElementException;
 
+import javax.validation.constraints.NotNull;
+
 import org.springframework.dao.DataIntegrityViolationException;
 
 import net.atos.projetFinal.model.Adresse;
@@ -37,36 +39,39 @@ import net.atos.projetFinal.model.Adresse;
  *
  */
 public interface IAdresseService {
-	
+
 	/**
 	 * Créer l'adresse d'un client
 	 * 
 	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
 	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans
 	 *                                         la base
+	 * @throws NullPointerException            si l'adresse donnée en paramètre est
+	 *                                         null
 	 * @return une Adresse
 	 */
-	Adresse creerAdresse(final Adresse adresse);
-	
+	Adresse creerAdresse(@NotNull final Adresse adresse);
+
 	/**
 	 * Supprime une adresse
 	 * 
 	 * @param idAdresse identifiant de l'adresse à supppimer
 	 * @throws IllegalArgumentException dans le cas où {@code idAdresse} donné est
 	 *                                  {@literal null}
+	 * @throws NullPointerException     si l'id de l'adresse donné en paramètre est
+	 *                                  null
 	 */
-	void supprimerAdresseParId(final Long idAdresse);
-	
+	void supprimerAdresseParId(@NotNull final Long idAdresse);
+
 	/**
-	 * FIXME : voir Implémentation !!
-	 * Met à jour une adresse
+	 * FIXME : voir Implémentation !! Met à jour une adresse
 	 * 
 	 * @param adresse à mettre à jour, ne doit pas etre un {@literal null}
 	 * @throws IllegalArgumentException si l'identidiant d'une {@code adresse} est
-	 *                                  {@literal null}
-	 * @throws NoSuchElementException - si l'adresse n'existe pas en base
+	 *                                  {@literal null} ou si L'adresse donné est en
+	 *                                  paramètre est {@literal null}
+	 * @throws NoSuchElementException   - si l'adresse n'existe pas en base
 	 */
-	void modifierAdresse(final Adresse adresse) throws NoSuchFieldException;
-	
+	void modifierAdresse(@NotNull final Adresse adresse);
 
 }
