@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,11 +106,12 @@ public class ServiceClient implements IClientService {
 	/**
 	 * Modify in the database the clients in the list 
 	 * @param clients the clients with the modified attribute values
+	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldError 
 	 */
 	@Override
 	@Transactional
-	public void modifierClients(List<Client> clients) {
-
+	public void modifierClients(List<Client> clients) throws NoSuchFieldError, NoSuchFieldException {
 		for (Client client : clients) {
 			modifierClient(client);
 		}
@@ -120,10 +120,12 @@ public class ServiceClient implements IClientService {
 	/**
 	 * Modify in the database the client
 	 * @param client the client with the modified attribute values
+	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldError 
 	 */
 	@Override
 	@Transactional
-	public void modifierClient(Client client) {
+	public void modifierClient(Client client) throws NoSuchFieldError, NoSuchFieldException {
 		Client clientToUpdate ;
 		
 		/* Is not null (mandatory) */
@@ -132,7 +134,7 @@ public class ServiceClient implements IClientService {
 		/* If the adresse has changed then erase or create adresse */
 		if(!clientToUpdate.getAdresse().equals(client.getAdresse()))
 		{	
-
+			System.err.println("ServiceClient.modifierClient : juste avant modifierAdresseClient");
 			client = modifierAdresseClient(client) ;
 		}
 
@@ -151,18 +153,19 @@ public class ServiceClient implements IClientService {
 	 * Modify the adresse of the client in the database
 	 * @param client : client that contains the new value of the adresse
 	 * @return the new client values (adresse updated)
+	 * @throws NoSuchFieldException 
 	 * @NB if the adresse attribute of the client has an other client that the parameter client
 	 * the method create a new adresse
 	 */
 	@Override
 	@Transactional
-	public Client modifierAdresseClient(Client client) {
+	public Client modifierAdresseClient(Client client) throws NoSuchFieldException, NoSuchFieldError {
 		Client originalClient ;
 		Adresse adresse ;
 
 		adresse = client.getAdresse() ;
 		
-		/* Is not null (mandatory) */
+		/* findById must not be null (mandatory) */
 		originalClient = dao.findById(client.getIdClient()).get() ;
 		
 		if(originalClient.getAdresse().getClients().size()>1)
@@ -184,18 +187,17 @@ public class ServiceClient implements IClientService {
 		}
 		else
 		{
-			/* If less than one client then update the adresse */
-			try {
-				client.setAdresse(serviceAdresse.modifierAdresse(client.getAdresse())) ;
-			} catch (NoSuchFieldException e) {
-				
-				System.err.println(e.getMessage());
-				e.printStackTrace();
-			}
+			client.setAdresse(serviceAdresse.modifierAdresse(client.getAdresse())) ;
 		}
 		
 		return client ;
 		
+	}
+
+	@Override
+	public Client findClientById(Long id) {
+		
+		return dao.findById(id).get();
 	}
 	
 

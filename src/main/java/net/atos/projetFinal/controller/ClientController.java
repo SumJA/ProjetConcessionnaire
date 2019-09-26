@@ -94,11 +94,20 @@ public class ClientController {
 					Client client;
 
 					try {
-						client = modifClient.getClientFromModif(DATE_FORMAT);
+						client = serviceClient.findClientById(modifClient.getIdClient()) ;
+						modifClient.getClientFromModif(client, serviceAdresse, DATE_FORMAT);
 						checkedClients.add(client);
 						checkedModifClients.add(modifClient);
 					} catch (ParseException e) {
 						System.err.println(e.getMessage());
+					} catch (NoSuchFieldException e) {
+						// TODO Auto-generated catch block
+						System.err.println(e.getMessage());
+						e.printStackTrace();
+					} catch (IllegalArgumentException e) {
+						// TODO Auto-generated catch block
+						System.err.println(e.getMessage());
+						e.printStackTrace();
 					}
 				}
 			}
@@ -137,17 +146,28 @@ public class ClientController {
 				Client client;
 
 				try {
-					client = modifClient.getClientFromModif(DATE_FORMAT);
+					client = serviceClient.findClientById(modifClient.getIdClient()) ;
+					modifClient.getClientFromModif(client, serviceAdresse, DATE_FORMAT);
 					clientsToModify.add(client);
 				} catch (ParseException e) {
 					System.err.println(e.getMessage());
+				} catch (NoSuchFieldException e) {
+					// TODO Auto-generated catch block
+					System.err.println(e.getMessage());
+					e.printStackTrace();
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					System.err.println(e.getMessage());
+					e.printStackTrace();
 				}
 			}
 			
 			serviceClient.modifierClients(clientsToModify);
+			return afficher(pModel);
+		}else {
+			return("modifierClients") ;
 		}
 
-		return afficher(pModel);
 	}
 
 	/**
@@ -162,11 +182,12 @@ public class ClientController {
 			final BindingResult pBindingResult, final ModelMap pModel) {
 
 		if (!pBindingResult.hasErrors()) {
-			final Client clientsToCreate ;
+			final Client clientToCreate ;
 
-			clientsToCreate = pCreation.getClientFromModif() ;
+			clientToCreate = pCreation.getClientFromCreat() ;
 			
-			serviceClient.creerClient(clientsToCreate) ;
+			serviceAdresse.creerAdresse(clientToCreate.getAdresse()) ;
+			serviceClient.creerClient(clientToCreate) ;
 		}
 
 		return afficher(pModel);

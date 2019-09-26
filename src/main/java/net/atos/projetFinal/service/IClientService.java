@@ -39,9 +39,15 @@ import net.atos.projetFinal.model.Client;
 public interface IClientService {
 	
 	/**
-	 * Retourne la liste de tous les clients.
-	 * 
-	 * @return la liste de tous les clients.
+	 * Récupère le client avec l'ID donné
+	 * @param id id recherché
+	 * @return le client avec l'id suivant
+	 */
+	Client findClientById(Long id) ;
+	
+	/**
+	 * Get all the client saved in the database
+	 * @return all the clients saved in database
 	 */
 	List<Client> getAllClients();
 	
@@ -85,21 +91,25 @@ public interface IClientService {
 	 * Met à jour les informations d'un ensemble de clients
 	 * 
 	 * @param clients la liste des clients à mettre à jour
+	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldError 
 	 * @throws IllegalArgumentException si l'identidiant d'un {@code clients} est
 	 *                                  {@literal null}
 	 * @throws NoSuchElementException   - si un client n'existe pas en base
 	 */
-	void modifierClients(final List<Client> clients);
+	void modifierClients(final List<Client> clients) throws NoSuchFieldError, NoSuchFieldException;
 	
 	/**
 	 * Met à jour les information d'un client
 	 * 
 	 * @param client à mettre à jour
+	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldError 
 	 * @throws IllegalArgumentException si l'identidiant d'un {@code clients} est
 	 *                                  {@literal null}
 	 * @throws NoSuchElementException   - si un client n'existe pas en base
 	 */
-	void modifierClient(final Client client);
+	void modifierClient(final Client client) throws NoSuchFieldError, NoSuchFieldException;
 	
 	
 	
@@ -107,10 +117,11 @@ public interface IClientService {
 	 * Modify the adresse of the client in the database
 	 * @param client : client that contains the new value of the adresse
 	 * @return the new client values (with adresse updated)
+	 * @throws NoSuchFieldException 
 	 * @NB if the adresse attribute of the Client has an other client that the parameter client
 	 * the method create a new adresse
 	 */
-	Client modifierAdresseClient(Client client) ;
+	Client modifierAdresseClient(Client client) throws NoSuchFieldException ;
 
 }
 

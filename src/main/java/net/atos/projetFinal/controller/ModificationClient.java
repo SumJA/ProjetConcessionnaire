@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 
 import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
+import net.atos.projetFinal.service.IAdresseService;
 
 /**
  * 
@@ -37,7 +38,6 @@ public class ModificationClient {
 	
 	private int numeroAdresse ;
 
-	@NotEmpty
 	private String complementAdresse ;
 
 	@NotEmpty
@@ -88,32 +88,35 @@ public class ModificationClient {
 	/**
 	 * get the client with the right attributes according to the actual ModificationClient
 	 * @param expectedDateFormat : the expected date format (how the date have to appeared)
-	 * @return the Client object with the updated attributes
+	 * @param clientToUpdate client that has to be modified
+	 * @return the Client object with the updated attributes (clone)
 	 * @throws ParseException : exception thrown when the date is not at the expected format
+	 * @throws IllegalArgumentException 
+	 * @throws NoSuchFieldException 
 	 */
-	public Client getClientFromModif(String expectedDateFormat) throws ParseException {
+	public Client getClientFromModif(Client clientToUpdate, IAdresseService serviceAdresse, String expectedDateFormat) throws ParseException, NoSuchFieldException, IllegalArgumentException {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(expectedDateFormat) ;
-		Client client = new Client() ;
-		Adresse adresse = new Adresse() ;
+		Adresse adresseToUpdateCloned = clientToUpdate.getAdresse().clone();
+		Adresse adresseAJour ;	
 		
-		adresse.setIdAdresse(idAdresse);
-		adresse.setLibelleVoie(libelle);
-		adresse.setCodePostal(codePostal);
-		adresse.setVille(ville);
-		adresse.setNumeroVoie(numeroAdresse);
-		adresse.setComplementAdresse(complementAdresse);
-		client.setAdresse(adresse);
+		adresseToUpdateCloned.setLibelleVoie(libelle);
+		adresseToUpdateCloned.setCodePostal(codePostal);
+		adresseToUpdateCloned.setVille(ville);
+		adresseToUpdateCloned.setNumeroVoie(numeroAdresse);
+		adresseToUpdateCloned.setComplementAdresse(complementAdresse);
+
+		adresseAJour = serviceAdresse.modifierAdresse(adresseToUpdateCloned);	
+		clientToUpdate.setAdresse(adresseAJour);
 		
-		client.setIdClient(idClient);
-		client.setDateCreationClient(LocalDateTime.ofInstant(dateFormat.parse(dateCreation).toInstant(), ZoneId.systemDefault()));
+		clientToUpdate.setDateCreationClient(LocalDateTime.ofInstant(dateFormat.parse(dateCreation).toInstant(), ZoneId.systemDefault()));
 		/* Je considère que le client vient d'être mis à jour */
-		client.setDateDerniereMiseAJourClient(Instant.now());	
-		client.setNomClient(nom);
-		client.setPrenomClient(prenom);
-		client.setNumeroTelClient(tel);
-		client.setAdresseMail(mail);
+		clientToUpdate.setDateDerniereMiseAJourClient(Instant.now());	
+		clientToUpdate.setNomClient(nom);
+		clientToUpdate.setPrenomClient(prenom);
+		clientToUpdate.setNumeroTelClient(tel);
+		clientToUpdate.setAdresseMail(mail);
 		
-		return client ;
+		return clientToUpdate ;
 	}
 
 	public int getNumeroAdresse() {

@@ -24,7 +24,6 @@ SOFTWARE.
 package net.atos.projetFinal.service.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -35,7 +34,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import net.atos.projetFinal.model.Adresse;
+import net.atos.projetFinal.model.Client;
 import net.atos.projetFinal.repo.AdresseRepository;
+import net.atos.projetFinal.repo.ClientRepository;
 import net.atos.projetFinal.service.IAdresseService;
 
 /**
@@ -51,15 +52,15 @@ public class ServiceAdresse implements IAdresseService {
 	@Autowired
 	private AdresseRepository adresseRepository;
 
+	@Autowired
+	private ClientRepository clientRepository;
+
 	/**
 	 * Créer l'adresse d'un client
 	 * 
 	 * @param adresse à créer en base, ne doit pas etre un {@literal null}
-	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans
-	 *                                         la base
-	 * @throws NullPointerException            si l'adresse donnée en paramètre est
-	 *                                         null
-	 * @return une Adresse
+	 * @return adresse sauvegardée dans la base
+	 * @throws DataIntegrityViolationException si l'adresse est déjà existante dans la base
 	 */
 	@Override
 	@Transactional
@@ -99,24 +100,43 @@ public class ServiceAdresse implements IAdresseService {
 	}
 
 	/**
-	 * FIXME : voir Implémentation !!
-	 * Met à jour une adresse
+	 * Met à jour une adresse. 
+	 * Si idAdresse ne pointe sur rien donc creation adresse.
+	 * Sinon si idAdresse pointe sur une adresse ayant les mêmes attributs alors rien faire.
+	 * Sinon si aucune adresse existe avec des attributs identique à celle passé en param alors modif.
+	 * Sinon si une adresse avec des attributs indentiques à celle passé en paramètre alors pointé sur celle-ci
+	 * 		ET supprimer l'adresse avec idAdresse paramètré si elle ne contenait qu'un seul client.
 	 * 
 	 * @param adresse à mettre à jour, ne doit pas etre un {@literal null}
 	 * @return 
 	 * @throws NoSuchFieldException 
 	 * @throws IllegalArgumentException si l'identidiant d'une {@code adresse} est
-	 *                                  {@literal null} ou si L'adresse donné est en
-	 *                                  paramètre est {@literal null}
-	 * @throws NoSuchElementException   - si l'adresse n'existe pas en base
+	 *                                  {@literal null}
 	 */
 	@Override
 	@Transactional
-	public Adresse modifierAdresse(@NotNull final Adresse adresse) throws NoSuchFieldException {
+	public Adresse modifierAdresse(final Adresse adresse) throws IllegalArgumentException {
+
+		Adresse newAdresse = new Adresse() ;
 		Optional<Adresse> adresseToUpdate = adresseRepository.findById(adresse.getIdAdresse());
 		
 		if(!adresseToUpdate.isPresent()) {
-			throw new NoSuchFieldException("Id pour l'adresse inexistant") ;
+			/* if the idAdresse does not exist then create new adresse */
+			//newAdresse.setClients(adresse.getClients());
+			newAdresse.setCodePostal(adresse.getCodePostal());
+			newAdresse.setComplementAdresse(adresse.getComplementAdresse());
+			newAdresse.setLibelleVoie(adresse.getLibelleVoie());
+			newAdresse.setNumeroVoie(adresse.getNumeroVoie());
+			newAdresse.setVille(adresse.getVille());
+			
+			return(creerAdresse(newAdresse)) ;
+		}
+		
+		if(adresseToUpdate.get().equals(adresse))
+		{
+			/* if adresse equals to adresseToUpdate then do not update because same adresse already exist 
+			 * (with same id because findById above) */
+			return adresseToUpdate.get() ;
 		}
 		
 		List<Adresse> adresseVerificationDoublon = adresseRepository.findAdresseByFields(adresse.getNumeroVoie(),
@@ -124,24 +144,44 @@ public class ServiceAdresse implements IAdresseService {
 		
 		
 		if (adresseVerificationDoublon.isEmpty()) {
-			/* If the adresse does not exist then modify */
-			adresseToUpdate.get().setClients(adresse.getClients());
+			/* If the adresse does not exist then modify the adresse */
+
 			adresseToUpdate.get().setCodePostal(adresse.getCodePostal());
 			adresseToUpdate.get().setComplementAdresse(adresse.getComplementAdresse());
 			adresseToUpdate.get().setLibelleVoie(adresse.getLibelleVoie());
 			adresseToUpdate.get().setNumeroVoie(adresse.getNumeroVoie());
 			adresseToUpdate.get().setVille(adresse.getVille());
 			
-			return(adresseRepository.saveAndFlush(adresseToUpdate.get()));
+			return(adresseRepository.save(adresseToUpdate.get()));
 		} else {
+			/* If not empty  then the adresse fields already exist */
+			Adresse adresseToReturn = adresseVerificationDoublon.get(0) ;
 			
 			if(adresseToUpdate.get().getClients().size() <= 1) {
+				
+				if(adresseToUpdate.get().getClients().size() == 1)
+				{
+					/* if the adresse to update gets only one client then modify the client
+					 * to point to the right adresse */
+					Client clientToModify ;
+					
+					clientToModify = adresseToUpdate.get().getClients().get(0) ;
+
+					System.err.println("ServiceAdresse.modifierAdresse clientToModify.getAdresse = " + clientToModify.getAdresse());
+					System.err.println("ServiceAdresse.modifierAdresse adresseToUpdate = " + adresseToUpdate);
+					System.err.println("ServiceAdresse.modifierAdresse adresseToReturn = " + adresseToReturn);
+					System.err.println("ServiceAdresse.modifierAdresse adresseToReturn == adresseToUpdate = " + (adresseToReturn == adresseToUpdate.get()));
+					clientToModify.setAdresse(adresseToReturn) ;
+					clientToModify=clientRepository.save(clientToModify) ;
+					System.err.println("ServiceAdresse.modifierAdresse clientToModify.getAdresse = " + clientToModify.getAdresse());
+				}
+				
 				/* if the adresse has only one client then remove from the database */
 				adresseToUpdate.get().getClients().clear();
 				supprimerAdresseById(adresseToUpdate.get().getIdAdresse()) ;
 			}
 			/* If the adresse exists then return the existed adresse */
-			return adresseVerificationDoublon.get(0) ;
+			return adresseToReturn ;
 		}
 	}
 

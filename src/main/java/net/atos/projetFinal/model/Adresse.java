@@ -53,7 +53,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "adresse")
-public class Adresse implements Serializable {
+public class Adresse implements Serializable, Cloneable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -238,4 +238,22 @@ public class Adresse implements Serializable {
 				+ ", complementAdresse=" + complementAdresse + ", codePostal=" + codePostal + ", ville=" + ville
 				+ "]";
 	}
+	
+	@Override
+	public Adresse clone()
+	{
+	    Adresse clone;
+	    try
+	    {
+	    	clone = (Adresse) super.clone();
+	    }
+	    catch (CloneNotSupportedException e)
+	    {
+	        throw new Error("Erreur clone adresse");
+	    }
+
+	    return clone;
+	}
+	
+	
 }

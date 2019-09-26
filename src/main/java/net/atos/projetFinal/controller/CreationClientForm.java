@@ -1,5 +1,8 @@
 package net.atos.projetFinal.controller;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotEmpty;
 
 import net.atos.projetFinal.model.Adresse;
@@ -62,8 +65,8 @@ public class CreationClientForm {
 	 * get the client with the right attributes according to the actual CreationClientForm
 	 * @return the Client object with the updated attributes
 	 */
-	public Client getClientFromModif() {
-		Client client = new Client() ;
+	public Client getClientFromCreat() {
+		Client clientToCreate = new Client() ;
 		Adresse adresse = new Adresse() ;
 		
 		adresse.setLibelleVoie(libelle);
@@ -71,14 +74,16 @@ public class CreationClientForm {
 		adresse.setVille(ville);
 		adresse.setNumeroVoie(numeroAdresse);
 		adresse.setComplementAdresse(complementAdresse);
-		client.setAdresse(adresse);
+		clientToCreate.setAdresse(adresse);
 		
-		client.setNomClient(nom);
-		client.setPrenomClient(prenom);
-		client.setNumeroTelClient(tel);
-		client.setAdresseMail(mail);
+		clientToCreate.setNomClient(nom);
+		clientToCreate.setDateCreationClient(LocalDateTime.now());
+		clientToCreate.setDateDerniereMiseAJourClient(Instant.now());
+		clientToCreate.setPrenomClient(prenom);
+		clientToCreate.setNumeroTelClient(tel);
+		clientToCreate.setAdresseMail(mail);
 		
-		return client ;
+		return clientToCreate ;
 	}
 	
 	public int getNumeroAdresse() {
