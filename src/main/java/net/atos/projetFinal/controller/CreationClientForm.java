@@ -3,8 +3,6 @@ package net.atos.projetFinal.controller;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotEmpty;
-
 import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
 
