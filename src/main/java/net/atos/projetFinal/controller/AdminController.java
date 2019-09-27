@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  */
 @Controller
-public class Accueil {
+public class AdminController {
 	/*
-	 * TODO: Accueil personalisé en fonction du role (admin, commercial, magasinier)
+	 * TODO: AdminController personalisé en fonction du role (admin, commercial, magasinier)
 	 */
 	@Secured("ROLE_admin")
 	@GetMapping("/admin/test")
