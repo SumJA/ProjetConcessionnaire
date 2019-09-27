@@ -151,10 +151,12 @@ public class ClientController {
 	 * @param pBindingResult
 	 * @param pModel
 	 * @return à la jsp d'affichage des clients
+	 * @throws NoSuchFieldException 
+	 * @throws NoSuchFieldError 
 	 */
 	@RequestMapping(value = "/admin/listeClients/updateclient", method = RequestMethod.POST)
 	public String modifier(@Valid @ModelAttribute(value = "modifFormClient") final ModificationFormClient pModification,
-			final BindingResult pBindingResult, final ModelMap pModel) {
+			final BindingResult pBindingResult, final ModelMap pModel) throws NoSuchFieldError, NoSuchFieldException {
 
 		if (!pBindingResult.hasErrors()) {
 			final List<Client> clientsToModify = new ArrayList<>();
