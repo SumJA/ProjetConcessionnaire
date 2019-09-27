@@ -15,29 +15,22 @@ import net.atos.projetFinal.model.Client;
  */
 public class CreationClientForm {
 	
-	@NotEmpty
 	private String prenom ;
 
-	@NotEmpty
 	private String nom ;
 
-	@NotEmpty
 	private String libelle ;
 
 	private int numeroAdresse ;
 
 	private String complementAdresse ;
 
-	@NotEmpty
 	private String codePostal ;
 
-	@NotEmpty
 	private String ville ;
 
-	@NotEmpty
 	private String tel ;
 
-	@NotEmpty
 	private String mail ;
 	
 

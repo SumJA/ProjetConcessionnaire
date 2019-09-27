@@ -20,6 +20,7 @@ import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
 import net.atos.projetFinal.service.IAdresseService;
 import net.atos.projetFinal.service.IClientService;
+import net.atos.projetFinal.validator.CreationClientValidator;
 
 /**
  * 
@@ -36,6 +37,9 @@ public class ClientController {
 
 	@Autowired
 	private IAdresseService serviceAdresse;
+	
+	@Autowired
+	private CreationClientValidator creationValidator;
 
 	/**
 	 * Method pour afficher touts les client
@@ -204,9 +208,12 @@ public class ClientController {
 	 * @return à la jsp d'affichage des clients
 	 */
 	@RequestMapping(value = "/admin/listeClients/ajouterClient", method = RequestMethod.POST)
-	public String creer(@Valid @ModelAttribute(value = "creationForm") final CreationClientForm pCreation,
+	public String creer(@ModelAttribute(value = "creationForm") final CreationClientForm pCreation,
 			final BindingResult pBindingResult, final ModelMap pModel) {
 
+
+		creationValidator.validate(pCreation, pBindingResult); 
+		
 		if (!pBindingResult.hasErrors()) {
 			final Client clientToCreate ;
 
@@ -214,9 +221,14 @@ public class ClientController {
 			
 			clientToCreate.setAdresse(serviceAdresse.creerAdresse(clientToCreate.getAdresse())) ;
 			serviceClient.creerClient(clientToCreate) ;
+			
+			return afficher(pModel);
+		}
+		else
+		{
+			return "ajouterClient";
 		}
 
-		return afficher(pModel);
 	}
 
 	/**

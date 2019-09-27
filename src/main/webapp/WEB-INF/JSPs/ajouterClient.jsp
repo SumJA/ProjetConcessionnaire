@@ -16,6 +16,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Ajouter Client</title>
+
 </head>
 <body>
 
@@ -25,30 +26,39 @@
    
     <label>Prénom : </label>
 	<form:input path="prenom" />
+	<b><form:errors path="prenom"></form:errors></b>
     
     <label>Nom : </label>
-	<form:input path="nom" /> <br/>
+	<form:input path="nom" />
+	<b><form:errors path="nom"></form:errors></b> <br/>
     
     <label>Email : </label>
 	<form:input path="mail" />
+	<b><form:errors path="mail"></form:errors></b>
      
     <label>Téléphone : </label>
-	<form:input path="tel" /> <br/>
+	<form:input path="tel" />
+	<b><form:errors path="tel"></form:errors></b> <br/>
      
     <label>Numéro de rue : </label>
 	<form:input path="numeroAdresse" />
+	<b><form:errors path="numeroAdresse"></form:errors></b>
      
     <label>Libellé : </label>
-	<form:input path="libelle" /> <br/>
+	<form:input path="libelle" /> 
+	<b><form:errors path="libelle"></form:errors></b><br/>
      
     <label>Complément adresse : </label>
-	<form:input path="complementAdresse" /> <br/>
+	<form:input path="complementAdresse" /> 
+	<b><form:errors path="complementAdresse"></form:errors></b><br/>
      
     <label>Code Postal : </label>
 	<form:input path="codePostal" />
+	<b><form:errors path="codePostal"></form:errors></b>
      
     <label>Ville : </label>
-	<form:input path="ville" /> <br/>
+	<form:input path="ville" />
+	<b><form:errors path="ville"></form:errors></b> <br/>
     
         
     <input type="submit" value="Créer"/>

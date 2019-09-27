@@ -13,28 +13,30 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <head>
-<title>Modifier les clients</title>
+	<title>Modifier les clients</title>
+	<link
+	    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	    rel="stylesheet">
 </head>
   
 <body>
 <h1>Modifier Clients</h1>
-	
 	<form:form method="post" modelAttribute="modifFormClient" action="${contextPath}/admin/listeClients/updateclient">
-	    <table border="1">
-	    <thead>
-	        <tr>
-	            <th>ID</th>
-	            <th>Prénom</th>
-	            <th>Nom</th>
-	            <th>N° adresse</th>
-	            <th>Libellé adresse</th>
-	            <th>Complément adresse</th>
-	            <th>Code postal</th>
-	            <th>Ville</th>
-	            <th>Téléphone</th>
-	            <th>Mail</th>
-	        </tr>
-	    </thead>
+	    <table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Prénom</th>
+				<th scope="col">Nom</th>
+				<th scope="col">N° Adresse</th>
+				<th scope="col">Libellé adresse</th>
+				<th scope="col">Complément adresse</th>
+				<th scope="col">Code postal</th>
+				<th scope="col">Ville</th>
+				<th scope="col">Telephone</th>
+				<th scope="col">Mail</th>
+			</tr>
+		</thead>
 	        <tbody>
 	            <c:forEach items="${modifFormClient.modifClients}" var="clientModif" varStatus="status">
 	                <tr>
@@ -81,6 +83,7 @@
 	    <input type="submit" value="Modifier"/>
 	</form:form>
 	
-	    <input type="button" onclick="location.href='${contextPath}/accueil/admin'" value="Home" />
+    <input type="button" onclick="location.href='${contextPath}/accueil/admin'" value="Home" />
+
 </body>
 </html>
