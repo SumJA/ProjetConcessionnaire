@@ -142,15 +142,30 @@ public class ServiceAdresse implements IAdresseService {
 		
 		
 		if (adresseVerificationDoublon.isEmpty()) {
-			/* If the adresse does not exist then modify the adresse */
+			/* If a adresse with same attributes does not exist then modify the adresse */
 
-			adresseToUpdate.get().setCodePostal(adresse.getCodePostal());
-			adresseToUpdate.get().setComplementAdresse(adresse.getComplementAdresse());
-			adresseToUpdate.get().setLibelleVoie(adresse.getLibelleVoie());
-			adresseToUpdate.get().setNumeroVoie(adresse.getNumeroVoie());
-			adresseToUpdate.get().setVille(adresse.getVille());
-			
-			return(adresseRepository.save(adresseToUpdate.get()));
+			if(adresseToUpdate.get().getClients().size() > 1)
+			{
+				/* If the adresse to update has more than one client then create new one */
+				newAdresse.setCodePostal(adresse.getCodePostal());
+				newAdresse.setComplementAdresse(adresse.getComplementAdresse());
+				newAdresse.setLibelleVoie(adresse.getLibelleVoie());
+				newAdresse.setNumeroVoie(adresse.getNumeroVoie());
+				newAdresse.setVille(adresse.getVille());
+				
+				return(creerAdresse(newAdresse)) ;
+			}
+			else
+			{
+				/* If the adresse to update has less than (or only one) one clients then modify new one */
+				adresseToUpdate.get().setCodePostal(adresse.getCodePostal());
+				adresseToUpdate.get().setComplementAdresse(adresse.getComplementAdresse());
+				adresseToUpdate.get().setLibelleVoie(adresse.getLibelleVoie());
+				adresseToUpdate.get().setNumeroVoie(adresse.getNumeroVoie());
+				adresseToUpdate.get().setVille(adresse.getVille());
+				
+				return(adresseRepository.save(adresseToUpdate.get()));
+			}
 		} else {
 			/* If not empty  then the adresse fields already exist */
 			Adresse adresseToReturn = adresseVerificationDoublon.get(0) ;
@@ -165,13 +180,8 @@ public class ServiceAdresse implements IAdresseService {
 					
 					clientToModify = adresseToUpdate.get().getClients().get(0) ;
 
-					System.err.println("ServiceAdresse.modifierAdresse clientToModify.getAdresse = " + clientToModify.getAdresse());
-					System.err.println("ServiceAdresse.modifierAdresse adresseToUpdate = " + adresseToUpdate);
-					System.err.println("ServiceAdresse.modifierAdresse adresseToReturn = " + adresseToReturn);
-					System.err.println("ServiceAdresse.modifierAdresse adresseToReturn == adresseToUpdate = " + (adresseToReturn == adresseToUpdate.get()));
 					clientToModify.setAdresse(adresseToReturn) ;
 					clientToModify=clientRepository.save(clientToModify) ;
-					System.err.println("ServiceAdresse.modifierAdresse clientToModify.getAdresse = " + clientToModify.getAdresse());
 				}
 				
 				/* if the adresse has only one client then remove from the database */
