@@ -48,7 +48,7 @@
 	<form:input path="codePostal" />
      
     <label>Ville : </label>
-	<form:input path="ville" />
+	<form:input path="ville" /> <br/>
     
         
     <input type="submit" value="Créer"/>
