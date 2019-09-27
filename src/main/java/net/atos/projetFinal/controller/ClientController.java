@@ -127,6 +127,20 @@ public class ClientController {
 
 	}
 
+
+	/**
+	 * Une méthode qui retourne sur afficher client
+	 * @param pModel
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/listeClients/gotoupdateclient", method = RequestMethod.GET)
+	public String allerAModificationGet(final ModelMap pModel) {
+
+		
+		return(afficher(pModel)) ;
+
+	}
+
 	/**
 	 * Méthode enclencher lorsque l'utilisateur lance une modification de différents clients
 	 * @param pModification contient toutes les modif que l'utilisateur a fait
@@ -168,6 +182,18 @@ public class ClientController {
 			return("modifierClients") ;
 		}
 
+	}
+	
+	/**
+	 * Méthode qui retourne sur la jsp afficherClient
+	 * @param pModel
+	 * @return
+	 */
+	@RequestMapping(value = "/admin/listeClients/updateclient", method = RequestMethod.GET)
+	public String modifierGet(final ModelMap pModel) {
+
+		
+			return(afficher(pModel)) ;
 	}
 
 	/**
