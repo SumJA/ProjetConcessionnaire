@@ -15,9 +15,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Ajouter Client</title>
 </head>
 <body>
+
+<h1>Ajouter Client</h1>
 <form:form method="post" modelAttribute="creationForm" action="${contextPath}/admin/listeClients/ajouterClient">
 
    
@@ -51,5 +53,9 @@
         
     <input type="submit" value="Créer"/>
 </form:form>
+
+
+    <input type="button" onclick="location.href='${contextPath}/accueil/admin'" value="Home" />
+    
 </body>
 </html>
