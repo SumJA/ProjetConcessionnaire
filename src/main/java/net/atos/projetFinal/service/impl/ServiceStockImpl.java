@@ -2,6 +2,7 @@ package net.atos.projetFinal.service.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,6 +20,16 @@ public class ServiceStockImpl implements IStockService{
 	
 	@Autowired
 	StockRepository stockRepository;
+	
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Stock> trouverProduitParId(@NotNull final Long id) {
+        if (id != null) {
+            return stockRepository.findById(id);
+        } else {
+            throw new NullPointerException("L'identifiant du produit fournie en paramètre est null");
+        }
+    }
 
 	/**
 	 * Retourne la liste de tous les lignes de stock sauvegardé en base

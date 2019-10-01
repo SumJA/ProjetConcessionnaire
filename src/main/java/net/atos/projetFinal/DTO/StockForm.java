@@ -1,13 +1,60 @@
 package net.atos.projetFinal.DTO;
 
+import java.text.ParseException;
+
+import net.atos.projetFinal.model.Stock;
+
 public class StockForm {
 	
-	private Long id;
+	private Long idStock;
 	private String nomProduit;
 	private float prixProduit;
 	private int qteProduitDispo;
 	private int qteReserve;
+	private boolean checked;
 	
+	public void insertStockIntoModif(Stock stock) {
+		
+		idStock = stock.getIdStock();
+		nomProduit = stock.getNomProduit();
+		prixProduit = stock.getPrixProduit();
+		qteProduitDispo = stock.getQteProduitDispo();
+		qteReserve = stock.getQteReserve();
+		
+		checked = false ;
+	}
+	
+	public Stock getStockFromModif(Stock stockToUpdate) throws ParseException, NoSuchFieldException, IllegalArgumentException {
+		
+		stockToUpdate.setNomProduit(nomProduit);
+		stockToUpdate.setPrixProduit(prixProduit);
+		stockToUpdate.setQteProduitDispo(qteProduitDispo);
+		stockToUpdate.setQteReserve(qteReserve);
+		
+		return stockToUpdate;
+	}
+	
+	/**
+	 * @return the checked
+	 */
+	public boolean isChecked() {
+		return checked;
+	}
+
+	/**
+	 * @param checked the checked to set
+	 */
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
+	/**
+	 * @return the idStock
+	 */
+	public Long getIdStock() {
+		return idStock;
+	}
+
 	/**
 	 * @return the nomProduit
 	 */
@@ -56,11 +103,11 @@ public class StockForm {
 	public void setQteReserve(int qteReserve) {
 		this.qteReserve = qteReserve;
 	}
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
+
+	@Override
+	public String toString() {
+		return "StockForm [idStock=" + idStock + ", nomProduit=" + nomProduit + ", prixProduit=" + prixProduit
+				+ ", qteProduitDispo=" + qteProduitDispo + ", qteReserve=" + qteReserve + ", checked=" + checked + "]";
 	}
-	
+
 }

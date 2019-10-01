@@ -179,6 +179,8 @@ public class Devis implements Serializable{
 	public Long getIdDevis() {
 		return idDevis;
 	}
+	
+	
 
 	@Override
 	public String toString() {

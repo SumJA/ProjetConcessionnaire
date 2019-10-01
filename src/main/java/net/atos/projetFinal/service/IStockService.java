@@ -2,12 +2,12 @@ package net.atos.projetFinal.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
 import org.springframework.dao.DataIntegrityViolationException;
 
-import net.atos.projetFinal.model.Employe;
 import net.atos.projetFinal.model.Stock;
 
 /**
@@ -20,6 +20,8 @@ import net.atos.projetFinal.model.Stock;
  * 
  */
 public interface IStockService {
+	
+    Optional<Stock> trouverProduitParId(Long id);
 	
 	/**
 	 * Retourne la liste de tous les lignes de stock sauvegardées
