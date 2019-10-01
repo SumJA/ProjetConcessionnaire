@@ -1,67 +1,35 @@
-/**
- * MIT License
-
-Copyright (c) [2019] [Sumaira JAVAID, Nils VO-VAN, Kamel TRABELSI, Jerome BRUNA]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
- */
 package net.atos.projetFinal.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import java.util.Set;
 
 /**
  * Description des employés du concessionnaire
  * 
- * @author Jerome BRUNA
- * @author Kamel TRABELSI
- * @author Nils VO-VAN
- * @author Sumaira JAVAID
- * 
  */
 @Entity
-@Table(name = "employe")
+@Table(name = "employe", uniqueConstraints =
+@UniqueConstraint(columnNames = {"nom", "prenom", "username", "email"}))
 public class Employe implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(updatable = false, nullable = false)
-	private Long idEmploye;
+    private Long id;
 
 	@Column(length = 100, nullable = false)
 	private String nom;
-
-	@Column(length = 100)
+    
+    @Column(length = 100, nullable = false)
+    private String prenom;
+    
+    @Column(length = 100, nullable = false, unique = true)
+    private String username;
+    
+    @Column(length = 100, nullable = false, unique = true)
 	private String email;
 
 	@Column(length = 100, nullable = false)
@@ -71,147 +39,219 @@ public class Employe implements Serializable {
 	private String passwordConfirm;
 
 	@Column(nullable = false)
-	private Instant create_time;
-	
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Role_idRole", referencedColumnName = "idRole")
+    private Instant create_time = Instant.now();
+    
+    @ManyToOne
+    @JoinColumn(name = "Role_id", nullable = false)
     private Role role;
     
-	@OneToMany(mappedBy = "employeDevis")
-	List<Devis> listeDevis ;
-	
-	@OneToMany(mappedBy = "clientCommande")
-	List<Commande> commande ;
-
-	public Employe() {
-		super();
-		this.create_time = Instant.now();
-	}
-	
-	/**
-	 * @return the nom
-	 */
-	public String getNom() {
+    @OneToMany(mappedBy = "employe")
+    private Set<Devis> listeDevis;
+    
+    @OneToMany(mappedBy = "employe")
+    private Set<Commande> commande;
+    
+    /**
+     * Gets passwordConfirm.
+     *
+     * @return Value of passwordConfirm.
+     */
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+    
+    /**
+     * Sets new passwordConfirm.
+     *
+     * @param passwordConfirm New value of passwordConfirm.
+     */
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+    
+    /**
+     * Gets role.
+     *
+     * @return Value of role.
+     */
+    public Role getRole() {
+        return role;
+    }
+    
+    /**
+     * Sets new role.
+     *
+     * @param role New value of role.
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
+    
+    /**
+     * Gets id.
+     *
+     * @return Value of id.
+     */
+    public Long getId() {
+        return id;
+    }
+    
+    /**
+     * Gets create_time.
+     *
+     * @return Value of create_time.
+     */
+    public Instant getCreate_time() {
+        return create_time;
+    }
+    
+    /**
+     * Sets new create_time.
+     *
+     * @param create_time New value of create_time.
+     */
+    public void setCreate_time(Instant create_time) {
+        this.create_time = create_time;
+    }
+    
+    /**
+	 * Gets nom.
+     *
+     * @return Value of nom.
+     */
+    public String getNom() {
 		return nom;
 	}
-
+	
 	/**
-	 * @param nom the nom to set
-	 */
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	/**
-	 * @return the email
+	 * Sets new nom.
+	 *
+	 * @param nom New value of nom.
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+    
+    /**
+     * Gets password.
+     *
+     * @return Value of password.
+     */
+    public String getPassword() {
+        return password;
+    }
+    
+    /**
+     * Sets new password.
+     *
+     * @param password New value of password.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    /**
+     * Gets prenom.
+     *
+     * @return Value of prenom.
+     */
+    public String getPrenom() {
+        return prenom;
+    }
+    
+    /**
+     * Sets new prenom.
+     *
+     * @param prenom New value of prenom.
+     */
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+    
+    /**
+     * Gets email.
+     *
+     * @return Value of email.
 	 */
 	public String getEmail() {
 		return email;
 	}
-
+	
 	/**
-	 * @param email the email to set
-	 */
-	public void setEmail(String email) {
-		this.email = email;
+	 * Sets new email.
+     *
+     * @param email New value of email.
+     */
+    public void setEmail(String email) {
+        this.email = email;
 	}
-
-	/**
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @param password the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @return the passwordConfirm
-	 */
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	/**
-	 * @param passwordConfirm the passwordConfirm to set
-	 */
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
-
-	/**
-	 * @return the create_time
-	 */
-	public Instant getCreate_time() {
-		return create_time;
-	}
-
-	/**
-	 * @param create_time the create_time to set
-	 */
-	public void setCreate_time(Instant create_time) {
-		this.create_time = create_time;
-	}
-
-	/**
-	 * @return the role
-	 */
-	public Role getRole() {
-		return role;
-	}
-
-	/**
-	 * @param role the role to set
-	 */
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
-	/**
-	 * @return the listeDevis
-	 */
-	public List<Devis> getListeDevis() {
-		return listeDevis;
-	}
-
-	/**
-	 * @param listeDevis the listeDevis to set
-	 */
-	public void setListeDevis(List<Devis> listeDevis) {
-		this.listeDevis = listeDevis;
-	}
-
-	/**
-	 * @return the commandes
-	 */
-	public List<Commande> getCommande() {
-		return commande;
-	}
-
-	/**
-	 * @param commandes the commandes to set
-	 */
-	public void setCommande(List<Commande> commande) {
+    
+    /**
+     * Gets commande.
+     *
+     * @return Value of commande.
+     */
+    public Set<Commande> getCommande() {
+        return commande;
+    }
+    
+    /**
+     * Sets new commande.
+     *
+     * @param commande New value of commande.
+     */
+    public void setCommande(Set<Commande> commande) {
 		this.commande = commande;
+    }
+    
+    /**
+     * Gets listeDevis.
+     *
+     * @return Value of listeDevis.
+     */
+    public Set<Devis> getListeDevis() {
+        return listeDevis;
 	}
-
+	
 	/**
-	 * @return the idEmploye
-	 */
-	public Long getIdEmploye() {
-		return idEmploye;
+	 * Sets new listeDevis.
+     *
+     * @param listeDevis New value of listeDevis.
+     */
+    public void setListeDevis(Set<Devis> listeDevis) {
+		this.listeDevis = listeDevis;
+    }
+    
+    /**
+     * Gets username.
+     *
+     * @return Value of username.
+     */
+    public String getUsername() {
+        return username;
+    }
+    
+    /**
+	 * Sets new username.
+	 *
+	 * @param username New value of username.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    
+    @Override
+    public String toString() {
+        return "Employe{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+				", passwordConfirm='" + passwordConfirm + '\'' +
+				", create_time=" + create_time +
+				", role=" + role +
+				'}';
 	}
-
-	@Override
-	public String toString() {
-		return "Employe [idEmploye=" + idEmploye + ", nom=" + nom + ", email=" + email + ", password=" + password
-				+ ", passwordConfirm=" + passwordConfirm + ", create_time=" + create_time + ", role=" + role
-				+ ", listeDevis=" + listeDevis + ", commande=" + commande + "]";
-	}
-		
 }

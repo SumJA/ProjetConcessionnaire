@@ -5,12 +5,11 @@
  */
 package net.atos.projetFinal.validator;
 
+import net.atos.projetFinal.controller.CreationClientForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-
-import net.atos.projetFinal.controller.CreationClientForm;
 
 /**
  * @author Nils
@@ -32,6 +31,7 @@ public class CreationClientValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "libelle", "NotEmpty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "codePostal", "NotEmpty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "ville", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pays", "NotEmpty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tel", "NotEmpty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "mail", "NotEmpty");
 	}

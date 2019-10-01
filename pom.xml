@@ -17,6 +17,9 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+        <mysql.connector.version>5.1.48</mysql.connector.version>
+        <mysql.username>root</mysql.username>
+        <mysql.password></mysql.password>
 	</properties>
 
 	<dependencies>
@@ -117,7 +120,52 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.connector.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <driver>com.mysql.jdbc.Driver</driver>
+                    <username>${mysql.username}</username>
+                    <password>${mysql.password}</password>
+                    <onError>continue</onError>
+                    <autocommit>true</autocommit>
+                </configuration>
+                <executions>
+
+                    <execution>
+                        <id>drop-db</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>jdbc:mysql://localhost:3306</url>
+                            <sqlCommand>drop database if exists voitures</sqlCommand>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>create-db</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <url>jdbc:mysql://localhost:3306</url>
+                            <sqlCommand>create database voitures</sqlCommand>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 </project>

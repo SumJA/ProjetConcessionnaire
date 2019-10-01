@@ -1,56 +1,29 @@
-/**
- * MIT License
-
-Copyright (c) [2019] [Sumaira JAVAID, Nils VO-VAN, Kamel TRABELSI, Jerome BRUNA]
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
- */
 package net.atos.projetFinal.service.impl;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import net.atos.projetFinal.model.Employe;
 import net.atos.projetFinal.repo.EmployeRepository;
 import net.atos.projetFinal.service.IEmployeService;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * Implementation du service {@link IEmployeService}
- * 
- * @author Nils Vovan
- * @author Sumaira JAVAID
- * @author Kamel TRABELSI
  *
  */
 @Service
 public class ServiceEmploye implements IEmployeService {
-	@Autowired
-	EmployeRepository employeRepository;
+    private final EmployeRepository dao;
+    
+    public ServiceEmploye(EmployeRepository dao) {
+        this.dao = dao;
+    }
 	
 	/**
 	 * Retourne la liste de tous les employés sauvegardé en base
@@ -59,8 +32,8 @@ public class ServiceEmploye implements IEmployeService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Employe> trouverTousLesEmployes() {
-		return employeRepository.findAll();
+    public List<Employe> findAllEmploye() {
+        return dao.findAll();
 	}
 
 	/**
@@ -79,10 +52,10 @@ public class ServiceEmploye implements IEmployeService {
 		if (employe != null) {
 			// Vérfication du respect de la contrainte d'unicité sur le username et l'email
 			// de l'employé :
-			List<Employe> employeVerificationDoublon = employeRepository.findEmployeByNameOrEmail(employe.getNom(),
+            List<Employe> employeVerificationDoublon = dao.findEmployeByUsernameOrEmail(employe.getNom(),
 					employe.getEmail());
 			if (employeVerificationDoublon.isEmpty()) {
-				return employeRepository.saveAndFlush(employe);
+                return dao.saveAndFlush(employe);
 			} else {
 				throw new DataIntegrityViolationException("Employé déjà existant");
 			}
@@ -105,7 +78,7 @@ public class ServiceEmploye implements IEmployeService {
 	@Transactional
 	public void supprimerEmployeParId(@NotNull final Long idEmploye) {
 		if (idEmploye != null) {
-			employeRepository.deleteById(idEmploye);
+            dao.deleteById(idEmploye);
 		} else {
 			throw new NullPointerException("L'identifiant de l'employé fournie en paramètre est null");
 		}
@@ -127,14 +100,14 @@ public class ServiceEmploye implements IEmployeService {
 			throw new IllegalArgumentException("La liste d'employés à mettre à jour est vide");
 		} else {
 			for (Employe employe : employes) {
-				Optional<Employe> employeToUpdate = employeRepository.findById(employe.getIdEmploye());
+                Optional<Employe> employeToUpdate = dao.findById(employe.getId());
 				employeToUpdate.get().setNom(employe.getNom());
 				employeToUpdate.get().setEmail(employe.getEmail());
 				employeToUpdate.get().setPassword(employe.getPassword());
 				employeToUpdate.get().setRole(employe.getRole());
-				employeRepository.save(employeToUpdate.get());
+                dao.save(employeToUpdate.get());
 			}
-			employeRepository.flush();
+            dao.flush();
 		}
 	}
 
@@ -151,15 +124,23 @@ public class ServiceEmploye implements IEmployeService {
 	@Transactional
 	public void modifierEmploye(@NotNull final Employe employe) {
 		if (employe != null) {
-			Optional<Employe> employeToUpdate = employeRepository.findById(employe.getIdEmploye());
+            Optional<Employe> employeToUpdate = dao.findById(employe.getId());
 			employeToUpdate.get().setNom(employe.getNom());
 			employeToUpdate.get().setEmail(employe.getEmail());
 			employeToUpdate.get().setPassword(employe.getPassword());
 			employeToUpdate.get().setRole(employe.getRole());
-			employeRepository.save(employeToUpdate.get());
+            dao.save(employeToUpdate.get());
 		} else {
 			throw new NullPointerException("L'Employé fournie en paramètre est null");
 		}
 	}
-
+    
+    /**
+     * Gets dao.
+     *
+     * @return Value of dao.
+     */
+    public EmployeRepository getDao() {
+        return dao;
+    }
 }

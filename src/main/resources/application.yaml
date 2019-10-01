@@ -10,15 +10,20 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
-    generate-ddl: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
   datasource:
     platform: mysql
     url: jdbc:mysql://localhost:3306/voitures
     username: root
     password: 
     driverClassName: com.mysql.cj.jdbc.Driver
-    initialization-mode: always
+    initialization-mode: embedded
   application:
       name: ProjetGarage
 server:
   port: 8888
+logging:
+  level:
+    web: DEBUG

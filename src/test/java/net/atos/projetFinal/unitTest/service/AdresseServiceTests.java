@@ -23,10 +23,9 @@ SOFTWARE.
  */
 package net.atos.projetFinal.unitTest.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
-
+import net.atos.projetFinal.model.Adresse;
+import net.atos.projetFinal.repo.AdresseRepository;
+import net.atos.projetFinal.service.IAdresseService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,10 +35,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import net.atos.projetFinal.model.Adresse;
-import net.atos.projetFinal.repo.AdresseRepository;
-import net.atos.projetFinal.service.IAdresseService;
-import net.atos.projetFinal.service.impl.ServiceAdresse;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 /**
  * Test du service {@link IAdresseService}
@@ -56,7 +54,7 @@ public class AdresseServiceTests {
 	AdresseRepository adresseRepository;
 
 	@InjectMocks
-	IAdresseService adresseService = new ServiceAdresse();
+    IAdresseService adresseService;
 	
 	/**
 	 * On invoque la {@code MockitoAnnotations.initMocks()} pour utiliser nos Mocks

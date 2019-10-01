@@ -4,9 +4,9 @@
 START TRANSACTION;
 USE `voitures`;
 
-INSERT INTO `voitures`.`role` (`id_role`, `nom_role`) VALUES (1, 'admin');
-INSERT INTO `voitures`.`role` (`id_role`, `nom_role`) VALUES (2, 'magasinier');
-INSERT INTO `voitures`.`role` (`id_role`, `nom_role`) VALUES (3, 'commercial');
+INSERT INTO `voitures`.`role` (`id`, `nom`) VALUES (1, 'admin');
+INSERT INTO `voitures`.`role` (`id`, `nom`) VALUES (2, 'magasinier');
+INSERT INTO `voitures`.`role` (`id`, `nom`) VALUES (3, 'commercial');
 
 COMMIT;
 
@@ -17,11 +17,11 @@ COMMIT;
 START TRANSACTION;
 USE `voitures`;
 
-INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (1, 'commande livre');
-INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (2, 'commande recue');
-INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (3, 'commande annulee');
-INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (4, 'devis valide');
-INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (5, 'devis annule');
-INSERT INTO `voitures`.`status` (`id_status`, `nom_status`) VALUES (6, 'devis en cours');
+INSERT INTO `voitures`.`status` (`id`, `nom`) VALUES (1, 'commande livre');
+INSERT INTO `voitures`.`status` (`id`, `nom`) VALUES (2, 'commande recue');
+INSERT INTO `voitures`.`status` (`id`, `nom`) VALUES (3, 'commande annulee');
+INSERT INTO `voitures`.`status` (`id`, `nom`) VALUES (4, 'devis valide');
+INSERT INTO `voitures`.`status` (`id`, `nom`) VALUES (5, 'devis annule');
+INSERT INTO `voitures`.`status` (`id`, `nom`) VALUES (6, 'devis en cours');
 
 COMMIT;
