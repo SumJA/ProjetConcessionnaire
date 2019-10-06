@@ -1,8 +1,9 @@
 package net.atos.projetFinal.controller;
 
+import net.atos.projetFinal.exception.InvalidUserRole;
 import net.atos.projetFinal.model.Employe;
-import net.atos.projetFinal.service.impl.ServiceEmploye;
-import net.atos.projetFinal.service.impl.ServiceRole;
+import net.atos.projetFinal.service.GestionEmployeServiceImpl;
+import net.atos.projetFinal.service.ServiceRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,14 +19,14 @@ import java.util.List;
 @Controller
 public class EmployeController {
     @Autowired
-    private ServiceEmploye serviceEmploye;
+    private GestionEmployeServiceImpl gestionEmployeServiceImpl;
     
     @Autowired
     private ServiceRole serviceRole;
     
     @RequestMapping(value = "/admin/listeEmployes", method = RequestMethod.GET)
     public String afficher(final ModelMap pModel) {
-        List<Employe> employes = serviceEmploye.findAllEmploye();
+        List<Employe> employes = gestionEmployeServiceImpl.trouverTousLesEmployes();
         
         ModificationEmployeForm modifFormEmploye = new ModificationEmployeForm();
         List<ModificationEmploye> modifEmployeList = new ArrayList<>();
@@ -91,9 +92,9 @@ public class EmployeController {
                 Employe employe;
                 
                 try {
-                    
-                    
-                    employe = serviceEmploye.getDao().findById(modifEmploye.getId()).get();
+    
+    
+                    employe = gestionEmployeServiceImpl.getEmployeRepository().findById(modifEmploye.getId()).get();
                     modifEmploye.getEmployeFromModif(employe, serviceRole);
                     
                     employesToModify.add(employe);
@@ -102,9 +103,9 @@ public class EmployeController {
                 } catch (Exception e) {
                     System.err.println("erreur: voir methode modifier de la classe EmployeController " + e.getMessage());
                 }
-                
-                
-                serviceEmploye.modifierEmployes(employesToModify);
+    
+    
+                gestionEmployeServiceImpl.modifierEmployes(employesToModify);
                 
                 
             }
@@ -115,11 +116,11 @@ public class EmployeController {
     
     @RequestMapping(value = "/admin/ajouterEmploye", method = RequestMethod.POST)
     public String creer(@Valid @ModelAttribute(value = "creationForm") final CreationEmployeForm pCreation,
-                        final BindingResult pBindingResult, final ModelMap pModel) {
+                        final BindingResult pBindingResult, final ModelMap pModel) throws InvalidUserRole {
         if (!pBindingResult.hasErrors()) {
             final Employe employesToCreate;
             employesToCreate = pCreation.getEmployeFromCreat(serviceRole);
-            serviceEmploye.creerEmploye(employesToCreate);
+            gestionEmployeServiceImpl.creerEmploye(employesToCreate);
         }
         return afficher(pModel);
     }

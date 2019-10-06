@@ -1,6 +1,5 @@
-package net.atos.projetFinal.auth.service.impl;
+package net.atos.projetFinal.service.auth;
 
-import net.atos.projetFinal.auth.service.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;

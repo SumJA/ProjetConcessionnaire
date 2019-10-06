@@ -1,4 +1,4 @@
-package net.atos.projetFinal.auth.service.impl;
+package net.atos.projetFinal.service.auth;
 
 import net.atos.projetFinal.model.Employe;
 import net.atos.projetFinal.repo.EmployeRepository;
@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException(username);
 
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getNom()));
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().getNom().name()));
         return new org.springframework.security.core.userdetails.User(user.getPassword(), user.getPassword(),
 				grantedAuthorities);
 	}

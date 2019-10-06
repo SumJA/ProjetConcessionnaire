@@ -1,5 +1,6 @@
-package net.atos.projetFinal.auth.service;
+package net.atos.projetFinal.service.auth;
 
+import net.atos.projetFinal.exception.InvalidUserRole;
 import net.atos.projetFinal.model.Employe;
 
 /**
@@ -9,10 +10,11 @@ import net.atos.projetFinal.model.Employe;
 public interface UserService {
 	/**
 	 * Créer un nouveau utilisateur de type Employe
-	 * 
-	 * @param user un utilisateur de type Employe
-	 */
-	void save(Employe user);
+     *
+     * @param user un utilisateur de type Employe
+     * @return un objet Employe
+     */
+    Employe save(Employe user) throws InvalidUserRole;
 
 	/**
 	 * Retrouve l'employé à partir de son username

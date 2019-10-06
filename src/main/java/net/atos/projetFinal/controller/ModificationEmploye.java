@@ -4,7 +4,8 @@ import net.atos.projetFinal.model.Commande;
 import net.atos.projetFinal.model.Devis;
 import net.atos.projetFinal.model.Employe;
 import net.atos.projetFinal.model.Role;
-import net.atos.projetFinal.service.impl.ServiceRole;
+import net.atos.projetFinal.service.ServiceRole;
+import net.atos.projetFinal.utils.RoleEmploye;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
@@ -14,15 +15,13 @@ import java.util.List;
 
 
 public class ModificationEmploye {
-    
-    
     @Autowired
     private boolean checked;
     
     
     private Long idRole;
     
-    private String nomRole;
+    private RoleEmploye nomRole;
     
     
     private Long id;
@@ -167,11 +166,11 @@ public class ModificationEmploye {
     }
     
     
-    public String getNomRole() {
+    public RoleEmploye getNomRole() {
         return nomRole;
     }
     
-    public void setNomRole(String nomRole) {
+    public void setNomRole(RoleEmploye nomRole) {
         this.nomRole = nomRole;
     }
     

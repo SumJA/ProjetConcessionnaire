@@ -1,8 +1,7 @@
-package net.atos.projetFinal.service.impl;
+package net.atos.projetFinal.service;
 
 import net.atos.projetFinal.model.Role;
 import net.atos.projetFinal.repo.RoleRepository;
-import net.atos.projetFinal.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,20 +40,17 @@ public class ServiceRole implements IRoleService {
     @Override
     @Transactional
     public void modifierRole(final Role role) {
-        
-        
         if (role.getId() != null) {
             Optional<Role> roleToUpdate;
             System.err.println("id role: " + role.getId());
             roleToUpdate = dao.findById(role.getId());
             
-            
             roleToUpdate.get().setNom(role.getNom());
-            
+    
             dao.saveAndFlush(roleToUpdate.get());
             dao.saveAndFlush(roleToUpdate.get());
         } else
-            dao.saveAndFlush(role);
+            throw new NullPointerException("role null"); //TODO def excepttion
     }
     
     public RoleRepository getDao() {

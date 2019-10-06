@@ -32,7 +32,7 @@ public interface IAdresseService {
      * @throws IllegalArgumentException dans le cas où {@code idAdresse} donné est {@literal null}
      * @throws NullPointerException     si l'id de l'adresse donné en paramètre est null
      */
-    void supprimerAdresseById(@NotNull final Long idAdresse);
+    void supprimerAdresseParId(@NotNull final Long idAdresse);
     
     /**
      * Met à jour de l'adresse d'un client

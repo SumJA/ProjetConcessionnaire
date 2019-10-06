@@ -1,10 +1,9 @@
-package net.atos.projetFinal.service.impl;
+package net.atos.projetFinal.service;
 
 import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
 import net.atos.projetFinal.repo.AdresseRepository;
 import net.atos.projetFinal.repo.ClientRepository;
-import net.atos.projetFinal.service.IAdresseService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +16,13 @@ import java.util.Optional;
  * Implementation de {@link IAdresseService}
  */
 @Service
-public class ServiceAdresse implements IAdresseService {
+public class ServiceIAdresse implements IAdresseService {
     
     private final AdresseRepository adresseRepository;
     
     private final ClientRepository clientRepository;
     
-    public ServiceAdresse(AdresseRepository adresseRepository, ClientRepository clientRepository) {
+    public ServiceIAdresse(AdresseRepository adresseRepository, ClientRepository clientRepository) {
         this.adresseRepository = adresseRepository;
         this.clientRepository = clientRepository;
     }
@@ -63,7 +62,7 @@ public class ServiceAdresse implements IAdresseService {
      */
     @Override
     @Transactional
-    public void supprimerAdresseById(@NotNull final Long idAdresse) {
+    public void supprimerAdresseParId(@NotNull final Long idAdresse) {
         if (idAdresse != null) {
             adresseRepository.deleteById(idAdresse);
         } else {
@@ -72,6 +71,7 @@ public class ServiceAdresse implements IAdresseService {
     }
     
     /**
+     * //TODO : à reprendre
      * Met à jour une adresse.
      * <p> Si idAdresse ne pointe sur rien donc creation adresse. Sinon si idAdresse pointe sur une
      * adresse ayant les mêmes attributs alors rien faire. Sinon si aucune adresse existe avec des attributs identique à
@@ -154,7 +154,7 @@ public class ServiceAdresse implements IAdresseService {
                 
                 /* if the adresse has only one client then remove from the database */
                 adresseToUpdate.get().getClients().clear();
-                supprimerAdresseById(adresseToUpdate.get().getId());
+                supprimerAdresseParId(adresseToUpdate.get().getId());
             }
             /* If the adresse exists then return the existed adresse */
             return adresseToReturn;
@@ -162,6 +162,7 @@ public class ServiceAdresse implements IAdresseService {
     }
     
     /**
+     * //TODO : ajout exception
      * récupère les Adresse dont le numéro, libellé, complément, codePostal et Ville correspondent à ceux donné en
      * paramètres
      *

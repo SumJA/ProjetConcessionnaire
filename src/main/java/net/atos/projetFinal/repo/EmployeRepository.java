@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
      * @return un Employé
      */
     @Query("SELECT e FROM Employe e WHERE e.username = ?1")
-    Employe findByUsername(String username);
+    Employe findByUsername(@NotNull String username);
     
     /**
      * Retourne la lsite des employés dont le nom ou le mot de passe correspond à celui donné en paramètre
@@ -30,5 +31,5 @@ public interface EmployeRepository extends JpaRepository<Employe, Long> {
      * @return une liste d'employés
      */
     @Query("SELECT e FROM Employe e WHERE e.username = ?1 OR e.email = ?2")
-    List<Employe> findEmployeByUsernameOrEmail(String username, String email);
+    List<Employe> findEmployeByUsernameOrEmail(String username, String email); //TODO : pas besoin ?
 }

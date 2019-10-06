@@ -1,7 +1,7 @@
-package net.atos.projetFinal.auth.validator;
+package net.atos.projetFinal.validator;
 
-import net.atos.projetFinal.auth.service.UserService;
 import net.atos.projetFinal.model.Employe;
+import net.atos.projetFinal.service.auth.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

@@ -1,7 +1,7 @@
 package net.atos.projetFinal.controller;
 
 import net.atos.projetFinal.model.Employe;
-import net.atos.projetFinal.service.impl.ServiceRole;
+import net.atos.projetFinal.service.ServiceRole;
 
 public class CreationEmployeForm {
     
@@ -24,7 +24,7 @@ public class CreationEmployeForm {
         password = employe.getPassword();
         System.err.println("employe.getRole().getIdRole() " + employe.getRole().getId());
         idRole = employe.getRole().getId();
-        nomRole = employe.getRole().getNom();                //getNom();
+        nomRole = employe.getRole().getNom().name();                //getNom();
         
     }
     

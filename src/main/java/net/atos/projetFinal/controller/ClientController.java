@@ -45,7 +45,7 @@ public class ClientController {
      */
     @GetMapping(value = "/admin/listeClients")
     public String clientList(final ModelMap pModel) {
-        List<Client> clients = serviceClient.getAllClients();
+        List<Client> clients = serviceClient.trouverTousLesClients();
         
         ModificationFormClient modifFormClient = new ModificationFormClient();
         List<ModificationClient> modifClientList = new ArrayList<>();
@@ -84,7 +84,7 @@ public class ClientController {
                     Client client;
                     
                     try {
-                        client = serviceClient.findClientById(modifClient.getIdClient()).get();
+                        client = serviceClient.trouverClientParId(modifClient.getIdClient());
                         modifClient.getClientFromModif(client, serviceAdresse, DATE_FORMAT);
                         checkedClients.add(client);
                         checkedModifClients.add(modifClient);
@@ -154,7 +154,7 @@ public class ClientController {
                 Client client;
                 
                 try {
-                    client = serviceClient.findClientById(modifClient.getIdClient()).get();
+                    client = serviceClient.trouverClientParId(modifClient.getIdClient());
                     modifClient.getClientFromModif(client, serviceAdresse, DATE_FORMAT);
                     clientsToModify.add(client);
                 } catch (ParseException e) {

@@ -1,4 +1,4 @@
-package net.atos.projetFinal.auth.service;
+package net.atos.projetFinal.service.auth;
 
 /**
  * Pour retrouver l'utilisateur connecté + 

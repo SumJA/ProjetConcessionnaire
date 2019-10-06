@@ -1,15 +1,17 @@
-package net.atos.projetFinal.auth.controller;
+package net.atos.projetFinal.controller;
 
-import net.atos.projetFinal.auth.service.SecurityService;
-import net.atos.projetFinal.auth.service.UserService;
-import net.atos.projetFinal.auth.validator.UserValidator;
+import net.atos.projetFinal.exception.InvalidUserRole;
 import net.atos.projetFinal.model.Employe;
 import net.atos.projetFinal.repo.RoleRepository;
+import net.atos.projetFinal.service.auth.SecurityService;
+import net.atos.projetFinal.service.auth.UserService;
+import net.atos.projetFinal.validator.UserValidator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,10 +57,14 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
 			return "inscription";
 		}
-		
-		userService.save(userForm);
-        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
-        return "redirect:/home";
+        try {
+            userService.save(userForm);
+            securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+            return "redirect:/home";
+        } catch (InvalidUserRole e) {
+            bindingResult.addError(new ObjectError("role", e.getMessage()));
+            return "inscription";
+        }
     }
 	
 	@GetMapping("/login")

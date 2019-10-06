@@ -3,6 +3,7 @@ package net.atos.projetFinal.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -254,4 +255,30 @@ public class Employe implements Serializable {
 				", role=" + role +
 				'}';
 	}
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employe employe = (Employe) o;
+        return nom.equals(employe.nom) &&
+                prenom.equals(employe.prenom) &&
+                username.equals(employe.username) &&
+                email.equals(employe.email) &&
+                role.equals(employe.role);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom, prenom, username, email, role);
+    }
+    
+    /**
+     * Sets new id.
+     *
+     * @param id New value of id.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

@@ -1,9 +1,8 @@
-package net.atos.projetFinal.service.impl;
+package net.atos.projetFinal.service;
 
 import net.atos.projetFinal.model.Adresse;
 import net.atos.projetFinal.model.Client;
 import net.atos.projetFinal.repo.ClientRepository;
-import net.atos.projetFinal.service.IClientService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -21,9 +21,9 @@ public class ServiceClient implements IClientService {
     
     private final ClientRepository clientRepository;
     
-    private final ServiceAdresse serviceAdresse;
+    private final ServiceIAdresse serviceAdresse;
     
-    public ServiceClient(ClientRepository clientRepository, ServiceAdresse serviceAdresse) {
+    public ServiceClient(ClientRepository clientRepository, ServiceIAdresse serviceAdresse) {
         this.clientRepository = clientRepository;
         this.serviceAdresse = serviceAdresse;
     }
@@ -35,7 +35,7 @@ public class ServiceClient implements IClientService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Client> getAllClients() {
+    public List<Client> trouverTousLesClients() {
         return clientRepository.findAll();
     }
     
@@ -48,12 +48,15 @@ public class ServiceClient implements IClientService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<Client> trouverClientParId(@NotNull final Long id) {
+    public Client trouverClientParId(@NotNull final Long id) throws NullPointerException, NoSuchElementException {
         if (id != null) {
-            return clientRepository.findById(id);
-        } else {
+            Optional<Client> client = clientRepository.findById(id);
+            if (client.isPresent())
+                return client.get();
+            else
+                throw new NoSuchElementException("Aucun client avec l'identifiant : " + id);
+        } else
             throw new NullPointerException("L'identifiant du client fournie en paramètre est null");
-        }
     }
     
     /**
@@ -66,7 +69,7 @@ public class ServiceClient implements IClientService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<Client> trouverClientParNom(@NotNull final String nom, @NotNull final String prenom) {
+    public List<Client> trouverClientParNomEtPrenom(@NotNull final String nom, @NotNull final String prenom) {
         if (nom.isEmpty()) {
             throw new NullPointerException("Le nom du client donné en paramètre est nul");
         } else if (prenom.isEmpty()) {
@@ -130,10 +133,7 @@ public class ServiceClient implements IClientService {
         if (client == null) {
             throw new NullPointerException("L'objet client donné en paramètre est null");
         } else {
-            Client clientToUpdate;
-            
-            /* Is not null (mandatory) */
-            clientToUpdate = clientRepository.findById(client.getId()).get();
+            Client clientToUpdate = clientRepository.findById(client.getId()).get();
             
             /* If the adresse has changed then erase or create adresse */
             if (!clientToUpdate.getAdresse().equals(client.getAdresse())) {
@@ -165,32 +165,24 @@ public class ServiceClient implements IClientService {
      */
     @Override
     @Transactional
-    public Client modifierAdresseClient(@NotNull Client client) throws NoSuchFieldException {
+    public Client modifierAdresseClient(@NotNull Client client) throws NoSuchFieldException, NullPointerException {
         if (client == null) {
             throw new NullPointerException("L'objet client donné en paramètre est null");
         } else {
-            Client originalClient;
-            Adresse adresse;
+            Client originalClient = clientRepository.findById(client.getId()).get();
+            Adresse adresse = client.getAdresse();
             
-            adresse = client.getAdresse();
-            
-            /* findById must not be null (mandatory) */
-            originalClient = clientRepository.findById(client.getId()).get();
             
             if (originalClient.getAdresse().getClients().size() > 1) {
                 /* If more than one client depends on same adresse then create a new adresse */
-                
                 Adresse newAdresse = new Adresse();
-                
                 newAdresse.setCodePostal(adresse.getCodePostal());
                 newAdresse.setComplementAdresse(adresse.getComplementAdresse());
                 newAdresse.setLibelleVoie(adresse.getLibelleVoie());
                 newAdresse.setNumeroVoie(adresse.getNumeroVoie());
                 newAdresse.setVille(adresse.getVille());
                 /* Pas d'id car généré automatiquement par le service */
-                
                 newAdresse = serviceAdresse.creerAdresse(newAdresse);
-                
                 client.setAdresse(newAdresse);
             } else {
                 client.setAdresse(serviceAdresse.modifierAdresse(client.getAdresse()));
@@ -199,10 +191,4 @@ public class ServiceClient implements IClientService {
             return client;
         }
     }
-    
-    @Override
-    public Optional<Client> findClientById(@NotNull final Long id) {
-        return clientRepository.findById(id);
-    }
-    
 }

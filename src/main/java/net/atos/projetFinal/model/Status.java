@@ -118,4 +118,13 @@ public class Status implements Serializable {
     public Long getId() {
         return id;
     }
+    
+    /**
+     * Sets new id.
+     *
+     * @param id New value of id.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

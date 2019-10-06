@@ -48,13 +48,12 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
-public class AdresseServiceTests {
-
+public class IAdresseServiceTests {
 	@MockBean
 	AdresseRepository adresseRepository;
 
 	@InjectMocks
-    IAdresseService adresseService;
+    IAdresseService IAdresseService;
 	
 	/**
 	 * On invoque la {@code MockitoAnnotations.initMocks()} pour utiliser nos Mocks
@@ -83,11 +82,11 @@ public class AdresseServiceTests {
 		adresseACreer.setLibelleVoie("Downing Street");
 		adresseACreer.setCodePostal("UK9999");
 		adresseACreer.setVille("Londres");
-		
-		when(adresseService.creerAdresse(new Adresse())).thenReturn(new Adresse());
-		assertEquals(adresseService.creerAdresse(adresseACreer),Adresse.class);
-		
-		Adresse adresseCreee = adresseService.creerAdresse(adresseACreer);
+        
+        when(IAdresseService.creerAdresse(new Adresse())).thenReturn(new Adresse());
+        assertEquals(IAdresseService.creerAdresse(adresseACreer), Adresse.class);
+        
+        Adresse adresseCreee = IAdresseService.creerAdresse(adresseACreer);
 
 		assertThat(adresseCreee.getNumeroVoie()).isSameAs(adresseACreer.getNumeroVoie());
 		assertThat(adresseCreee.getLibelleVoie()).isSameAs(adresseACreer.getLibelleVoie());
